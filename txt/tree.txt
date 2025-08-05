@@ -1,0 +1,91 @@
+minishell/
+├── Makefile
+├── README.md
+├── .gitignore
+│
+├── includes/
+│   └── minishell.h          # Header principal avec structures et prototypes
+│
+├── src/
+│   ├── main.c               # Point d'entrée (mode interactif uniquement)
+│   ├── init.c               # Fonctions d'initialisation
+│   ├── cleanup.c            # Fonctions de nettoyage mémoire
+│   │
+│   ├── lexer/               # Analyse lexicale (tokenization)
+│   │   ├── lexer.c          # Fonction principale de tokenization
+│   │   ├── lexer_utils.c    # Utilitaires lexer (whitespace, operators)
+│   │   └── token_utils.c    # Gestion des tokens (create, add, free)
+│   │
+│   ├── parser/              # Analyse syntaxique
+│   │   ├── parser.c         # Parser principal
+│   │   ├── parser_args.c    # Extraction des arguments
+│   │   ├── parser_redir.c   # Extraction des redirections
+│   │   ├── parser_utils.c   # Utilitaires parser (count_words)
+│   │   └── syntax_check.c   # Validation syntaxique (check_token_syntax.c)
+│   │
+│   ├── expansion/           # Expansion des variables et quotes
+│   │   ├── expand.c         # Expansion principale
+│   │   ├── quotes.c         # Gestion des quotes
+│   │   ├── quotes_helpers.c # Helpers pour quotes
+│   │   └── quotes_utils.c   # Utilitaires quotes
+│   │
+│   ├── execution/           # Exécution des commandes
+│   │   ├── executor.c       # Executor principal
+│   │   ├── execute_simple.c # Exécution commande simple
+│   │   ├── execute_pipeline.c # Exécution pipeline
+│   │   ├── redirections.c   # Gestion redirections
+│   │   ├── heredoc.c        # Gestion heredocs
+│   │   └── pipes.c          # Gestion pipes
+│   │
+│   ├── builtins/            # Commandes intégrées
+│   │   ├── builtin_cd.c     # Commande cd
+│   │   ├── builtin_echo.c   # Commande echo
+│   │   ├── builtin_env.c    # Commande env
+│   │   ├── builtin_exit.c   # Commande exit
+│   │   ├── builtin_export.c # Commande export
+│   │   ├── builtin_pwd.c    # Commande pwd
+│   │   ├── builtin_unset.c  # Commande unset
+│   │   └── builtin_utils.c  # Utilitaires builtins
+│   │
+│   ├── environment/         # Gestion variables d'environnement
+│   │   ├── env_init.c       # Initialisation environnement
+│   │   ├── env_get_set.c    # Get/set variables
+│   │   ├── env_utils.c      # Utilitaires environnement
+│   │   └── env_export.c     # Export de variables
+│   │
+│   ├── signals/             # Gestion des signaux
+│   │   ├── signals.c        # Configuration signaux
+│   │   ├── signal_handlers.c # Handlers de signaux
+│   │   └── signal_utils.c   # Utilitaires signaux
+│   │
+│   ├── structures/          # Gestion structures de données
+│   │   ├── assignment.c     # Gestion assignements (VAR=value)
+│   │   ├── append_assignment.c # Gestion VAR+=value
+│   │   ├── cmd_utils.c      # Utilitaires commandes
+│   │   ├── redir_utils.c    # Utilitaires redirections
+│   │   ├── heredoc_utils.c  # Utilitaires heredocs
+│   │   └── env_var_utils.c  # Utilitaires variables env
+│   │
+│   ├── utils/               # Fonctions utilitaires générales
+│   │   ├── error.c          # Gestion erreurs (print_error, etc.)
+│   │   ├── memory.c         # Utilitaires mémoire
+│   │   ├── string_utils.c   # Utilitaires strings
+│   │   └── path_utils.c     # Utilitaires chemins
+│   │
+│   └── debug/               # Outils de debug (optionnel)
+│       ├── debug_token.c    # Debug tokens
+│       ├── debug_cmds.c     # Debug commandes
+│       └── debug_env.c      # Debug environnement
+│
+├── libft/                   # Votre bibliothèque libft
+│   ├── Makefile
+│   ├── libft.h
+│   └── src/
+│       └── ... (fonctions libft)
+│
+└── tests/                   # Tests (optionnel mais recommandé)
+    ├── test_basic.sh        # Tests de base
+    ├── test_builtins.sh     # Tests builtins
+    ├── test_redirections.sh # Tests redirections
+    ├── test_pipes.sh        # Tests pipes
+    └── test_quotes.sh       # Tests quotes et expansion

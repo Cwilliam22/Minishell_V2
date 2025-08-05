@@ -1,0 +1,47 @@
+==911129== Memcheck, a memory error detector
+==911129== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==911129== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==911129== Command: ./minishell
+==911129== Parent PID: 911125
+==911129== 
+==911129== 
+==911129== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==911129== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==911129==    <inherited from parent>
+==911129== 
+==911129== Open file descriptor 42: /dev/ptmx
+==911129==    <inherited from parent>
+==911129== 
+==911129== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250805T123415/ptyhost.log
+==911129==    <inherited from parent>
+==911129== 
+==911129== Open file descriptor 3: /home/alfavre/Documents/42_github/42_minishell/valgrind.log
+==911129==    <inherited from parent>
+==911129== 
+==911129== Open file descriptor 2: /dev/pts/3
+==911129==    <inherited from parent>
+==911129== 
+==911129== Open file descriptor 1: /dev/pts/3
+==911129==    <inherited from parent>
+==911129== 
+==911129== Open file descriptor 0: /dev/pts/3
+==911129==    <inherited from parent>
+==911129== 
+==911129== 
+==911129== HEAP SUMMARY:
+==911129==     in use at exit: 208,198 bytes in 222 blocks
+==911129==   total heap usage: 975 allocs, 753 frees, 273,351 bytes allocated
+==911129== 
+==911129== LEAK SUMMARY:
+==911129==    definitely lost: 0 bytes in 0 blocks
+==911129==    indirectly lost: 0 bytes in 0 blocks
+==911129==      possibly lost: 0 bytes in 0 blocks
+==911129==    still reachable: 0 bytes in 0 blocks
+==911129==         suppressed: 208,198 bytes in 222 blocks
+==911129== 
+==911129== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--911129-- 
+--911129-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,182 bytes in 221 blocks
+--911129-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==911129== 
+==911129== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,0 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 16:55:32 by alexis            #+#    #+#             */
+/*   Updated: 2025/07/30 15:39:53 by alexis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	g_signal_received = 0;
+
+/**
+ * Check if there is some arguments when minishell is launched
+ * @param argc: quantity of arguments (executor's name included)
+ * @param argv: char tab with all arguments (executor's name included)
+ * @return: 1 if error, 0 otherwise
+ */
+static int	handle_arguments(int argc, char **argv)
+{
+	if (argc > 1)
+	{
+		if (argv[1][0] == '-' && argv[1][1] == 'c')
+		{
+			print_error("minishell", "-c", "option not supported");
+			return (1);
+		}
+		else
+		{
+			print_error("minishell", argv[1], "no such file or directory");
+			return (1);
+		}
+	}
+	return (0);
+}
+
+/**
+ * Initialize shell and environment
+ * @param envp: Environment variables
+ * @return: Initialized shell or NULL on error
+ */
+static t_shell	*setup_shell(char **envp)
+{
+	t_shell	*shell;
+
+	shell = get_shell(envp);
+	if (ft_shlvl(shell))
+		add_env_var(&shell->env->variables, create_env_var("SHLVL", "1")); //Pas déjà dans ft_shlvl??
+	if (isatty(STDIN_FILENO))
+		print_welcome();
+	return (shell);
+}
+
+/**
+ * Main function
+ * @param argc: Argument count
+ * @param argv: Argument vector
+ * @param envp: Environment variables
+ * @return: Exit code
+ */
+int	main(int argc, char **argv, char **envp)
+{
+	t_shell	*shell;
+	int		exit_code;
+
+	if (handle_arguments(argc, argv))
+		return (1);
+	shell = setup_shell(envp);
+	if (!shell)
+		return (GENERAL_ERROR);
+	run_shell_loop(shell);
+	exit_code = shell->env->last_exit_status;
+	cleanup_shell(shell);
+	return (exit_code);
+}

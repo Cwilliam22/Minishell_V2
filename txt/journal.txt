@@ -1,0 +1,250 @@
+Mardi 29 juillet :
+Fait :
+- j'ai ajouté une fonction safe_malloc() pour gérer les allocations mémoire du projets 
+	-> si un malloc échoue, on quitte le programme avec un message et la valeur 2.
+- j'ai modifié les fonctions concernant l'environnement en mettant un get et un set qui regroupent les fonctions de William.
+- j'ai ajouté dans le parsing le refus du caractère '&' car nous ne le traitons pas.
+
+A faire:
+- il faut être sûr qu'avec les strjoin ou strdup ou d'autres fonctions de la libft on quitte également le projet si l'info nous retourne NULL 
+	-> également un soucis de malloc donc il faut quitter le programme.
+- vu le flag running -> a utiliser si besoin d'arrêter le programme
+- vu la fonction set_exit_value -> pas besoin de faire de la cascade d'info -> fonctions void moins de risque de perdre des infos en chemin
+
+Mercredi 30 juillet:
+Fait:
+ Remplacer 
+ int	find_var_path(char ***env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (env[i][0] && env[i][1] && ft_strcmp(env[i][0], "PATH") == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+char	*read_in_path(char ***env, int place)
+{
+	char	*src;
+	char	*path;
+	int		i;
+
+	if (!env[place] || !env[place][1])
+		return (NULL);
+	src = env[place][1];
+	i = 0;
+	while (src[i])
+		i++;
+	path = malloc(sizeof(char) * (i + 1));
+	if (!path)
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		path[i] = src[i];
+		i++;
+	}
+	path[i] = '\0';
+	return (path);
+}
+
+par ->
+char	*get_path(char ***env)
+{
+	char	*path;
+	int		i;
+
+	i = 0;
+	if (!env)
+		return (NULL);
+	while (env[i])
+	{
+		if (env[i][0] && env[i][1] && ft_strcmp(env[i][0], "PATH") == 0)
+		{
+			path = ft_strdup(env[i][1]);
+			if (!path)
+				cleanup_and_exit(2);
+			return (path);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+et remplacer :
+int	find_in_path(t_shell *shell, char **paths, int flag)
+{
+	int		i;
+	char	*test_path;
+	char	*tmp;
+
+	i = 0;
+	while (paths[i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		test_path = ft_strjoin(tmp, shell->exec->cmd);
+		free(tmp);
+		if (access(test_path, flag) == 0)
+		{
+			shell->exec->cmd_path = test_path;
+			free_array(paths);
+			return (1);
+		}
+		free(test_path);
+		i++;
+	}
+	free_array(paths);
+	return (0);
+}
+
+int	command_exist(t_shell *shell)
+{
+	char	**paths;
+
+	if (g_signal_received == SIGINT)
+	{
+		exit_codes(shell, 130, NULL);
+		return (0);
+	}
+	paths = ft_split(read_in_path(shell->exec->env,
+				find_var_path(shell->exec->env)), ':');
+	if (!paths || !paths[0])
+	{
+		free_array(paths);
+		shell->exec->cmd_path = NULL;
+		return (ft_printf("No PATH variable found!\n"), 0);
+	}
+	if (find_in_path(shell, paths, F_OK))
+		return (1);
+	return (exit_codes(shell, 127, NULL), 0);
+}
+int	apply_path(t_shell *shell)
+{
+	char	**paths;
+
+	if (g_signal_received == SIGINT)
+	{
+		exit_codes(shell, 130, NULL);
+		return (0);
+	}
+	paths = ft_split(read_in_path(shell->exec->env,
+				find_var_path(shell->exec->env)), ':');
+	if (!paths || !paths[0])
+	{
+		free_array(paths);
+		shell->exec->cmd_path = NULL;
+		return (ft_printf("No PATH variable found!\n"), 0);
+	}
+	if (find_in_path(shell, paths, X_OK))
+		return (1);
+	return (exit_codes(shell, 127, NULL), 0);
+}
+
+par -> 
+static int	find_in_path(t_exec *exec, char **paths, int flag)
+{
+	int		i;
+	char	*test_path;
+	char	*tmp;
+
+	i = 0;
+	while (paths[i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		test_path = ft_strjoin(tmp, exec->cmd_path);
+		free(tmp);
+		if (access(test_path, flag) == 0)
+		{
+			exec->cmd_path = test_path;
+			free_array(paths);
+			return (1);
+		}
+		free(test_path);
+		i++;
+	}
+	free_array(paths);
+	return (0);
+}
+
+/**
+ * Fonction qui contrôle si une commande est executable ou si elle existe
+ * en fonction de l'appelant
+ * @param shell: structure du shell
+ * @param access_mode: F_OK (existence) ou X_OK (exécutable)
+ * @return: 1 si trouvé, 0 sinon
+ */
+static int	find_command_in_path(t_exec *exec, int access_mode)
+{
+	char	**paths;
+
+	if (!exec->path)
+	{
+		exec->cmd_path = NULL;
+		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+	}
+	paths = ft_split(exec->path, ':');
+	if (!paths || !paths[0])
+	{
+		free_array(paths);
+		exec->cmd_path = NULL;
+		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+	}
+	if (!find_in_path(exec, paths, access_mode))
+	{
+		set_exit_status(127);
+		return (0);
+	}
+	return (1);
+}
+
+/**
+ * Applique le PATH pour trouver une commande exécutable
+ */
+int	apply_path(t_exec *exec)
+{
+	return (find_command_in_path(exec, X_OK));
+}
+
+/**
+ * Vérifie si une commande existe dans le PATH
+ */
+int	command_exist(t_exec *exec)
+{
+	return (find_command_in_path(exec, F_OK));
+}
+
+Remplacer :
+
+par ->
+void	var_path(t_shell *shell)
+{
+	int			path_index;
+	static int	call_count = 0;
+
+	call_count++;
+	if (shell->exec->path)
+	{
+		free(shell->exec->path);
+		shell->exec->path = NULL;
+	}
+	path_index = find_var_path(shell->exec->env);
+	if (path_index >= 0)
+		shell->exec->path = ft_strdup(shell->exec->env[path_index][1]);
+	else
+		shell->exec->path = NULL;
+}
+
+void	update_path(t_exec *exec)
+{
+	if (exec->path)
+	{
+		free(exec->path);
+		exec->path = NULL;
+	}
+	exec->path = get_path(exec->shell->env);
+}
