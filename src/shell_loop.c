@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:56:31 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/05 16:16:30 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:25:07 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	process_input(t_shell *shell)
 			return ;
 		}
 		tokenize_and_parse(shell);
+		expand_commands(shell);
 		if (shell->commands)
 		{
-			expand_commands(shell);
 			print_commands(shell->commands);
 			execute_commands(shell);
 		}

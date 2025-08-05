@@ -1,47 +1,1147 @@
-==911129== Memcheck, a memory error detector
-==911129== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==911129== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==911129== Command: ./minishell
-==911129== Parent PID: 911125
-==911129== 
-==911129== 
-==911129== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==911129== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==911129==    <inherited from parent>
-==911129== 
-==911129== Open file descriptor 42: /dev/ptmx
-==911129==    <inherited from parent>
-==911129== 
-==911129== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250805T123415/ptyhost.log
-==911129==    <inherited from parent>
-==911129== 
-==911129== Open file descriptor 3: /home/alfavre/Documents/42_github/42_minishell/valgrind.log
-==911129==    <inherited from parent>
-==911129== 
-==911129== Open file descriptor 2: /dev/pts/3
-==911129==    <inherited from parent>
-==911129== 
-==911129== Open file descriptor 1: /dev/pts/3
-==911129==    <inherited from parent>
-==911129== 
-==911129== Open file descriptor 0: /dev/pts/3
-==911129==    <inherited from parent>
-==911129== 
-==911129== 
-==911129== HEAP SUMMARY:
-==911129==     in use at exit: 208,198 bytes in 222 blocks
-==911129==   total heap usage: 975 allocs, 753 frees, 273,351 bytes allocated
-==911129== 
-==911129== LEAK SUMMARY:
-==911129==    definitely lost: 0 bytes in 0 blocks
-==911129==    indirectly lost: 0 bytes in 0 blocks
-==911129==      possibly lost: 0 bytes in 0 blocks
-==911129==    still reachable: 0 bytes in 0 blocks
-==911129==         suppressed: 208,198 bytes in 222 blocks
-==911129== 
-==911129== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---911129-- 
---911129-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,182 bytes in 221 blocks
---911129-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
-==911129== 
-==911129== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1106633== Memcheck, a memory error detector
+==1106633== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1106633== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1106633== Command: ./minishell
+==1106633== Parent PID: 1106629
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4054BA: handle_quotes (quotes.c:122)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4054CC: handle_quotes (quotes.c:124)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4054E1: handle_quotes (quotes.c:124)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x404AFC: process_unquoted_char (quotes_helpers.c:31)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x404B19: process_unquoted_char (quotes_helpers.c:31)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x404B36: process_unquoted_char (quotes_helpers.c:31)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x408B64: ft_substr (ft_substr.c:32)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x408B64: ft_substr (ft_substr.c:32)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x408B90: ft_substr (ft_substr.c:34)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x408B90: ft_substr (ft_substr.c:34)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x408BCC: ft_substr (ft_substr.c:39)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x408BCC: ft_substr (ft_substr.c:39)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x409334: ft_strlcpy (ft_strlcpy.c:37)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x409373: ft_strlcpy (ft_strlcpy.c:39)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x4093A6: ft_strlcpy (ft_strlcpy.c:44)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x4093A6: ft_strlcpy (ft_strlcpy.c:44)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== Invalid free() / delete / delete[] / realloc()
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==1106633== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==1106633==    <inherited from parent>
+==1106633== 
+==1106633== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250805T183515/ptyhost.log
+==1106633==    <inherited from parent>
+==1106633== 
+==1106633== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==1106633==    <inherited from parent>
+==1106633== 
+==1106633== Open file descriptor 2: /dev/pts/3
+==1106633==    <inherited from parent>
+==1106633== 
+==1106633== Open file descriptor 1: /dev/pts/3
+==1106633==    <inherited from parent>
+==1106633== 
+==1106633== Open file descriptor 0: /dev/pts/3
+==1106633==    <inherited from parent>
+==1106633== 
+==1106633== 
+==1106633== HEAP SUMMARY:
+==1106633==     in use at exit: 208,199 bytes in 223 blocks
+==1106633==   total heap usage: 849 allocs, 627 frees, 237,000 bytes allocated
+==1106633== 
+==1106633== 1 bytes in 1 blocks are definitely lost in loss record 1 of 64
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408C99: ft_strjoin (ft_strjoin.c:27)
+==1106633==    by 0x404F91: join_and_free (quotes_utils.c:77)
+==1106633==    by 0x404BAB: process_unquoted_char (quotes_helpers.c:37)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== LEAK SUMMARY:
+==1106633==    definitely lost: 1 bytes in 1 blocks
+==1106633==    indirectly lost: 0 bytes in 0 blocks
+==1106633==      possibly lost: 0 bytes in 0 blocks
+==1106633==    still reachable: 0 bytes in 0 blocks
+==1106633==         suppressed: 208,198 bytes in 222 blocks
+==1106633== 
+==1106633== ERROR SUMMARY: 34 errors from 18 contexts (suppressed: 0 from 0)
+==1106633== 
+==1106633== 1 errors in context 1 of 18:
+==1106633== Invalid free() / delete / delete[] / realloc()
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 1 errors in context 2 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x4093A6: ft_strlcpy (ft_strlcpy.c:44)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 1 errors in context 3 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x408BCC: ft_substr (ft_substr.c:39)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 1 errors in context 4 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x408B90: ft_substr (ft_substr.c:34)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 1 errors in context 5 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x40879E: ft_strlen (ft_strlen.c:29)
+==1106633==    by 0x408B64: ft_substr (ft_substr.c:32)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 1 errors in context 6 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4054E1: handle_quotes (quotes.c:124)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 1 errors in context 7 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4054CC: handle_quotes (quotes.c:124)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 2 errors in context 8 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4054BA: handle_quotes (quotes.c:122)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 2 errors in context 9 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x409373: ft_strlcpy (ft_strlcpy.c:39)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 2 errors in context 10 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x404B36: process_unquoted_char (quotes_helpers.c:31)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 2 errors in context 11 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x404B19: process_unquoted_char (quotes_helpers.c:31)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 3 errors in context 12 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x4093A6: ft_strlcpy (ft_strlcpy.c:44)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 3 errors in context 13 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x409334: ft_strlcpy (ft_strlcpy.c:37)
+==1106633==    by 0x408C48: ft_substr (ft_substr.c:46)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 3 errors in context 14 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x408BCC: ft_substr (ft_substr.c:39)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 3 errors in context 15 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x408B90: ft_substr (ft_substr.c:34)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 3 errors in context 16 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x4087BD: ft_strlen (ft_strlen.c:31)
+==1106633==    by 0x408B64: ft_substr (ft_substr.c:32)
+==1106633==    by 0x404B89: process_unquoted_char (quotes_helpers.c:35)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+==1106633== 
+==1106633== 3 errors in context 17 of 18:
+==1106633== Invalid read of size 1
+==1106633==    at 0x404AFC: process_unquoted_char (quotes_helpers.c:31)
+==1106633==    by 0x405520: handle_quotes (quotes.c:127)
+==1106633==    by 0x404932: expand_command_args (expand_utils.c:92)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Address 0x4b6b780 is 0 bytes inside a block of size 3 free'd
+==1106633==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x4049D5: expand_command_args (expand_utils.c:103)
+==1106633==    by 0x404A4F: expand_commands (expand.c:29)
+==1106633==    by 0x4016E8: process_input (shell_loop.c:61)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633==  Block was alloc'd at
+==1106633==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1106633==    by 0x408AE9: ft_strdup (ft_strdup.c:33)
+==1106633==    by 0x40625F: process_word_token (parser_args.c:46)
+==1106633==    by 0x406156: extract_arguments (parser_args.c:88)
+==1106633==    by 0x406919: parse_single_command (parser.c:75)
+==1106633==    by 0x4067AB: parse_tokens (parser.c:104)
+==1106633==    by 0x401781: tokenize_and_parse (shell_loop.c:31)
+==1106633==    by 0x4016DF: process_input (shell_loop.c:60)
+==1106633==    by 0x401821: handle_iteration (shell_loop.c:88)
+==1106633==    by 0x4018C2: run_shell_loop (shell_loop.c:107)
+==1106633==    by 0x4014E7: main (main.c:75)
+==1106633== 
+--1106633-- 
+--1106633-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,182 bytes in 221 blocks
+--1106633-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==1106633== 
+==1106633== ERROR SUMMARY: 34 errors from 18 contexts (suppressed: 0 from 0)

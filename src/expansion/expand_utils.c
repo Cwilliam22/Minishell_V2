@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:33:41 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/30 14:19:33 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:17:58 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,19 @@ void	expand_command_args(t_cmd *cmd, t_shell *shell)
 	while (cmd->args[i])
 	{
 		expanded = handle_quotes(cmd->args[i], shell);
-		free(cmd->args[i]);
-		cmd->args[i] = expanded;
-		i++;
+		if (ft_strcmp(expanded, "") == 0)
+		{
+			free(cmd->args[i]);
+			if (cmd->args[i + 1])
+				cmd->args[i] = cmd->args[i + 1];
+			else
+				cmd->args[i] = NULL; 
+		}
+		else
+		{
+			free(cmd->args[i]);
+			cmd->args[i] = expanded;
+			i++;
+		}
 	}
 }
