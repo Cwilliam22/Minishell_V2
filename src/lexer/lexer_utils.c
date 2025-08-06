@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 14:34:20 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/02 22:56:56 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 14:27:53 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,21 +100,12 @@ char	*extract_operator(char *input, int start, int *end)
 		return (NULL);
 	}
 	if (input[start] == '>' && input[start + 1] == '>')
-	{
-		*end = start + 2;
-		op = ft_strdup(">>");
-	}
+		return (*end = start + 2, ft_strdup(">>"));
 	else if (input[start] == '<' && input[start + 1] == '<')
-	{
-		*end = start + 2;
-		op = ft_strdup("<<");
-	}
-	else
-	{
-		*end = start + 1;
-		op = (char *)safe_malloc(2);
-		op[0] = input[start];
-		op[1] = '\0';
-	}
+		return (*end = start + 2, ft_strdup("<<"));
+	*end = start + 1;
+	op = (char *)safe_malloc(2);
+	op[0] = input[start];
+	op[1] = '\0';
 	return (op);
 }

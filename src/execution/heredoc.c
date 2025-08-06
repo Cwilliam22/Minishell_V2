@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 14:31:36 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 05:40:47 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 14:35:48 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ int	handle_heredoc(char *delimiter)
 		return (1);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:54:22 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/05 15:12:39 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 13:23:13 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int	builtin_exit(t_exec *exec)
 		}
 		else
 			exit_code = handle_single_arg(args[1]);
-
 	}
 	else
 		exit_code = exec->shell->env->last_exit_status;

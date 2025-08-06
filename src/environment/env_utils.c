@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 07:38:09 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/04 18:37:13 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 13:35:00 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	**env_to_string(t_env *env)
 	t_env_var	*current;
 	char		**env_strings;
 	int			i;
+	char		*temp;
 
 	if (!env || !env->variables)
 		return (NULL);
@@ -84,7 +85,7 @@ char	**env_to_string(t_env *env)
 		env_strings[i] = ft_strjoin(current->key, "=");
 		if (current->value)
 		{
-			char *temp = env_strings[i];
+			temp = env_strings[i];
 			env_strings[i] = ft_strjoin(temp, current->value);
 			free(temp);
 		}

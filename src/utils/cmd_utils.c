@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:55:32 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/05 12:41:52 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:19:44 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,13 @@ int	update_state_path(t_exec *exec)
 	}
 	return (1);
 }
-// jamais appelee?
-/*void	update_cmd_path(t_exec *exec)
+
+int	check_command_exist(char *name)
 {
-	if (exec->shell->commands->args[0][0] == '/')
-		exec->current_cmd->cmd_path = ft_strdup(exec->shell->commands->args[0]);
-	else if (exec->shell->commands->args[0][0] == '.'
-		&& exec->shell->commands->args[0][1] == '/')
-		exec->current_cmd->cmd_path = ft_strdup(exec->shell->commands->args[0]);
-	if (!exec->current_cmd->cmd_path)
+	if (access(name, F_OK) != 0)
 	{
-		print_error(NULL, NULL, "malloc failed");
-		cleanup_and_exit(2);
+		set_exit_status(127);
+		return (0);
 	}
-}*/
+	return (1);
+}

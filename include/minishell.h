@@ -416,6 +416,7 @@ int			apply_cmd_path(t_exec *exec);
 /* Cmd_utils */
 int			update_state_path(t_exec *exec);
 void		update_cmd_path(t_exec *exec);
+int			check_command_exist(char *name);
 
 /* Error */
 void		print_syntax_error(char *token);

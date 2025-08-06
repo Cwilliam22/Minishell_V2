@@ -6,21 +6,11 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:13:07 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/05 16:14:18 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:19:33 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	check_command_exist(char *name)
-{
-	if (access(name, F_OK) != 0)
-	{
-		set_exit_status(127);
-		return (0);
-	}
-	return (1);
-}
 
 static int	find_other_in_path(t_exec *exec)
 {
@@ -95,6 +85,25 @@ static int	command_permission(char *name_cmd)
 	return (1);
 }
 
+static int	apply_path(t_exec *exec, char **paths)
+{
+	if (exec->current_cmd->state_path == PATH_SIMPLE)
+	{
+		if (find_simple_in_path(exec, paths))
+			return (command_permission(exec->current_cmd->cmd_path));
+		else
+			return (0);
+	}
+	else
+	{
+		free_array(paths);
+		if (find_other_in_path(exec))
+			return (command_permission(exec->current_cmd->cmd_path));
+		else
+			return (0);
+	}
+}
+
 /**
  * Fonction qui contrôle si une commande est executable ou si elle existe
  * en fonction de l'appelant
@@ -120,20 +129,5 @@ int	apply_cmd_path(t_exec *exec)
 		exec->current_cmd->cmd_path = NULL;
 		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
 	}
-	if (exec->current_cmd->state_path == PATH_SIMPLE)
-	{
-		if (find_simple_in_path(exec, paths))
-			return (command_permission(exec->current_cmd->cmd_path));
-		else
-			return (0);
-	}
-	else
-	{
-		free_array(paths);
-		if (find_other_in_path(exec))
-			return (command_permission(exec->current_cmd->cmd_path));
-		else
-			return (0);
-	}
-	return (1);
+	return (apply_path(exec, paths));
 }

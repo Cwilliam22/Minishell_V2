@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:33:41 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/05 19:17:58 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 14:24:33 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,27 +82,28 @@ void	expand_redirections(t_redir *redirections, t_shell *shell)
 void	expand_command_args(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
+	int		j;
 	char	*expanded;
 
 	if (!cmd || !cmd->args)
 		return ;
 	i = 0;
+	j = 0;
 	while (cmd->args[i])
 	{
 		expanded = handle_quotes(cmd->args[i], shell);
 		if (ft_strcmp(expanded, "") == 0)
 		{
 			free(cmd->args[i]);
-			if (cmd->args[i + 1])
-				cmd->args[i] = cmd->args[i + 1];
-			else
-				cmd->args[i] = NULL; 
+			free(expanded);
 		}
 		else
 		{
 			free(cmd->args[i]);
-			cmd->args[i] = expanded;
-			i++;
+			cmd->args[j] = expanded;
+			j++;
 		}
+		i++;
 	}
+	cmd->args[j] = NULL;
 }

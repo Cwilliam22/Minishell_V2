@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/07/30 16:53:22 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 13:19:40 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ t_shell	*init_shell(char **envp)
 	shell->running = 1;
 	return (shell);
 }
-

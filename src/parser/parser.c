@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 15:31:41 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 17:53:13 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 14:21:00 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static t_token	**split_by_pipes(t_token *tokens)
 
 	if (!tokens)
 		return (NULL);
-	commands = (t_token **)safe_malloc(sizeof(t_token *) * (count_pipes(tokens) + 2));
+	commands = (t_token **)safe_malloc(sizeof(t_token *)
+			* (count_pipes(tokens) + 2));
 	current = tokens;
 	i = 0;
 	commands[i] = current;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 17:37:05 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 14:19:45 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 14:35:06 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,19 @@ static char	*process_variable(char *str, int *i, t_shell *shell)
 	char	*result;
 
 	if (str [*i + 1] == '?')
-	{
-		(*i) += 2;
-		return (ft_itoa(shell->env->last_exit_status));
-	}
+		return ((*i) += 2, ft_itoa(shell->env->last_exit_status));
 	var_name = extract_var_name(str + *i + 1, i);
-	if (var_name && var_name[0] != '\0')
-	{
-		var_value = get_env_var(var_name, shell->env);
-		if (var_value && ft_strlen(var_value) > 0)
-			result = var_value;
-		else
-		{
-			result = ft_strdup("");
-			free(var_value);
-		}
-		free(var_name);
-	}
+	if (!var_name || var_name[0] == '\0')
+		return ((*i)++, ft_strdup("$"));
+	var_value = get_env_var(var_name, shell->env);
+	if (var_value && ft_strlen(var_value) > 0)
+		result = var_value;
 	else
 	{
-		result = ft_strdup("$");
-		(*i)++;
+		result = ft_strdup("");
+		free(var_value);
 	}
+	free(var_name);
 	return (result);
 }
 

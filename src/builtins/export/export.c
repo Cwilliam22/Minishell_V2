@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 01:51:43 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 15:26:36 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 13:32:56 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ static int	export_args_only(t_exec *exec)
 {
 	char	**arg;
 	int		i;
-	int		error;
 
 	arg = exec->shell->commands->args;
-	error = 0;
 	i = 1;
 	while (arg[i])
 	{
@@ -49,20 +47,16 @@ static int	export_args_only(t_exec *exec)
 		if (!is_a_valid_identifier(arg[i]))
 		{
 			print_error("export", arg[i], "not a valid identifier");
-			error = 1;
-			return (error);
+			return (1);
 		}
 		else if (get_env_var(arg[i], exec->shell->env) == NULL)
 		{
 			if (!set_env_var(arg[i], "", exec->shell->env, 0))
-			{
-				error = 1;
-					printf("set_env failed, error :%d\n", error);
-			}
+				return (1);
 		}
 		i++;
 	}
-	return (error);
+	return (0);
 }
 
 int	builtin_export(t_exec *exec)

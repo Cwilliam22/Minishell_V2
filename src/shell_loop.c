@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:56:31 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/05 19:25:07 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 13:33:40 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	process_input(t_shell *shell)
 {
 	int		pos;
 
-
 	if (!shell->input_line || shell->input_line[0] == '\0')
 		return ;
 	pos = skip_whitespace(shell->input_line, 0);
@@ -61,7 +60,7 @@ void	process_input(t_shell *shell)
 		expand_commands(shell);
 		if (shell->commands)
 		{
-			print_commands(shell->commands);
+			//print_commands(shell->commands);
 			execute_commands(shell);
 		}
 		return ;

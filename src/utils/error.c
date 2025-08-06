@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:42:25 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/03 18:25:40 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 14:17:07 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,3 @@ void	print_error(char *cmd, char *arg, char *msg)
 		ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
 }
-
-

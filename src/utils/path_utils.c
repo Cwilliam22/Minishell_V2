@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 00:02:24 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/03 00:14:19 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 14:16:54 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//anciennement find_var_path
 char	*get_path(t_env *env)
 {
 	char		*path;
@@ -35,7 +34,6 @@ char	*get_path(t_env *env)
 	return (NULL);
 }
 
-//anciennement var_path
 void	update_var_path(t_exec *exec)
 {
 	if (exec->path)
@@ -45,6 +43,3 @@ void	update_var_path(t_exec *exec)
 	}
 	exec->path = get_path(exec->shell->env);
 }
-
-
-
