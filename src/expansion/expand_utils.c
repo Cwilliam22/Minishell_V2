@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:33:41 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 14:24:33 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:29:24 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,31 +79,37 @@ void	expand_redirections(t_redir *redirections, t_shell *shell)
  * @param cmd: Command to expand
  * @param shell: Shell context
  */
-void	expand_command_args(t_cmd *cmd, t_shell *shell)
+void expand_command_args(t_cmd *cmd, t_shell *shell)
 {
-	int		i;
-	int		j;
-	char	*expanded;
+	int i, original_count, valid_count;
+	char **old_args, **new_args;
+	char *expanded;
 
 	if (!cmd || !cmd->args)
 		return ;
-	i = 0;
-	j = 0;
-	while (cmd->args[i])
+	old_args = cmd->args;
+	original_count = 0;
+	while (old_args[original_count])
+		original_count++;
+	new_args = safe_malloc(sizeof(char*) * (original_count + 1));
+	valid_count = 0;
+	for (i = 0; i < original_count; i++)
 	{
-		expanded = handle_quotes(cmd->args[i], shell);
-		if (ft_strcmp(expanded, "") == 0)
+		expanded = handle_quotes(old_args[i], shell);
+		
+		if (ft_strcmp(expanded, "") != 0)
 		{
-			free(cmd->args[i]);
-			free(expanded);
+			new_args[valid_count] = expanded;
+			valid_count++;
 		}
 		else
 		{
-			free(cmd->args[i]);
-			cmd->args[j] = expanded;
-			j++;
+			free(expanded);
 		}
-		i++;
+		
+		free(old_args[i]);  // Libérer l'ancien argument
 	}
-	cmd->args[j] = NULL;
+	new_args[valid_count] = NULL;
+	free(old_args);
+	cmd->args = new_args;
 }

@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:38:04 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/04 18:37:26 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:01:08 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,15 @@ void	free_commands(t_cmd *commands)
 	t_cmd	*current;
 	t_cmd	*next;
 	int		i;
+	int		count = 0; //DEBUG
 
+	printf("DEBUG: Starting to free commands\n");  // DEBUG
 	current = commands;
 	while (current)
 	{
 		next = current->next;
+		count++;
+		printf("DEBUG: Freeing command %d\n", count);  // DEBUG
 		if (current->args)
 		{
 			i = 0;
@@ -83,6 +87,7 @@ void	free_commands(t_cmd *commands)
 		free(current);
 		current = next;
 	}
+	printf("DEBUG: Freed %d commands\n", count);  // DEBUG
 }
 
 int	get_nb_commands(t_cmd *commands)
@@ -100,16 +105,4 @@ int	get_nb_commands(t_cmd *commands)
 	return (i);
 }
 
-int	get_nb_command_args(t_cmd *commands)
-{
-	char	**args;
-	int		i;
 
-	args = commands->args;
-	i = 0;
-	if (!args)
-		return (0);
-	while (args[i])
-		i++;
-	return (i);
-}

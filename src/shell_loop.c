@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:56:31 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 13:33:40 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:28:58 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ static void	tokenize_and_parse(t_shell *shell)
 		set_exit_status(exit_code);
 		return ;
 	}
-	//print_tokens(tokens);
 	shell->commands = parse_tokens(tokens);
 	free_tokens(tokens);
 	if (!shell->commands)
 		return ;
-	//print_commands(shell->commands);
 	return ;
 }
 
@@ -58,14 +56,10 @@ void	process_input(t_shell *shell)
 		}
 		tokenize_and_parse(shell);
 		expand_commands(shell);
-		if (shell->commands)
-		{
-			//print_commands(shell->commands);
-			execute_commands(shell);
-		}
-		return ;
+		execute_commands(shell);
+		free_commands(shell->commands);
+		shell->commands = NULL;
 	}
-	return ;
 }
 
 /**

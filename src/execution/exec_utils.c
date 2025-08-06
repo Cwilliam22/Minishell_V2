@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 23:06:26 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/04 18:37:20 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:19:19 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,12 @@ void	free_exec(t_exec *exec)
 {
 	if (!exec)
 		return ;
+	if (exec->pipe_fds)
+		free(exec->pipe_fds);
 	if (exec->path)
-	{
 		free(exec->path);
-		exec->path = NULL;
-	}
-	if (exec->current_cmd)
-	{
-		free_commands(exec->current_cmd);
-		exec->current_cmd = NULL;
-	}
 	if (exec->env_copy)
-	{
 		free_array(exec->env_copy);
-		exec->env_copy = NULL;
-	}
 	free(exec);
 }
 

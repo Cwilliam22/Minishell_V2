@@ -100,6 +100,7 @@ STRUCT_SRCS =	structures/append_assignment.c \
 				structures/t_redir_utils.c \
 
 UTILS_SRCS	= 	utils/check_args.c \
+				utils/cmd_args_utils.c \
 				utils/cmd_check.c \
 				utils/cmd_utils.c \
 				utils/error.c \

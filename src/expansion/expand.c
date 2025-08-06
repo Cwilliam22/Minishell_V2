@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 21:17:28 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/05 19:15:47 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 15:28:17 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,4 @@ void	expand_commands(t_shell *shell)
 			expand_redirections(current->redirections, shell);
 		current = current->next;
 	}
-	if (!shell->commands->args[0])
-		shell->commands = NULL;
 }

@@ -399,7 +399,6 @@ t_cmd		*create_command(void);
 void		add_command(t_cmd **head, t_cmd *new_cmd);
 void		free_commands(t_cmd *commands);
 int			get_nb_commands(t_cmd *commands);
-int			get_nb_command_args(t_cmd *commands);
 
 /* t_redir utils */
 t_redir		*create_redirection(int type, char *target);
@@ -409,6 +408,9 @@ void		free_redirections(t_redir *redirections);
 /* ============================= UTILS ===================================== */
 /* check_args */
 int			check_args(t_exec *exec);
+
+/* cmd_args_utils */
+int			get_nb_command_args(t_cmd *commands);
 
 /* cmd_check */
 int			apply_cmd_path(t_exec *exec);
