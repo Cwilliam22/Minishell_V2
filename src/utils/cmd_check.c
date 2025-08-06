@@ -54,6 +54,7 @@ static int	find_simple_in_path(t_exec *exec, char **paths)
 			exec->current_cmd->cmd_path = path_cmd;
 			return (1);
 		}
+		free(path_cmd);
 		i++;
 	}
 	print_error(NULL, NULL, "command not found");
@@ -76,6 +77,8 @@ static int	command_permission(char *name_cmd)
 			return (0);
 		}
 	}
+	if (file_stat.st_size == 0)
+		return (0);
 	if (access(name_cmd, X_OK) != 0)
 	{
 		print_error(name_cmd, NULL, "Permission denied");
@@ -103,7 +106,7 @@ static int	apply_path(t_exec *exec, char **paths)
 int	apply_cmd_path(t_exec *exec)
 {
 	char	**paths;
-	int		status;
+	int		result;
 
 	if (exec->current_cmd->state_path != PATH_SIMPLE)
 	{
@@ -119,7 +122,6 @@ int	apply_cmd_path(t_exec *exec)
 			exec->current_cmd->cmd_path = NULL;
 			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
 		}
-		status = 0;
 		paths = ft_split(exec->path, ':');
 		if (!paths || !paths[0])
 		{
@@ -127,6 +129,8 @@ int	apply_cmd_path(t_exec *exec)
 			exec->current_cmd->cmd_path = NULL;
 			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
 		}
-		return (apply_path(exec, paths));
+		result = apply_path(exec, paths);
+		free_array(paths);
+		return (result);
 	}
 }

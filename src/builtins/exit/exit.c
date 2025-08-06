@@ -41,7 +41,6 @@ static ssize_t	ft_atoll(char *str)
 	int		i;
 	int		sign;
 	ssize_t	result;
-	ssize_t	prev;
 
 	i = 0;
 	sign = 1;
@@ -56,7 +55,6 @@ static ssize_t	ft_atoll(char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		prev = result;
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}

@@ -53,6 +53,25 @@ void	add_command(t_cmd **head, t_cmd *new_cmd)
 }
 
 /**
+ * @brief Free one command
+ * @param cmd The command to free
+ */
+static void	free_command(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	if (cmd->args)
+		free_array(cmd->args);
+	if (cmd->assignments)
+		free_assignments(cmd->assignments);
+	if (cmd->redirections)
+		free_redirections(cmd->redirections);
+	if (cmd->cmd_path)
+		free(cmd->cmd_path);
+	free(cmd);
+}
+
+/**
  * Free all commands in the list
  * @param commands: Head of the command list
  */
@@ -60,27 +79,12 @@ void	free_commands(t_cmd *commands)
 {
 	t_cmd	*current;
 	t_cmd	*next;
-	int		i;
 
 	current = commands;
 	while (current)
 	{
 		next = current->next;
-		if (current->args)
-		{
-			i = 0;
-			while (current->args[i])
-			{
-				free(current->args[i]);
-				i++;
-			}
-			free(current->args);
-		}
-		free_assignments(current->assignments);
-		free_redirections(current->redirections);
-		free(current->cmd_path);
-		current->cmd_path = NULL;
-		free(current);
+		free_command(current);
 		current = next;
 	}
 }

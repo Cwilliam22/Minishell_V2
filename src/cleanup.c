@@ -50,6 +50,8 @@ void	cleanup_shell(t_shell *shell)
 	cleanup_iteration(shell);
 	if (shell->env)
 		free_environment(shell->env);
+	if (shell->commands)
+		free_commands(shell->commands);
 	if (shell->interactive)
 		clear_history();
 	free(shell);
