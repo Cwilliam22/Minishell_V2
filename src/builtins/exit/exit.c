@@ -12,30 +12,6 @@
 
 #include "minishell.h"
 
-static int	check_limit(char *str)
-{
-	char	*tmp;
-	int		neg;
-
-	tmp = str;
-	neg = 0;
-	while (is_whitespace(*tmp))
-		tmp++;
-	if (*tmp == '-' || *tmp == '+')
-	{
-		if (*tmp == '-')
-		{
-			neg = 1;
-		}
-		tmp++;
-	}
-	if (ft_strlen(tmp) > 19
-		|| (neg && (ft_strcmp("9223372036854775808", tmp) < 0))
-		|| (!neg && (ft_strcmp("9223372036854775807", tmp)) < 0))
-		return (0);
-	return (1);
-}
-
 static ssize_t	ft_atoll(char *str)
 {
 	int		i;
@@ -68,41 +44,30 @@ static int	ft_is_a_number(char *arg)
 	i = 0;
 	if (!arg || !*arg)
 		return (0);
+	while (is_whitespace(arg[i]))
+		i++;
 	if (arg[i] == '+' || arg[i] == '-')
 		i++;
 	if (!arg[i])
 		return (0);
-	while (arg[i])
-	{
-		if (!ft_isdigit((int)arg[i]))
-			return (0);
+	while (arg[i] && ft_isdigit((int)arg[i]))
 		i++;
-	}
-	return (1);
+	while (is_whitespace(arg[i]))
+		i++;
+	return (arg[i] == '\0');
 }
 
 static int	handle_single_arg(char *arg)
 {
 	ssize_t	exit_code;
 
-	if (ft_is_a_number(arg))
-	{
-		if (check_limit(arg))
-		{
-			exit_code = ft_atoll(arg);
-			return ((exit_code % 256 + 256) % 256);
-		}
-		else
-		{
-			print_error("exit", arg, "numeric argument required");
-			return (2);
-		}
-	}
-	else
+	if (!ft_is_a_number(arg) || !check_limit(arg))
 	{
 		print_error("exit", arg, "numeric argument required");
 		return (2);
 	}
+	exit_code = ft_atoll(arg);
+	return ((exit_code % 256 + 256) % 256);
 }
 
 int	builtin_exit(t_exec *exec)
@@ -112,23 +77,15 @@ int	builtin_exit(t_exec *exec)
 
 	args = exec->shell->commands->args;
 	printf("exit\n");
-	if (args[1])
+	if (!args[1])
+		exit_code = exec->shell->env->last_exit_status;
+	else if (args[2])
 	{
-		if (!ft_is_a_number(args[1]))
-		{
-			print_error("exit", args[1], "numeric argument required");
-			exit_code = 2;
-		}
-		else if (args[2])
-		{
-			print_error("exit", NULL, "too many arguments");
-			return (1);
-		}
-		else
-			exit_code = handle_single_arg(args[1]);
+		print_error("exit", NULL, "too many arguments");
+		return (1);
 	}
 	else
-		exit_code = exec->shell->env->last_exit_status;
+		exit_code = handle_single_arg(args[1]);
 	cleanup_all(exec);
 	exit(exit_code);
 }

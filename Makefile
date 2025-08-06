@@ -52,6 +52,7 @@ MAIN_SRCS	=	cleanup.c \
 BUILTIN_SRCS = 	builtins/cd/cd.c \
 				builtins/echo/echo.c \
 				builtins/env/env.c \
+				builtins/exit/exit_utils.c \
 				builtins/exit/exit.c \
 				builtins/export/export_assign.c \
 				builtins/export/export_no_args.c \

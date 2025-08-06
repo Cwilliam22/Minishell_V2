@@ -235,6 +235,9 @@ int			builtin_echo(t_exec *exec);
 /* Env */
 int			builtin_env(t_exec *exec);
 
+/* Exit utils */
+int			check_limit(char *str);
+
 /* Exit */
 int			builtin_exit(t_exec *exec);
 
