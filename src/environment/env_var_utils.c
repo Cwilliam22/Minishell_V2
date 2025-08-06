@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 07:40:54 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/04 17:08:28 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:31:14 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ t_env_var	*create_env_var(char *key, char *value)
 		return (NULL);
 	}
 	var->value = ft_strdup(value);
-	if (!var->value)
-	{
-		free(var->key);
-		free(var);
-		return (NULL);
-	}
 	var->next = NULL;
 	return (var);
 }

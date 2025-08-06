@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 07:38:09 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 13:35:00 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:12:37 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static void	init_env_variables(t_env *env, char **envp)
 	int			i;
 
 	i = 0;
+	if (!envp)
+	{
+		printf("no env");
+		return ;
+	}
 	while (envp[i])
 	{
 		if (split_assignment(envp[i], &key, &value))
@@ -50,8 +55,11 @@ t_env	*init_environment(char **envp)
 	env->variables = NULL;
 	env->nbr_var_env = 0;
 	env->last_exit_status = 0;
-	if (!envp)
+	if (!envp || !envp[0])
+	{
+		init_minimal_env_vars(env);
 		return (env);
+	}
 	init_env_variables(env, envp);
 	return (env);
 }

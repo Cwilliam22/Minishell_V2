@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_no_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:27:19 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 03:03:10 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 17:35:53 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,11 @@ void	print_env_sorted(t_exec *exec)
 	current = sorted_env;
 	while (current)
 	{
-		printf("declare -x %s=\"%s\"\n", current->key,
-			current->value);
+		if (current->value && ft_strcmp(current->value, "") != 0)
+			printf("declare -x %s=\"%s\"\n", current->key,
+				current->value);
+		else
+			printf("declare -x %s\n", current->key);
 		current = current->next;
 	}
 	free_env_vars(sorted_env);

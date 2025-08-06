@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 14:36:34 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/30 17:50:41 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 17:12:40 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ t_shell	*get_shell(char **envp)
 {
 	static t_shell	*shell = NULL;
 
-	if (!shell && envp)
-	{
-		shell = (t_shell *)safe_malloc(sizeof(t_shell));
+	if (!shell)
 		shell = init_shell(envp);
-	}
 	return (shell);
 }

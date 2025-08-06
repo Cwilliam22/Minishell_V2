@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:55:32 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/30 15:39:53 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/06 17:13:05 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ static t_shell	*setup_shell(char **envp)
 	t_shell	*shell;
 
 	shell = get_shell(envp);
+	if (!shell)
+		return (NULL);
 	if (ft_shlvl(shell))
-		add_env_var(&shell->env->variables, create_env_var("SHLVL", "1")); //Pas déjà dans ft_shlvl??
+		set_env_var("SHLVL", "1", shell->env, 0);
 	if (isatty(STDIN_FILENO))
 		print_welcome();
 	return (shell);

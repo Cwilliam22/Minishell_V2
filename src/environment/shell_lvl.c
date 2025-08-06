@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 21:20:38 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/04 19:00:21 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:05:15 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,19 @@ int	ft_shlvl(t_shell *shell)
 	char	*new_lvl;
 	char	*value;
 
+	shlvl = 0;
 	value = get_env_var("SHLVL", shell->env);
 	if (!value)
 	{
 		if (!set_env_var("SHLVL", "0",shell->env, 0))
 			return (printf("failed to set variable\n"), GENERAL_ERROR);
 	}
-	shlvl = ft_atoi(value);
+	else
+	{
+		shlvl = ft_atoi(value);
+		free(value);
+	}
 	shlvl++;
-	free(value);
 	new_lvl = ft_itoa(shlvl);
 	if (!new_lvl)
 		return (GENERAL_ERROR); //Exit ??

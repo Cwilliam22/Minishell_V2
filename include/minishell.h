@@ -218,6 +218,7 @@ void		cleanup_and_exit(int exit_code);
 
 /* Init */
 t_shell		*init_shell(char **envp);
+void		init_minimal_env_vars(t_env *env);
 
 /* Shell_loop */
 void		process_input(t_shell *shell);

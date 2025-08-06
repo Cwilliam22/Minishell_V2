@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:31:06 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/03 13:54:03 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:23:53 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ static void	print_env(t_env *env)
 	}
 	while (head)
 	{
-		if (head->value)
+		if (head->value && (ft_strcmp(head->value, "") != 0))
 			printf("%s=%s\n", head->key, head->value);
-		else
-			printf("%s=\n", head->key);
 		head = head->next;
 	}
 }

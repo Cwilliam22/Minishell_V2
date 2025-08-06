@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 17:47:19 by alfavre           #+#    #+#             */
-/*   Updated: 2024/10/22 18:15:24 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:32:01 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_strdup(const char *s)
 	char			*ptr;
 	size_t			length;
 
+	if (!s)
+		return (NULL);
 	length = ft_strlen(s) + 1;
 	ptr = malloc(sizeof(char) * length);
 	if (!ptr)
