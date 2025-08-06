@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:51:55 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 13:30:37 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 18:34:21 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	set_env_var(char *key, char *new_value, t_env *env, int is_append)
 	{
 		new_var = create_env_var(key, new_value);
 		if (new_var)
-			return (add_env_var(&env->variables, new_var), 1);
+			return (add_env_var(&env->variables, new_var),
+				env->nbr_var_env++, 1);
 		return (0);
 	}
 	if (is_append)

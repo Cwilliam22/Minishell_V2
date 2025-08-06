@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:13:07 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 14:19:33 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 18:06:41 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,10 @@ static int	command_permission(char *name_cmd)
 
 static int	apply_path(t_exec *exec, char **paths)
 {
-	if (exec->current_cmd->state_path == PATH_SIMPLE)
-	{
-		if (find_simple_in_path(exec, paths))
-			return (command_permission(exec->current_cmd->cmd_path));
-		else
-			return (0);
-	}
+	if (find_simple_in_path(exec, paths))
+		return (command_permission(exec->current_cmd->cmd_path));
 	else
-	{
-		free_array(paths);
-		if (find_other_in_path(exec))
-			return (command_permission(exec->current_cmd->cmd_path));
-		else
-			return (0);
-	}
+		return (0);
 }
 
 /**
@@ -116,18 +105,28 @@ int	apply_cmd_path(t_exec *exec)
 	char	**paths;
 	int		status;
 
-	if (!exec->path)
+	if (exec->current_cmd->state_path != PATH_SIMPLE)
 	{
-		exec->current_cmd->cmd_path = NULL;
-		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+		if (find_other_in_path(exec))
+			return (command_permission(exec->current_cmd->cmd_path));
+		else
+			return (0);
 	}
-	status = 0;
-	paths = ft_split(exec->path, ':');
-	if (!paths || !paths[0])
+	else
 	{
-		free_array(paths);
-		exec->current_cmd->cmd_path = NULL;
-		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+		if (!exec->path)
+		{
+			exec->current_cmd->cmd_path = NULL;
+			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+		}
+		status = 0;
+		paths = ft_split(exec->path, ':');
+		if (!paths || !paths[0])
+		{
+			free_array(paths);
+			exec->current_cmd->cmd_path = NULL;
+			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+		}
+		return (apply_path(exec, paths));
 	}
-	return (apply_path(exec, paths));
 }

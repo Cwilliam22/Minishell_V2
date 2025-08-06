@@ -190,6 +190,7 @@ debug: $(NAME)
 # Exécution avec valgrind (Linux uniquement)
 valgrind:
 	@echo "Running with valgrind..."
+#env -i valgrind -s --leak-check=full --log-file=valgrind.log --show-leak-kinds=all --track-fds=all --track-origins=yes --default-suppressions=yes --suppressions=.valgrind_readline ./$(NAME)
 	valgrind -s --leak-check=full --log-file=valgrind.log --show-leak-kinds=all --track-fds=all --track-origins=yes --default-suppressions=yes --suppressions=.valgrind_readline ./$(NAME)
 
 # Check for norm errors (if norminette is installed)

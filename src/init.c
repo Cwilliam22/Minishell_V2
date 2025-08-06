@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/08/06 17:26:36 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/06 18:25:27 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	init_minimal_env_vars(t_env *env)
 	if (pwd)
 	{
 		add_env_var(&env->variables, create_env_var("PWD", pwd));
+		env->nbr_var_env++;
 		free(pwd);
 	}
 	add_env_var(&env->variables, create_env_var("OLDPWD", NULL));
+	env->nbr_var_env++;
 }
