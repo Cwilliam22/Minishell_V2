@@ -12,32 +12,6 @@
 
 #include "minishell.h"
 
-static void	handle_assignment(char *arg, t_cmd *cmd)
-{
-	char	*key;
-	char	*value;
-	t_ass	*assign;
-
-	assign = NULL;
-	if (is_append_assignment_word(arg)
-		&& split_append_assignment(arg, &key, &value))
-	{
-		assign = create_append_assignment(key, value);
-		if (assign)
-			add_assignment(&cmd->assignments, assign);
-		free(key);
-		free(value);
-	}
-	else if (is_assignment_word(arg) && split_assignment(arg, &key, &value))
-	{
-		assign = create_assignment(key, value);
-		if (assign)
-			add_assignment(&cmd->assignments, assign);
-		free(key);
-		free(value);
-	}
-}
-
 static int	process_word_token(t_token *current, t_cmd *cmd, int *i)
 {
 	int		j;
@@ -51,10 +25,12 @@ static int	process_word_token(t_token *current, t_cmd *cmd, int *i)
 			free(cmd->args[j]);
 		return (free(cmd->args), cmd->args = NULL, 0);
 	}
+	if (current->type == T_ASS)
+	{
+		free(processed_value);
+		return (1);
+	}
 	cmd->args[*i] = processed_value;
-	if (*i > 0 && cmd->args[0] && (ft_strcmp(cmd->args[0], "export") == 0
-			|| ft_strcmp(cmd->args[0], "declare") == 0))
-		handle_assignment(cmd->args[*i], cmd);
 	return ((*i)++, 1);
 }
 

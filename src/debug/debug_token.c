@@ -21,7 +21,7 @@ void	print_tokens(t_token *tokens)
 	t_token		*current;
 	const char	*type_names[] = {
 		"T_WORD", "T_PIPE", "T_REDIR_IN", "T_REDIR_OUT", "T_APPEND",
-		"T_HEREDOC", "T_EOF", "T_VAR"
+		"T_HEREDOC", "T_EOF", "T_VAR", "T_ASS"
 	};
 
 	current = tokens;

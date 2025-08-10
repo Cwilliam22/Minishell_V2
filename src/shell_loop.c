@@ -21,7 +21,7 @@ static void	tokenize_and_parse(t_shell *shell)
 	if (!tokens)
 		return ;
 	exit_code = check_token_syntax(tokens);
-	print_tokens(tokens);
+	//print_tokens(tokens);
 	if (exit_code != 1)
 	{
 		free_tokens(tokens);
@@ -56,9 +56,9 @@ void	process_input(t_shell *shell)
 			return ;
 		}
 		tokenize_and_parse(shell);
-		print_commands(shell->commands);
+		//print_commands(shell->commands);
 		expand_commands(shell);
-		print_commands_expanded(shell->commands);
+		//print_commands_expanded(shell->commands);
 		execute_commands(shell);
 		free_commands(shell->commands);
 		shell->commands = NULL;

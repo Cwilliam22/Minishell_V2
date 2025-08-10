@@ -77,14 +77,14 @@ static int	command_permission(char *name_cmd)
 			return (0);
 		}
 	}
-	if (file_stat.st_size == 0)
-		return (0);
 	if (access(name_cmd, X_OK) != 0)
 	{
 		print_error(name_cmd, NULL, "Permission denied");
 		set_exit_status(126);
 		return (0);
 	}
+	if (file_stat.st_size == 0)
+		return (0);
 	return (1);
 }
 

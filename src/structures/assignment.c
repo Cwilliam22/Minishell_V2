@@ -72,6 +72,8 @@ void	free_assignments(t_ass *assignments)
 	t_ass	*current;
 	t_ass	*next;
 
+	if (!assignments)
+		return ;
 	current = assignments;
 	while (current)
 	{

@@ -95,15 +95,22 @@ void expand_command_args(t_cmd *cmd, t_shell *shell)
 	valid_count = 0;
 	for (i = 0; i < original_count; i++)
 	{
-		expanded = handle_quotes(old_args[i], shell);
-		if (ft_strcmp(expanded, "") != 0)
+		if (!ft_strchr(old_args[i], '='))
 		{
-			new_args[valid_count] = expanded;
-			valid_count++;
+			expanded = handle_quotes(old_args[i], shell);
+			if (ft_strcmp(expanded, "") != 0)
+			{
+				new_args[valid_count] = expanded;
+				valid_count++;
+			}
+			else
+			{
+				free(expanded);
+			}
 		}
 		else
 		{
-			free(expanded);
+			new_args[valid_count++] = ft_strdup(old_args[i]);
 		}
 	}
 	new_args[valid_count] = NULL;

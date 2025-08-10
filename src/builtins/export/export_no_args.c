@@ -77,11 +77,14 @@ void	print_env_sorted(t_exec *exec)
 	current = sorted_env;
 	while (current)
 	{
-		if (current->value && ft_strcmp(current->value, "") != 0)
-			printf("declare -x %s=\"%s\"\n", current->key,
-				current->value);
-		else
-			printf("declare -x %s\n", current->key);
+		if (ft_strcmp(current->key, "_") != 0)
+		{
+			if (current->value)
+				printf("declare -x %s=\"%s\"\n", current->key,
+					current->value);
+			else
+				printf("declare -x %s\n", current->key);
+		}
 		current = current->next;
 	}
 	free_env_vars(sorted_env);

@@ -33,8 +33,13 @@ static void	print_env(t_env *env)
 int	builtin_env(t_exec *exec)
 {
 	char	**arg;
+	char	*pwd;
+	char	*new_command;
 
 	arg = exec->shell->commands->args_expanded;
+	pwd = getcwd(NULL, 0);
+	new_command = ft_strjoin(pwd, "/env");
+	set_env_var("_", new_command, exec->shell->env, 0);
 	if (exec->nb_arg == 1)
 	{
 		print_env(exec->shell->env);

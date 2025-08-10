@@ -35,15 +35,10 @@ static int	export_args_only(t_exec *exec)
 	char	**arg;
 	int		i;
 
-	arg = exec->shell->commands->args_expanded;
+	arg = exec->current_cmd->args_expanded;
 	i = 1;
 	while (arg[i])
 	{
-		if (ft_strchr(arg[i], '='))
-		{
-			i++;
-			continue ;
-		}
 		if (!is_a_valid_identifier(arg[i]))
 		{
 			print_error("export", arg[i], "not a valid identifier");
@@ -64,11 +59,11 @@ int	builtin_export(t_exec *exec)
 	int	error;
 
 	error = 0;
-	if (exec->nb_arg == 1)
-		print_env_sorted(exec);
-	else if (exec->shell->commands->assignments)
+	if (exec->current_cmd->assignments)
 		error = export_with_assignment(exec);
 	else if (exec->nb_arg > 1)
 		error = export_args_only(exec);
+	else
+		print_env_sorted(exec);
 	return (error);
 }

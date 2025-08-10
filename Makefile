@@ -89,6 +89,7 @@ LEXER_SRCS =	lexer/lexer_utils.c \
 
 PARSER_SRCS	=	parser/check_token_syntax.c \
 				parser/parser_args.c \
+				parser/parser_assignments.c \
 				parser/parser_redir.c \
 				parser/parser_utils.c \
 				parser/parser.c \

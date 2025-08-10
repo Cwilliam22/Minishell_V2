@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+static int	is_assignment(char *str)
+{
+	char	*ptr;
+	char	save;
+	int		valid;
+
+	ptr = ft_strchr(str, '=');
+	if (ptr && ptr != str)
+	{
+		save = *ptr;
+		*ptr = '\0';
+		valid = is_a_valid_identifier(str);
+		*ptr = save;
+		if (valid)
+			return (T_ASS);
+	}
+	return (T_WORD);
+}
+
 /**
  * Get the type of a token based on its value
  * @param str: Token string
@@ -35,7 +54,7 @@ static int	get_token_type(char *str)
 		return (T_VAR);
 	if (str[0] == '\0')
 		return (T_EOF);
-	return (T_WORD);
+	return (is_assignment(str));
 }
 
 /**

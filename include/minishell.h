@@ -57,7 +57,8 @@ typedef enum e_token_type
 	T_APPEND,
 	T_HEREDOC,
 	T_EOF,
-	T_VAR
+	T_VAR,
+	T_ASS
 }	t_token_type;
 
 typedef enum e_redir_type
@@ -374,6 +375,9 @@ int			check_token_syntax(t_token *tokens);
 
 /* Parser args */
 int			extract_arguments(t_token *tokens, t_cmd *cmd);
+
+/* Parser assignements */
+int			extract_assignments(t_token *tokens, t_cmd *cmd);
 
 /* Parser redir */
 int			extract_redirections(t_token *tokens, t_cmd *cmd);

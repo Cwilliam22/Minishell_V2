@@ -58,7 +58,6 @@ int	check_token_syntax(t_token *tokens)
 		return (print_syntax_error("|"), SYNTAX_ERROR);
 	while (current)
 	{
-		printf("DEBUG: type: %d, name: %s\n", current->type, current->value);
 		if (current->type == T_PIPE)
 			result = check_pipe_syntax(current);
 		else if (current->type >= T_REDIR_IN

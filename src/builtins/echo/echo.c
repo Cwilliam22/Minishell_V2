@@ -47,6 +47,20 @@ static int	ft_printf_arg(char **tab_arg, int index, int option)
 	return (1);
 }
 
+static void	print_assignments(t_ass *assignments)
+{
+	t_ass	*head;
+
+	if (!assignments)
+		return ;
+	head = assignments;
+	while (head)
+	{
+		printf("%s=%s ", head->key, head->value);
+		head = head->next;
+	}
+}
+
 int	builtin_echo(t_exec *exec)
 {
 	int		i;
@@ -56,10 +70,12 @@ int	builtin_echo(t_exec *exec)
 	arg = exec->shell->commands->args_expanded;
 	if (arg[1] == NULL)
 	{
+		if (exec->current_cmd->assignments)
+			print_assignments(exec->current_cmd->assignments);
 		printf("\n");
 		return (0);
 	}
-	else if (ft_strncmp("-n", arg[1], 2) == 0)
+	if (ft_strncmp("-n", arg[1], 2) == 0)
 	{
 		i = skip_n(arg);
 		if (i == -1)

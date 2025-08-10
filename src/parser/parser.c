@@ -75,6 +75,8 @@ static t_cmd	*parse_single_command(t_token *tokens)
 	cmd = create_command();
 	if (!extract_arguments(tokens, cmd))
 		return (free_commands(cmd), NULL);
+	if (!extract_assignments(tokens, cmd))
+		return (free_commands(cmd), NULL);
 	if (!extract_redirections(tokens, cmd))
 		return (free_commands(cmd), NULL);
 	return (cmd);
