@@ -20,7 +20,7 @@ int	builtin_unset(t_exec *exec)
 
 	i = 1;
 	exit_code = 0;
-	args = exec->shell->commands->args;
+	args = exec->shell->commands->args_expanded;
 	if (!args[1])
 		return (exit_code);
 	while (args[i])

@@ -65,7 +65,7 @@ int	builtin_cd(t_exec *exec)
 {
 	char	**args;
 
-	args = exec->shell->commands->args;
+	args = exec->shell->commands->args_expanded;
 	if (!args[1])
 		return (handle_cd_home(exec));
 	if (args[2])

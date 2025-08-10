@@ -47,7 +47,8 @@ int	extract_redirections(t_token *tokens, t_cmd *cmd)
 	{
 		if (current->type >= T_REDIR_IN && current->type <= T_HEREDOC)
 		{
-			if (!current->next || current->next->type != T_WORD)
+			if (!current->next || (current->next->type != T_WORD
+					&& current->next->type != T_VAR))
 				return (0);
 			filename = ft_strdup(current->next->value);
 			if (!filename)

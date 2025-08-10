@@ -24,7 +24,7 @@ void	execute_commands(t_shell *shell)
 	current = shell->commands;
 	while (current)
 	{
-		if (!current->args || !current->args[0])
+		if (!current->args_expanded || !current->args_expanded[0])
 		{
 			current = current->next;
 			continue ;

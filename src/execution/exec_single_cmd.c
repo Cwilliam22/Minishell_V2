@@ -49,7 +49,9 @@ static int	execute_with_redirections(t_exec *exec)
 	return (exit_code);
 }
 
-//Anciennement identification
+/**
+ * Nb_arg compte le nom d'argument avant expension
+ */
 void	execute_single_command(t_exec *exec)
 {
 	int		exit_code;

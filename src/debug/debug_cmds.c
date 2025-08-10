@@ -131,3 +131,30 @@ void	print_commands(t_cmd *commands)
 	}
 	printf("================\n");
 }
+
+/**
+ * Debug function to print command structure
+ * @param commands: Head of command list
+ */
+void	print_commands_expanded(t_cmd *commands)
+{
+	t_cmd	*current;
+	int		cmd_num;
+
+	current = commands;
+	cmd_num = 1;
+	printf("=== COMMANDS EXPANDED ===\n");
+	while (current)
+	{
+		printf("Command %d:\n", cmd_num);
+		print_args(current->args_expanded);
+		print_assignments(current->assignments);
+		print_redirections(current->redirections);
+		if (current->next)
+			printf("  -> PIPE TO NEXT COMMAND\n");
+		printf("\n");
+		current = current->next;
+		cmd_num++;
+	}
+	printf("================\n");
+}

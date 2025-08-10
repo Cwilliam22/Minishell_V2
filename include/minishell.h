@@ -145,6 +145,7 @@ typedef struct s_ass
 typedef struct s_cmd
 {
 	char			**args;
+	char			**args_expanded;
 	t_ass			*assignments;
 	t_redir			*redirections;
 	char			*cmd_path;
@@ -265,6 +266,7 @@ int			execute_builtin(t_exec *exec);
 /* ==================================== DEBUG ============================== */
 /*Debug commands */
 void		print_commands(t_cmd *commands);
+void		print_commands_expanded(t_cmd *commands);
 
 /*Debug tokens */
 void		print_tokens(t_token *tokens);

@@ -21,7 +21,7 @@ int	is_builtin(t_cmd *cmd)
 	int		i;
 
 	i = 0;
-	args = cmd->args;
+	args = cmd->args_expanded;
 	if (!args)
 		return (0);
 	while (builtins[i])
@@ -49,7 +49,7 @@ int	execute_builtin(t_exec *exec)
 	char		*name_cmd;
 
 	i = 0;
-	name_cmd = exec->shell->commands->args[0];
+	name_cmd = exec->shell->commands->args_expanded[0];
 	while (tab_link[i].builtin != NULL)
 	{
 		if (ft_strcmp(name_cmd, tab_link[i].builtin) == 0)

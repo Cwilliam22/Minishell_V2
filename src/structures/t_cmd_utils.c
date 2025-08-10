@@ -22,6 +22,7 @@ t_cmd	*create_command(void)
 
 	cmd = (t_cmd *)safe_malloc(sizeof(t_cmd));
 	cmd->args = NULL;
+	cmd->args_expanded = NULL;
 	cmd->assignments = NULL;
 	cmd->redirections = NULL;
 	cmd->next = NULL;
@@ -62,6 +63,8 @@ static void	free_command(t_cmd *cmd)
 		return ;
 	if (cmd->args)
 		free_array(cmd->args);
+	if (cmd->args_expanded)
+		free_array(cmd->args_expanded);
 	if (cmd->assignments)
 		free_assignments(cmd->assignments);
 	if (cmd->redirections)

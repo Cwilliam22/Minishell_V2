@@ -36,7 +36,7 @@ int	check_args(t_exec *exec)
 	shell = exec->shell;
 	if (!shell || !shell->commands || !shell->commands->args)
 		return (GENERAL_ERROR);
-	process = shell->commands->args;
+	process = shell->commands->args_expanded;
 	if (!process || !process[0] || !process[0][0] || is_all_spaces(process[0]))
 	{
 		if (process[0] && process[0][0] == '\0')

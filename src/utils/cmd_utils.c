@@ -14,10 +14,10 @@
 
 static int	its_absolute_path(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args || !cmd->args[0])
+	if (!cmd || !cmd->args_expanded || !cmd->args_expanded[0])
 		return (0);
-	if (cmd->args[0][0] == '/')
-		cmd->cmd_path = ft_strdup(cmd->args[0]);
+	if (cmd->args_expanded[0][0] == '/')
+		cmd->cmd_path = ft_strdup(cmd->args_expanded[0]);
 	if (!cmd->cmd_path)
 		return (0);
 	return (1);
@@ -25,11 +25,11 @@ static int	its_absolute_path(t_cmd *cmd)
 
 static int	its_relative_path(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args || !cmd->args[0])
+	if (!cmd || !cmd->args_expanded || !cmd->args_expanded[0])
 		return (0);
-	if (cmd->args[0][0] == '.'
-		&& cmd->args[0][1] == '/')
-		cmd->cmd_path = ft_strdup(cmd->args[0]);
+	if (cmd->args_expanded[0][0] == '.'
+		&& cmd->args_expanded[0][1] == '/')
+		cmd->cmd_path = ft_strdup(cmd->args_expanded[0]);
 	if (!cmd->cmd_path)
 		return (0);
 	return (1);

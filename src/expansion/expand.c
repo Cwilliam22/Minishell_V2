@@ -26,11 +26,11 @@ void	expand_commands(t_shell *shell)
 		return ;
 	while (current)
 	{
-		expand_command_args(current, shell);
 		if (current->assignments)
 			expand_assignments(current->assignments, shell);
 		if (current->redirections)
 			expand_redirections(current->redirections, shell);
+		expand_command_args(current, shell);
 		current = current->next;
 	}
 }

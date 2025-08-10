@@ -34,13 +34,15 @@ int	builtin_env(t_exec *exec)
 {
 	char	**arg;
 
-	arg = exec->shell->commands->args;
+	arg = exec->shell->commands->args_expanded;
 	if (exec->nb_arg == 1)
+	{
 		print_env(exec->shell->env);
-	else if (exec->nb_arg != 1)
+		return (0);
+	}
+	else
 	{
 		print_error("env", arg[1], "No such file or directory");
 		return (127);
 	}
-	return (0);
 }

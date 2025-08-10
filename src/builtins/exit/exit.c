@@ -75,10 +75,19 @@ int	builtin_exit(t_exec *exec)
 	char	**args;
 	ssize_t	exit_code;
 
-	args = exec->shell->commands->args;
+	args = exec->shell->commands->args_expanded;
 	printf("exit\n");
 	if (!args[1])
-		exit_code = exec->shell->env->last_exit_status;
+	{
+		if (exec->nb_arg > 1 && ft_strchr(exec->shell->commands->args[1], '\"') != NULL)
+		{
+			print_error("exit", "", "numeric argument required");
+			cleanup_all(exec);
+			exit(2);
+		}
+		else
+			exit_code = exec->shell->env->last_exit_status;
+	}
 	else if (args[2])
 	{
 		print_error("exit", NULL, "too many arguments");

@@ -17,13 +17,13 @@ static void	child_process(t_exec *exec)
 	exec->env_copy = env_to_string(exec->shell->env);
 	if (access(exec->current_cmd->cmd_path, X_OK) == 0)
 	{
-		execve(exec->current_cmd->cmd_path, exec->current_cmd->args,
+		execve(exec->current_cmd->cmd_path, exec->current_cmd->args_expanded,
 			exec->env_copy);
 		print_error(exec->current_cmd->cmd_path, NULL, "execve failed");
 	}
 	else
 	{
-		print_error(exec->current_cmd->cmd_path, exec->current_cmd->args[1],
+		print_error(exec->current_cmd->cmd_path, exec->current_cmd->args_expanded[1],
 			"Permission denied");
 	}
 }

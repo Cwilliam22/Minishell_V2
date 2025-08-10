@@ -46,7 +46,7 @@ int	set_env_var(char *key, char *new_value, t_env *env, int is_append)
 	t_env_var	*var;
 	t_env_var	*new_var;
 
-	if (!new_value || !env)
+	if (!env)
 		return (0);
 	var = env->variables;
 	while (var && (ft_strcmp(var->key, key) != 0))

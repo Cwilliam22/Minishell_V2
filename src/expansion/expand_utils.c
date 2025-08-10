@@ -96,7 +96,6 @@ void expand_command_args(t_cmd *cmd, t_shell *shell)
 	for (i = 0; i < original_count; i++)
 	{
 		expanded = handle_quotes(old_args[i], shell);
-		
 		if (ft_strcmp(expanded, "") != 0)
 		{
 			new_args[valid_count] = expanded;
@@ -106,10 +105,7 @@ void expand_command_args(t_cmd *cmd, t_shell *shell)
 		{
 			free(expanded);
 		}
-		
-		free(old_args[i]);  // Libérer l'ancien argument
 	}
 	new_args[valid_count] = NULL;
-	free(old_args);
-	cmd->args = new_args;
+	cmd->args_expanded = new_args;
 }

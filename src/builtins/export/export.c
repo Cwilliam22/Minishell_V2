@@ -35,7 +35,7 @@ static int	export_args_only(t_exec *exec)
 	char	**arg;
 	int		i;
 
-	arg = exec->shell->commands->args;
+	arg = exec->shell->commands->args_expanded;
 	i = 1;
 	while (arg[i])
 	{
@@ -51,7 +51,7 @@ static int	export_args_only(t_exec *exec)
 		}
 		else if (get_env_var(arg[i], exec->shell->env) == NULL)
 		{
-			if (!set_env_var(arg[i], "", exec->shell->env, 0))
+			if (!set_env_var(arg[i], NULL, exec->shell->env, 0))
 				return (1);
 		}
 		i++;

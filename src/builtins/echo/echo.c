@@ -53,7 +53,7 @@ int	builtin_echo(t_exec *exec)
 	char	**arg;
 
 	i = 1;
-	arg = exec->shell->commands->args;
+	arg = exec->shell->commands->args_expanded;
 	if (arg[1] == NULL)
 	{
 		printf("\n");

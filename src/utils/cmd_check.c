@@ -16,7 +16,7 @@ static int	find_other_in_path(t_exec *exec)
 {
 	char	*name_cmd;
 
-	name_cmd = exec->current_cmd->args[0];
+	name_cmd = exec->current_cmd->args_expanded[0];
 	if (check_command_exist(name_cmd))
 	{
 		if (exec->current_cmd->cmd_path)
@@ -41,7 +41,7 @@ static int	find_simple_in_path(t_exec *exec, char **paths)
 	char	*tmp;
 
 	i = 0;
-	name_cmd = exec->current_cmd->args[0];
+	name_cmd = exec->current_cmd->args_expanded[0];
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
