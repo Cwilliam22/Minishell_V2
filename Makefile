@@ -70,12 +70,14 @@ ENV_SRCS =		environment/env_get.c \
 				environment/env_var_utils.c \
 				environment/shell_lvl.c \
 				
-EXEC_SRCS =		execution/exec_externe.c \
-				execution/exec_single_cmd.c \
-				execution/exec_utils.c \
-				execution/exec.c \
-				execution/heredoc.c \
-				execution/redir.c
+EXEC_SRCS =		execution/exec/exec_externe.c \
+				execution/exec/exec_single_cmd.c \
+				execution/exec/exec_utils.c \
+				execution/exec/exec.c \
+				execution/pipe/pipe_utils.c \
+				execution/pipe/pipe.c \
+				execution/redir/heredoc.c \
+				execution/redir/redir.c
 
 EXPAND_SRCS =	expansion/expand_utils.c \
 				expansion/expand.c \

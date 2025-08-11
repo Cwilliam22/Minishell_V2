@@ -15,24 +15,20 @@
 void	execute_commands(t_shell *shell)
 {
 	t_exec	*exec;
-	t_cmd	*current;
 
 	exec = create_exec(shell);
 	if (!exec)
 		return ;
 	update_var_path(exec);
-	current = shell->commands;
-	while (current)
+	exec->current_cmd = shell->commands;
+	if (exec->nb_process == 1)
 	{
-		if (!current->args_expanded || !current->args_expanded[0])
-		{
-			current = current->next;
-			continue ;
-		}
-		exec->current_cmd = current;
 		if (check_args(exec))
 			execute_single_command(exec);
-		current = current->next;
+	}
+	else if (exec->nb_process > 1)
+	{
+		pipeline(exec);
 	}
 	free_exec(exec);
 }

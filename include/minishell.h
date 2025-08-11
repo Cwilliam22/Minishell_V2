@@ -310,15 +310,19 @@ void		free_var(t_exec *exec);
 /* Exec */
 void		execute_commands(t_shell *shell);
 
+/* Pipe_utils */
+void		kill_all_process(pid_t *pids, int count);
+int			create_pipes(t_exec *exec, int ***pipes);
+int			free_pipes(int **pipes, t_exec *exec);
+void		close_pipes(int **pipes, t_exec *exec);
+
+/* Pipe */
+void		pipeline(t_exec *exec);
+
 /* Heredoc */
 t_heredoc	*create_heredoc(char *delimiter, int quoted);
 int			handle_heredoc(char *delimiter);
 void		free_heredoc(t_heredoc *heredoc);
-
-/* Redi_utils */
-t_redir		*create_redirection(int type, char *file);
-void		add_redirection(t_redir **head, t_redir *new_redir);
-void		free_redirections(t_redir *redirections);
 
 /* Redir */
 int			apply_redirections(t_exec *exec);
@@ -427,7 +431,6 @@ int			apply_cmd_path(t_exec *exec);
 
 /* Cmd_utils */
 int			update_state_path(t_exec *exec);
-void		update_cmd_path(t_exec *exec);
 int			check_command_exist(char *name);
 
 /* Error */
