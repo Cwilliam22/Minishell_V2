@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 12:55:38 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/11 16:49:09 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/12 13:19:09 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,12 @@ static int	exec_pipe(t_exec *exec, int **pipes, pid_t *pids)
 	return (1);
 }
 
-void	pipeline(t_exec *exec)
+void	wait_all_child(t_exec *exec, pid_t *pids)
 {
-	int		**pipes;
-	pid_t	*pids;
-	int		i;
-	int		status;
-	int		exit_status;
+	int	i;
+	int	status;
+	int	exit_status;
 
-	if (!create_pipes(exec, &pipes))
-	{
-		print_error(NULL, NULL, "Error creating pipes\n");
-		return ;
-	}
-	pids = (pid_t *)safe_malloc(sizeof(pid_t) * exec->nb_process);
-	if (!exec_pipe(exec, pipes, pids))
-	{
-		free(pids);
-		free_pipes(pipes, exec);
-		return ;
-	}
-	close_pipes(pipes, exec);
 	i = 0;
 	while (i < exec->nb_process)
 	{
@@ -97,7 +82,28 @@ void	pipeline(t_exec *exec)
 		}
 		i++;
 	}
+	set_exit_status(exit_status);
+}
+
+void	handle_pipeline(t_exec *exec)
+{
+	int		**pipes;
+	pid_t	*pids;
+
+	if (!create_pipes(exec, &pipes))
+	{
+		print_error(NULL, NULL, "Error creating pipes\n");
+		return ;
+	}
+	pids = (pid_t *)safe_malloc(sizeof(pid_t) * exec->nb_process);
+	if (!exec_pipe(exec, pipes, pids))
+	{
+		free(pids);
+		free_pipes(pipes, exec);
+		return ;
+	}
+	close_pipes(pipes, exec);
+	wait_all_child(exec, pids);
 	free_pipes(pipes, exec);
 	free(pids);
-	set_exit_status(exit_status);
 }

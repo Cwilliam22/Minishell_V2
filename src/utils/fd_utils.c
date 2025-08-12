@@ -21,14 +21,14 @@
  * STDOUT_FILENO).
  * @return 0 on success, 1 on error.
  */
-int	open_and_dup(const char *file, int flags, int stdfd)
+int	open_and_dup(const char *file, int flags, int target_fd)
 {
 	int	fd;
 
 	fd = open(file, flags, 0644);
 	if (fd < 0)
 		return (perror(file), 1);
-	if (dup2(fd, stdfd) < 0)
+	if (dup2(fd, target_fd) < 0)
 	{
 		close(fd);
 		return (perror("dup2"), 1);

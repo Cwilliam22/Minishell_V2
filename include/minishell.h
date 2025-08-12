@@ -317,7 +317,7 @@ int			free_pipes(int **pipes, t_exec *exec);
 void		close_pipes(int **pipes, t_exec *exec);
 
 /* Pipe */
-void		pipeline(t_exec *exec);
+void		handle_pipeline(t_exec *exec);
 
 /* Heredoc */
 t_heredoc	*create_heredoc(char *delimiter, int quoted);
