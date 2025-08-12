@@ -18,12 +18,12 @@
  * @param shell: Shell structure for signal handling
  * @return: 0 on success, 1 on error, EXIT_SIGINT if interrupted
  */
-int	apply_redirections(t_exec *exec)
+int	apply_redirections(t_cmd *cmd)
 {
 	t_redir	*curr;
 	int		ret;
 
-	curr = exec->shell->commands->redirections;
+	curr = cmd->redirections;
 	while (curr)
 	{
 		if (g_signal_received == SIGINT)

@@ -79,7 +79,8 @@ int	builtin_exit(t_exec *exec)
 	printf("exit\n");
 	if (!args[1])
 	{
-		if (exec->nb_arg > 1 && ft_strchr(exec->shell->commands->args[1], '\"') != NULL)
+		if (exec->nb_arg > 1
+			&& ft_strchr(exec->shell->commands->args[1], '\"') != NULL)
 		{
 			print_error("exit", "", "numeric argument required");
 			cleanup_all(exec);

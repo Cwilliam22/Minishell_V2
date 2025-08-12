@@ -83,6 +83,8 @@ void	free_commands(t_cmd *commands)
 	t_cmd	*current;
 	t_cmd	*next;
 
+	if (!commands)
+		return ;
 	current = commands;
 	while (current)
 	{

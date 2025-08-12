@@ -37,13 +37,13 @@ static int	ft_printf_arg(char **tab_arg, int index, int option)
 	i = index;
 	while (tab_arg[i])
 	{
-		printf("%s", tab_arg[i]);
+		write(STDOUT_FILENO, tab_arg[i], ft_strlen(tab_arg[i]));
 		if (tab_arg[i + 1])
-			printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (option == 0)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 	return (1);
 }
 
@@ -56,7 +56,10 @@ static void	print_assignments(t_ass *assignments)
 	head = assignments;
 	while (head)
 	{
-		printf("%s=%s ", head->key, head->value);
+		write(STDOUT_FILENO, head->key, strlen(head->key));
+		write(STDOUT_FILENO, "=", 1);
+		write(STDOUT_FILENO, head->value, strlen(head->value));
+		write(STDOUT_FILENO, " ", 1);
 		head = head->next;
 	}
 }
@@ -67,12 +70,12 @@ int	builtin_echo(t_exec *exec)
 	char	**arg;
 
 	i = 1;
-	arg = exec->shell->commands->args_expanded;
+	arg = exec->current_cmd->args_expanded;
 	if (arg[1] == NULL)
 	{
 		if (exec->current_cmd->assignments)
 			print_assignments(exec->current_cmd->assignments);
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 		return (0);
 	}
 	if (ft_strncmp("-n", arg[1], 2) == 0)

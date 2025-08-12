@@ -24,8 +24,13 @@ static void	print_env(t_env *env)
 	}
 	while (head)
 	{
-		if (head->value && (ft_strcmp(head->value, "") != 0))
-			printf("%s=%s\n", head->key, head->value);
+		if (head->value)
+		{
+			write(STDOUT_FILENO, head->key, strlen(head->key));
+			write(STDOUT_FILENO, "=", 1);
+			write(STDOUT_FILENO, head->value, strlen(head->value));
+			write(STDOUT_FILENO, "\n", 1);
+		}
 		head = head->next;
 	}
 }

@@ -37,6 +37,7 @@ void	cleanup_all(t_exec *exec)
 		exec->shell = NULL;
 	}
 	free_exec(exec);
+	exec = NULL;
 }
 
 /**
@@ -49,12 +50,19 @@ void	cleanup_shell(t_shell *shell)
 		return ;
 	cleanup_iteration(shell);
 	if (shell->env)
+	{
 		free_environment(shell->env);
+		shell->env = NULL;
+	}
 	if (shell->commands)
+	{
 		free_commands(shell->commands);
+		shell->commands = NULL;
+	}
 	if (shell->interactive)
 		clear_history();
 	free(shell);
+	shell = NULL;
 }
 
 void	cleanup_and_exit(int exit_code)

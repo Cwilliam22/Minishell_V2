@@ -35,15 +35,13 @@ static int	its_relative_path(t_cmd *cmd)
 	return (1);
 }
 
-int	update_state_path(t_exec *exec)
+int	update_state_path(t_cmd *cmd)
 {
-	t_shell	*shell;
 	t_cmd	*current;
 
-	shell = exec->shell;
-	if (!shell || !shell->commands)
+	if (!cmd)
 		return (0);
-	current = shell->commands;
+	current = cmd;
 	while (current)
 	{
 		if (its_absolute_path(current))

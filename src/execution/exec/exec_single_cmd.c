@@ -12,15 +12,19 @@
 
 #include "minishell.h"
 
-static int	execute_direct(t_exec *exec)
+int	execute_direct(t_cmd *cmd, t_exec *exec)
 {
-	if (is_builtin(exec->shell->commands))
-		return (execute_builtin(exec));
+	if (is_builtin(cmd))
+	{
+		return (execute_builtin(cmd, exec));
+	}
 	else
-		return (execute_externe(exec));
+	{
+		return (execute_externe(cmd, exec));
+	}
 }
 
-static int	execute_with_redirections(t_exec *exec)
+static int	execute_with_redirections(t_cmd *cmd, t_exec *exec)
 {
 	int	saved_stdout;
 	int	saved_stdin;
@@ -38,13 +42,13 @@ static int	execute_with_redirections(t_exec *exec)
 		print_error(NULL, NULL, "dup");
 		return (1);
 	}
-	redir_status = apply_redirections(exec);
+	redir_status = apply_redirections(cmd);
 	if (redir_status != 0)
 	{
 		restore_std(saved_stdout, saved_stdin);
 		return (redir_status);
 	}
-	exit_code = execute_direct(exec);
+	exit_code = execute_direct(cmd, exec);
 	restore_std(saved_stdout, saved_stdin);
 	return (exit_code);
 }
@@ -52,16 +56,19 @@ static int	execute_with_redirections(t_exec *exec)
 /**
  * Nb_arg compte le nom d'argument avant expension
  */
-void	execute_single_command(t_exec *exec)
+void	execute_single_command(t_cmd *cmd, t_exec *exec)
 {
 	int		exit_code;
 
 	exit_code = 0;
-	exec->current_cmd = exec->shell->commands;
-	exec->nb_arg = get_nb_command_args(exec->current_cmd);
-	if (has_redirections(exec->current_cmd))
-		exit_code = execute_with_redirections(exec);
+	exec->nb_arg = get_nb_command_args(cmd);
+	if (has_redirections(cmd))
+	{
+		exit_code = execute_with_redirections(cmd, exec);
+	}
 	else
-		exit_code = execute_direct(exec);
+	{
+		exit_code = execute_direct(cmd, exec);
+	}
 	set_exit_status(exit_code);
 }

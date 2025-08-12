@@ -15,6 +15,7 @@
 void	execute_commands(t_shell *shell)
 {
 	t_exec	*exec;
+	t_cmd	*cmd;
 
 	exec = create_exec(shell);
 	if (!exec)
@@ -22,14 +23,14 @@ void	execute_commands(t_shell *shell)
 	update_var_path(exec);
 	if (shell->commands && shell->commands->args_expanded[0])
 	{
-		exec->current_cmd = shell->commands;
+		cmd = shell->commands;
 		if (exec->nb_process == 1)
 		{
 			if (check_args(exec))
-				execute_single_command(exec);
+				execute_single_command(cmd, exec);
 		}
 		else if (exec->nb_process > 1)
-			handle_pipeline(exec);
+			handle_pipeline(cmd, exec);
 	}
 	free_exec(exec);
 }

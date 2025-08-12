@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 12:55:38 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/12 13:19:09 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/12 20:35:05 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,43 @@ static void	setup_child_pipes_and_redir(int i, int **pipes, t_exec *exec)
 	if (i == 0 && exec->nb_process > 1)
 	{
 		dup2(pipes[i][1], STDOUT_FILENO);
+		close(pipes[i][1]);
 	}
 	else if (i == exec->nb_process - 1 && exec->nb_process > 1)
 	{
 		dup2(pipes[i - 1][0], STDIN_FILENO);
+		close(pipes[i - 1][0]);
 	}
 	else if (i > 0 && i < exec->nb_process - 1)
 	{
 		dup2(pipes[i - 1][0], STDIN_FILENO);
+		close(pipes[i - 1][0]);
 		dup2(pipes[i][1], STDOUT_FILENO);
+		close(pipes[i][1]);
 	}
 	close_pipes(pipes, exec);
 }
 
-static int	exec_pipe(t_exec *exec, int **pipes, pid_t *pids)
+static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 {
 	int		i;
 	t_cmd	*current_cmd;
+	int		exit_status;
 
 	i = 0;
-	current_cmd = exec->shell->commands;
+	current_cmd = cmd;
 	while (i < exec->nb_process && current_cmd)
 	{
 		pids[i] = fork();
 		if (pids[i] == 0)
 		{
 			setup_child_pipes_and_redir(i, pipes, exec);
-			exec->shell->commands = current_cmd;
-			execute_single_command(exec);
-			exit(exec->shell->env->last_exit_status);
+			execute_single_command(current_cmd, exec);
+			free_pipes(pipes, exec);
+			free(pids);
+			exit_status = exec->shell->env->last_exit_status;
+			cleanup_all(exec);
+			exit(exit_status);
 		}
 		else if (pids[i] < 0)
 		{
@@ -85,7 +93,7 @@ void	wait_all_child(t_exec *exec, pid_t *pids)
 	set_exit_status(exit_status);
 }
 
-void	handle_pipeline(t_exec *exec)
+void	handle_pipeline(t_cmd *cmd, t_exec *exec)
 {
 	int		**pipes;
 	pid_t	*pids;
@@ -96,7 +104,7 @@ void	handle_pipeline(t_exec *exec)
 		return ;
 	}
 	pids = (pid_t *)safe_malloc(sizeof(pid_t) * exec->nb_process);
-	if (!exec_pipe(exec, pipes, pids))
+	if (!exec_pipe(cmd, exec, pipes, pids))
 	{
 		free(pids);
 		free_pipes(pipes, exec);

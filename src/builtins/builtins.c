@@ -14,11 +14,11 @@
 
 int	is_builtin(t_cmd *cmd)
 {
-	char	**args;
-	char	*builtins[] = {
+	char		**args;
+	const char	*builtins[] = {
 		"cd", "echo", "pwd", "export", "unset", "env", "exit", NULL
 	};
-	int		i;
+	int			i;
 
 	i = 0;
 	args = cmd->args_expanded;
@@ -33,23 +33,24 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	execute_builtin(t_exec *exec)
+int	execute_builtin(t_cmd *cmd, t_exec *exec)
 {
-	int			i;
-	t_builtin	tab_link[] = {
-		{"cd", builtin_cd},
-		{"echo", builtin_echo},
-		{"pwd", builtin_pwd},
-		{"export", builtin_export},
-		{"unset", builtin_unset},
-		{"env", builtin_env},
-		{"exit", builtin_exit},
-		{NULL, NULL}
+	int				i;
+	const t_builtin	tab_link[] = {
+	{"cd", builtin_cd},
+	{"echo", builtin_echo},
+	{"pwd", builtin_pwd},
+	{"export", builtin_export},
+	{"unset", builtin_unset},
+	{"env", builtin_env},
+	{"exit", builtin_exit},
+	{NULL, NULL}
 	};
-	char		*name_cmd;
+	char			*name_cmd;
 
 	i = 0;
-	name_cmd = exec->shell->commands->args_expanded[0];
+	name_cmd = cmd->args_expanded[0];
+	exec->current_cmd = cmd;
 	while (tab_link[i].builtin != NULL)
 	{
 		if (ft_strcmp(name_cmd, tab_link[i].builtin) == 0)

@@ -12,17 +12,17 @@
 
 #include "minishell.h"
 
-static int	find_other_in_path(t_exec *exec)
+static int	find_other_in_path(t_cmd *cmd)
 {
 	char	*name_cmd;
 
-	name_cmd = exec->current_cmd->args_expanded[0];
+	name_cmd = cmd->args_expanded[0];
 	if (check_command_exist(name_cmd))
 	{
-		if (exec->current_cmd->cmd_path)
-			free(exec->current_cmd->cmd_path);
-		exec->current_cmd->cmd_path = ft_strdup(name_cmd);
-		if (!exec->current_cmd->cmd_path)
+		if (cmd->cmd_path)
+			free(cmd->cmd_path);
+		cmd->cmd_path = ft_strdup(name_cmd);
+		if (!cmd->cmd_path)
 		{
 			print_error(NULL, NULL, "Memory allocation failed!");
 			cleanup_and_exit(2);
@@ -33,7 +33,7 @@ static int	find_other_in_path(t_exec *exec)
 	return (0);
 }
 
-static int	find_simple_in_path(t_exec *exec, char **paths)
+static int	find_simple_in_path(t_cmd *cmd, char **paths)
 {
 	int		i;
 	char	*name_cmd;
@@ -41,7 +41,7 @@ static int	find_simple_in_path(t_exec *exec, char **paths)
 	char	*tmp;
 
 	i = 0;
-	name_cmd = exec->current_cmd->args_expanded[0];
+	name_cmd = cmd->args_expanded[0];
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
@@ -49,9 +49,9 @@ static int	find_simple_in_path(t_exec *exec, char **paths)
 		free(tmp);
 		if (check_command_exist(path_cmd))
 		{
-			if (exec->current_cmd->cmd_path)
-				free(exec->current_cmd->cmd_path);
-			exec->current_cmd->cmd_path = path_cmd;
+			if (cmd->cmd_path)
+				free(cmd->cmd_path);
+			cmd->cmd_path = path_cmd;
 			return (1);
 		}
 		free(path_cmd);
@@ -88,10 +88,10 @@ static int	command_permission(char *name_cmd)
 	return (1);
 }
 
-static int	apply_path(t_exec *exec, char **paths)
+static int	apply_path(t_cmd *cmd, char **paths)
 {
-	if (find_simple_in_path(exec, paths))
-		return (command_permission(exec->current_cmd->cmd_path));
+	if (find_simple_in_path(cmd, paths))
+		return (command_permission(cmd->cmd_path));
 	else
 		return (0);
 }
@@ -103,15 +103,17 @@ static int	apply_path(t_exec *exec, char **paths)
  * @param access_mode: F_OK (existence) ou X_OK (exécutable)
  * @return: 1 si trouvé, 0 sinon
  */
-int	apply_cmd_path(t_exec *exec)
+int	apply_cmd_path(t_cmd *cmd, t_exec * exec)
 {
 	char	**paths;
 	int		result;
 
-	if (exec->current_cmd->state_path != PATH_SIMPLE)
+	if (!cmd)
+		return (0);
+	if (cmd->state_path != PATH_SIMPLE)
 	{
-		if (find_other_in_path(exec))
-			return (command_permission(exec->current_cmd->cmd_path));
+		if (find_other_in_path(cmd))
+			return (command_permission(cmd->cmd_path));
 		else
 			return (0);
 	}
@@ -126,10 +128,10 @@ int	apply_cmd_path(t_exec *exec)
 		if (!paths || !paths[0])
 		{
 			free_array(paths);
-			exec->current_cmd->cmd_path = NULL;
+			cmd->cmd_path = NULL;
 			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
 		}
-		result = apply_path(exec, paths);
+		result = apply_path(cmd, paths);
 		free_array(paths);
 		return (result);
 	}

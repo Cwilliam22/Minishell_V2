@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-static void	child_process(t_exec *exec)
+static void	child_process(t_cmd *cmd, t_exec *exec)
 {
 	exec->env_copy = env_to_string(exec->shell->env);
-	if (access(exec->current_cmd->cmd_path, X_OK) == 0)
+	if (access(cmd->cmd_path, X_OK) == 0)
 	{
-		execve(exec->current_cmd->cmd_path, exec->current_cmd->args_expanded,
+		execve(cmd->cmd_path, cmd->args_expanded,
 			exec->env_copy);
-		print_error(exec->current_cmd->cmd_path, NULL, "execve failed");
+		print_error(cmd->cmd_path, NULL, "execve failed");
 	}
 	else
 	{
-		print_error(exec->current_cmd->cmd_path, exec->current_cmd->args_expanded[1],
+		print_error(cmd->cmd_path, cmd->args_expanded[1],
 			"Permission denied");
 	}
 }
@@ -42,17 +42,17 @@ static int	parent_process(pid_t pid)
 	return (exit_code);
 }
 
-int	execute_externe(t_exec *exec)
+int	execute_externe(t_cmd *cmd, t_exec *exec)
 {
 	pid_t	pid;
 
-	update_state_path(exec);
-	if (!apply_cmd_path(exec))
+	update_state_path(cmd);
+	if (!apply_cmd_path(cmd, exec))
 		return (exec->shell->env->last_exit_status);
 	pid = fork();
 	if (pid == 0)
 	{
-		child_process(exec);
+		child_process(cmd, exec);
 		exit(126);
 	}
 	else if (pid > 0)

@@ -263,7 +263,7 @@ int			builtin_unset(t_exec *exec);
 
 /* builtins */
 int			is_builtin(t_cmd *cmd);
-int			execute_builtin(t_exec *exec);
+int			execute_builtin(t_cmd *cmd, t_exec *exec);
 /* ==================================== DEBUG ============================== */
 /*Debug commands */
 void		print_commands(t_cmd *commands);
@@ -296,10 +296,11 @@ int			ft_shlvl(t_shell *shell);
 
 /* ============================= EXECUTION ================================== */
 /* Exec_externe */
-int			execute_externe(t_exec *exec);
+int			execute_externe(t_cmd *cmd, t_exec *exec);
 
 /* Exec_single_cmd */
-void		execute_single_command(t_exec *exec);
+int			execute_direct(t_cmd *cmd, t_exec *exec);
+void		execute_single_command(t_cmd *cmd, t_exec *exec);
 
 /* Exec_utils */
 t_exec		*create_exec(t_shell *shell);
@@ -317,7 +318,7 @@ int			free_pipes(int **pipes, t_exec *exec);
 void		close_pipes(int **pipes, t_exec *exec);
 
 /* Pipe */
-void		handle_pipeline(t_exec *exec);
+void		handle_pipeline(t_cmd *cmd, t_exec *exec);
 
 /* Heredoc */
 t_heredoc	*create_heredoc(char *delimiter, int quoted);
@@ -325,7 +326,7 @@ int			handle_heredoc(char *delimiter);
 void		free_heredoc(t_heredoc *heredoc);
 
 /* Redir */
-int			apply_redirections(t_exec *exec);
+int			apply_redirections(t_cmd *cmd);
 int			has_redirections(t_cmd *commands);
 
 /* ============================= EXPAND ==================================== */
@@ -427,10 +428,10 @@ int			check_args(t_exec *exec);
 int			get_nb_command_args(t_cmd *commands);
 
 /* cmd_check */
-int			apply_cmd_path(t_exec *exec);
+int			apply_cmd_path(t_cmd *cmd, t_exec *exec);
 
 /* Cmd_utils */
-int			update_state_path(t_exec *exec);
+int			update_state_path(t_cmd *cmd);
 int			check_command_exist(char *name);
 
 /* Error */
