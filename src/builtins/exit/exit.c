@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 13:54:22 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/06 13:23:13 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/13 12:33:46 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/13 13:30:10 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,15 @@ int	builtin_exit(t_exec *exec)
 
 	args = exec->shell->commands->args_expanded;
 	printf("exit\n");
-	if (!args[1])
+	/*if (exec->nb_arg > 1
+		&& ft_strchr(exec->shell->commands->args[1], '\"') != NULL)
 	{
-		if (exec->nb_arg > 1
-			&& ft_strchr(exec->shell->commands->args[1], '\"') != NULL)
-		{
-			print_error("exit", "", "numeric argument required");
-			cleanup_all(exec);
-			exit(2);
-		}
-		else
-			exit_code = exec->shell->env->last_exit_status;
-	}
+		print_error("exit", "", "numeric argument required");
+		cleanup_all(exec);
+		exit(2);
+	}*/
+	if (!args[1])
+		exit_code = exec->shell->env->last_exit_status;
 	else if (args[2])
 	{
 		print_error("exit", NULL, "too many arguments");

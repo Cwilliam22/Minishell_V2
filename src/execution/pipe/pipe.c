@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 12:55:38 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/12 20:35:05 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/13 11:39:57 by alfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,13 @@
 static void	setup_child_pipes_and_redir(int i, int **pipes, t_exec *exec)
 {
 	if (i == 0 && exec->nb_process > 1)
-	{
 		dup2(pipes[i][1], STDOUT_FILENO);
-		close(pipes[i][1]);
-	}
 	else if (i == exec->nb_process - 1 && exec->nb_process > 1)
-	{
 		dup2(pipes[i - 1][0], STDIN_FILENO);
-		close(pipes[i - 1][0]);
-	}
 	else if (i > 0 && i < exec->nb_process - 1)
 	{
 		dup2(pipes[i - 1][0], STDIN_FILENO);
-		close(pipes[i - 1][0]);
 		dup2(pipes[i][1], STDOUT_FILENO);
-		close(pipes[i][1]);
 	}
 	close_pipes(pipes, exec);
 }

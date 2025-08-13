@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 01:32:04 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 01:43:21 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/13 12:32:06 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/13 12:32:22 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ int	builtin_echo(t_exec *exec)
 	if (ft_strncmp("-n", arg[1], 2) == 0)
 	{
 		i = skip_n(arg);
-		if (i == -1)
-			return (1);
-		if (!ft_printf_arg(arg, i, 1))
+		if (i == -1 || !ft_printf_arg(arg, i, 1))
 			return (1);
 	}
 	else
