@@ -57,6 +57,7 @@ void	process_input(t_shell *shell)
 		tokenize_and_parse(shell);
 		expand_commands(shell);
 		print_commands_expanded(shell->commands);
+		//heredoc(.......................);
 		execute_commands(shell);
 		free_commands(shell->commands);
 		shell->commands = NULL;

@@ -30,7 +30,7 @@ t_redir	*create_redirection(int type, char *target)
 	if (type == REDIR_HEREDOC)
 	{
 		redir->file = NULL;
-		redir->heredoc = create_heredoc(target, 0);
+		redir->heredoc = create_heredoc(target, single_quote(target));
 		if (!redir->heredoc)
 			return (free(redir), NULL);
 	}
@@ -41,6 +41,7 @@ t_redir	*create_redirection(int type, char *target)
 			return (free(redir), NULL);
 		redir->heredoc = NULL;
 	}
+	redir->nb_hd = 0;
 	return (redir);
 }
 

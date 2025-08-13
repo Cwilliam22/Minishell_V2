@@ -120,6 +120,7 @@ typedef struct s_heredoc
 	char	*content;
 	int		quoted_delimiter;
 	int		fd;
+	struct s_heredoc	*next;
 }	t_heredoc;
 
 /* Redirection structure */
@@ -130,6 +131,7 @@ typedef struct s_redir
 	t_heredoc		*heredoc;
 	int				fd_in;
 	int				fd_out;
+	int				nb_hd;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -344,6 +346,8 @@ char		*process_unquoted_char(char *result, char *str,
 char		*extract_unquoted_section(char *str, int *index);
 char		*process_quoted_section(char *result, char *str,
 				int *index, t_shell *shell);
+int			single_quote(char *str);
+
 
 /* Quotes utilities */
 int			find_matching_quote(char *str, int start);

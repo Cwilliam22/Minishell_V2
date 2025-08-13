@@ -94,3 +94,19 @@ char	*process_quoted_section(char *result, char *str,
 	*index = quote_end + 1;
 	return (result);
 }
+
+int	single_quote(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'')
+			return (1);
+		i++;
+	}
+	return (0);
+}
