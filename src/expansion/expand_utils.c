@@ -79,40 +79,23 @@ void	expand_redirections(t_redir *redirections, t_shell *shell)
  * @param cmd: Command to expand
  * @param shell: Shell context
  */
-void expand_command_args(t_cmd *cmd, t_shell *shell)
+void	expand_command_args(t_cmd *cmd, t_shell *shell)
 {
-	int i, original_count, valid_count;
-	char **old_args, **new_args;
-	char *expanded;
+	int		i;
+	int		j;
+	char	*expanded;
+	int		size;
 
-	if (!cmd || !cmd->args)
-		return ;
-	old_args = cmd->args;
-	original_count = 0;
-	while (old_args[original_count])
-		original_count++;
-	new_args = safe_malloc(sizeof(char*) * (original_count + 1));
-	valid_count = 0;
-	for (i = 0; i < original_count; i++)
+	i = 0;
+	j = 0;
+	size = get_nb_command_args(cmd);
+	cmd->args_expanded = (char **)safe_malloc(sizeof(char *) * (size + 1));
+	while (cmd->args[i])
 	{
-		if (!ft_strchr(old_args[i], '='))
-		{
-			expanded = handle_quotes(old_args[i], shell);
-			if (ft_strcmp(expanded, "") != 0)
-			{
-				new_args[valid_count] = expanded;
-				valid_count++;
-			}
-			else
-			{
-				free(expanded);
-			}
-		}
-		else
-		{
-			new_args[valid_count++] = ft_strdup(old_args[i]);
-		}
+		expanded = handle_quotes(cmd->args[i], shell);
+		if (expanded)
+			cmd->args_expanded[j++] = expanded;
+		i++;
 	}
-	new_args[valid_count] = NULL;
-	cmd->args_expanded = new_args;
+	cmd->args_expanded[j] = NULL;
 }
