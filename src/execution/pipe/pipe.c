@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/11 12:55:38 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/13 11:39:57 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/14 11:43:48 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 11:43:48 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 	while (i < exec->nb_process && current_cmd)
 	{
 		pids[i] = fork();
+		sig_core_dump_parent_signal();
 		if (pids[i] == 0)
 		{
+			child_signal();
 			setup_child_pipes_and_redir(i, pipes, exec);
 			execute_single_command(current_cmd, exec);
 			free_pipes(pipes, exec);
@@ -106,4 +108,5 @@ void	handle_pipeline(t_cmd *cmd, t_exec *exec)
 	wait_all_child(exec, pids);
 	free_pipes(pipes, exec);
 	free(pids);
+	parent_signal();
 }

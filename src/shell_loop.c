@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/13 13:45:33 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/13 13:46:05 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/14 11:18:50 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 11:18:50 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	handle_iteration(t_shell *shell)
 		set_exit_status(SUCCESS);
 		return (0);
 	}
+	handle_signal();
 	process_input(shell);
 	if (shell->input_line && shell->input_line[0] != '\0')
 	{

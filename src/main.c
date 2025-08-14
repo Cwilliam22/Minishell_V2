@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 16:55:32 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 17:13:05 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/14 11:00:25 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 11:00:25 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	shell = setup_shell(envp);
 	if (!shell)
 		return (GENERAL_ERROR);
+	parent_signal();
 	run_shell_loop(shell);
 	exit_code = shell->env->last_exit_status;
 	cleanup_shell(shell);

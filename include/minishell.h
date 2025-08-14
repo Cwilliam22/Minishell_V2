@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/31 16:35:19 by marvin            #+#    #+#             */
-/*   Updated: 2025/05/31 16:35:19 by marvin           ###   ########.fr       */
+/*   Created: 2025/08/14 11:43:19 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 11:43:19 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,6 +398,21 @@ int			count_words(t_token *tokens);
 t_cmd		*parse_tokens(t_token *tokens);
 
 /* ============================= SIGNALS ================================== */
+/* Child */
+void		heredoc_child_signal(void);
+void		child_signal(void);
+void		handler_child_sigint(int sig);
+
+/* Parent */
+void		parent_signal(void);
+void		heredoc_parent_signal(void);
+void		sig_core_dump_parent_signal(void);
+
+/* Signals */
+void		handle_signal(void);
+void		handle_sigint(int sig);
+void		handle_sigquit(int sig);
+void		handle_signal_heredoc(int sig);
 
 /* ============================= STRUCTURE ================================ */
 /* Append assignement */

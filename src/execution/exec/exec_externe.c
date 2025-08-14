@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_externe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 04:56:28 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 17:55:57 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/14 11:58:55 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 12:01:51 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,24 @@ static int	parent_process(pid_t pid)
 int	execute_externe(t_cmd *cmd, t_exec *exec)
 {
 	pid_t	pid;
+	int		result;
 
 	update_state_path(cmd);
 	if (!apply_cmd_path(cmd, exec))
 		return (exec->shell->env->last_exit_status);
 	pid = fork();
+	sig_core_dump_parent_signal();
 	if (pid == 0)
 	{
 		child_process(cmd, exec);
-		exit(126);
+		exit(COMMAND_NOT_EXECUTABLE);
 	}
 	else if (pid > 0)
-		return (parent_process(pid));
+	{
+		result = parent_process(pid);
+		parent_signal();
+		return (result);
+	}
 	else
-		return (print_error(NULL, NULL, "Fork failed"), 1);
+		return (parent_signal(), print_error(NULL, NULL, "Fork failed"), 1);
 }

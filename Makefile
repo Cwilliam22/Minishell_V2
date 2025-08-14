@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/05/31 17:40:12 by root             ###   ########.fr        #
+#    Updated: 2025/08/14 11:01:08 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,9 @@ PARSER_SRCS	=	parser/check_token_syntax.c \
 				parser/parser_utils.c \
 				parser/parser.c \
 
-SIGNAL_SRCS = 
+SIGNAL_SRCS = 	signals/signal_child.c \
+				signals/signal_parent.c \
+				signals/signals.c
 
 STRUCT_SRCS =	structures/append_assignment.c \
 				structures/assignment.c \
