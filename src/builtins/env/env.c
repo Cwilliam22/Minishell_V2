@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 13:31:06 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/06 17:23:53 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/14 15:46:00 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 15:46:31 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ int	builtin_env(t_exec *exec)
 	arg = exec->shell->commands->args_expanded;
 	pwd = getcwd(NULL, 0);
 	new_command = ft_strjoin(pwd, "/env");
+	free(pwd);
 	set_env_var("_", new_command, exec->shell->env, 0);
+	free(new_command);
 	if (exec->nb_arg == 1)
 	{
 		print_env(exec->shell->env);
