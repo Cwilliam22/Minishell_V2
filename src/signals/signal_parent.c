@@ -14,7 +14,6 @@
 
 void	parent_signal(void)
 {
-	printf("DEBUG: parent_signal()\n");
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -27,7 +26,6 @@ void	heredoc_parent_signal(void)
 
 void	sig_core_dump_parent_signal(void)
 {
-	printf("DEBUG: sig_core_dump_parent_signal()\n");
 	signal(SIGINT, handler_child_sigint);
 	signal(SIGQUIT, handle_sigquit);
 }

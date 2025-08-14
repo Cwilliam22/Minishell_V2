@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 11:56:32 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 11:56:32 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/14 12:18:02 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 12:18:02 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	heredoc_child_signal(void)
 
 void	child_signal(void)
 {
-	printf("DEBUG: child_signal()\n");
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
