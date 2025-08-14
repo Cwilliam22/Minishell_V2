@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 11:58:55 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 12:01:51 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/14 16:40:29 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 16:40:35 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	execute_externe(t_cmd *cmd, t_exec *exec)
 	pid_t	pid;
 	int		result;
 
+	exec->current_cmd = cmd;
 	update_state_path(cmd);
 	if (!apply_cmd_path(cmd, exec))
 		return (exec->shell->env->last_exit_status);

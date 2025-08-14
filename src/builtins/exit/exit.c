@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/13 12:33:46 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/13 13:30:10 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/14 16:50:07 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 16:50:07 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	builtin_exit(t_exec *exec)
 	else if (args[2])
 	{
 		print_error("exit", NULL, "too many arguments");
-		return (1);
+		return (2);
 	}
 	else
 		exit_code = handle_single_arg(args[1]);

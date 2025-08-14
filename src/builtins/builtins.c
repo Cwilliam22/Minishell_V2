@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 15:48:14 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 13:22:52 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/14 16:29:26 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/14 16:30:14 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_builtin(t_cmd *cmd)
 		return (0);
 	while (builtins[i])
 	{
-		if (ft_strcmp(cmd->args[0], builtins[i]) == 0)
+		if (ft_strcmp(args[0], builtins[i]) == 0)
 			return (1);
 		i++;
 	}
