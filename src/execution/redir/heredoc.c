@@ -34,6 +34,7 @@ t_heredoc	*create_heredoc(char *delimiter, int quoted)
 	heredoc->content = NULL;
 	heredoc->quoted_delimiter = quoted;
 	heredoc->fd = -1;
+	heredoc->id = 0;
 	return (heredoc);
 }
 
@@ -54,51 +55,3 @@ void	free_heredoc(t_heredoc *heredoc)
 	free(heredoc);
 }
 
-static int	write_heredoc_to_pipe(char *delimiter, int write_fd)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-			break ;
-		printf("delimiter: %s\n", delimiter);
-		printf("line : %s\n", line);
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		if (write(write_fd, line, ft_strlen(line)) == -1
-			|| write(write_fd, "\n", 1) == -1)
-		{
-			perror("write heredoc");
-			free(line);
-			return (1);
-		}
-		free(line);
-	}
-	return (0);
-}
-
-int	handle_heredoc(char *delimiter)
-{
-	int	pipe_fd[2];
-
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("pipe");
-		return (1);
-	}
-	if (write_heredoc_to_pipe(delimiter, pipe_fd[1]))
-	{
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
-		return (1);
-	}
-	close(pipe_fd[1]);
-	if (dup_and_close(pipe_fd[0], STDIN_FILENO, "heredoc"))
-		return (1);
-	return (0);
-}

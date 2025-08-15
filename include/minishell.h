@@ -40,7 +40,7 @@
 /*                                 DEFINES                                    */
 /* ************************************************************************** */
 
-# define PROMPT "\033[32mminishell$> \033[0m"
+# define PROMPT "minishell$> "
 # define MAX_PATH 4096
 # define MAX_ARGS 1024
 
@@ -118,9 +118,9 @@ typedef struct s_heredoc
 {
 	char	*delimiter;
 	char	*content;
+	int		id;
 	int		quoted_delimiter;
 	int		fd;
-	struct s_heredoc	*next;
 }	t_heredoc;
 
 /* Redirection structure */

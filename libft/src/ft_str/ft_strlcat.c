@@ -27,7 +27,7 @@ DESCRIPTION
 	minated string src to dst, NUL-terminating the result.
 
 	The strlcat() function appends the NUL-terminated string src to the end
-	of dst. It will append at most size - strlen(dst) - 1 bytes, NUL-termi‐
+	of dst. It will append at most size - ft_strlen(dst) - 1 bytes, NUL-termi‐
 	nating the result.
 
 RETURN VALUES

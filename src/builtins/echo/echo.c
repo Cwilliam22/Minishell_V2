@@ -23,7 +23,7 @@ static int	skip_n(char **arg)
 		return (-1);
 	while (arg[j])
 	{
-		if (strncmp("-n", arg[i], 2) == 0)
+		if (ft_strncmp("-n", arg[i], 2) == 0)
 			i++;
 		j++;
 	}
@@ -56,9 +56,9 @@ static void	print_assignments(t_ass *assignments)
 	head = assignments;
 	while (head)
 	{
-		write(STDOUT_FILENO, head->key, strlen(head->key));
+		write(STDOUT_FILENO, head->key, ft_strlen(head->key));
 		write(STDOUT_FILENO, "=", 1);
-		write(STDOUT_FILENO, head->value, strlen(head->value));
+		write(STDOUT_FILENO, head->value, ft_strlen(head->value));
 		write(STDOUT_FILENO, " ", 1);
 		head = head->next;
 	}

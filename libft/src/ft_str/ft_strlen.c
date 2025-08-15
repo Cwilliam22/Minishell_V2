@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 /**
- * @brief The strlen() function computes the length of the string s. The
+ * @brief The ft_strlen() function computes the length of the string s. The
  * strnlen() function attempts to compute the length of s, but never scans
  * beyond the first maxlen bytes of s.
  * @param s The string to compute the length.
- * @return The strlen() function returns the number of characters that
+ * @return The ft_strlen() function returns the number of characters that
  * precede the terminating NUL character. The strnlen() function returns
- * either the same result as strlen() or maxlen, whichever is smaller.
+ * either the same result as ft_strlen() or maxlen, whichever is smaller.
 */
 #include "libft.h"
 
