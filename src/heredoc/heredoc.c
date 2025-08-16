@@ -3,6 +3,58 @@
 
 // creer get_exec()
 
+int	first_and_last_quotes(char *str)
+{
+	int first;
+	int last;
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			first = i;
+		i++;
+	}
+	while (i > 0)
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			last = i;
+		i--;
+	}
+	if ((str[first] == str[last]) && (last != first))
+		return (0);
+	return (HALF_QUOTED);
+}
+
+int	odd_quotes(int s_quote, int d_quote, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (first_and_last_quotes(str) == HALF_QUOTED)
+		return (HALF_QUOTED);
+	while (str[i])
+	{
+		if (str[i] == '\'')
+		{
+			if (s_quote % 2 != 0)
+				return (HALF_QUOTED);
+			else
+				return (SIMPLE_QUOTED);
+		}
+		if (str[i] == '\"')
+		{
+			if (d_quote % 2 != 0)
+				return (HALF_QUOTED);
+			else
+				return (DOUBLE_QUOTED);
+		}
+		i++;
+	}
+	return (NO_QUOTED);
+}
+
 int	type_of_quote(const char *str)
 {
 	int	i;
@@ -16,16 +68,16 @@ int	type_of_quote(const char *str)
 	double_quote = 0;
 	while (str[i])
 	{
-		if (str[i] != '\'')
+		if (str[i] == '\'')
 			single_quote++;
-		if (str[i] != '\"')
+		else if (str[i] == '\"')
 			double_quote++;
 		i++;
 	}
 	if (single_quote == 0 && double_quote == 0)
 		return (NO_QUOTED);
-	if (single_quote % 2 == 0 && double_quote % 2 == 0)
-		return (QUOTED);
+	else if (single_quote % 2 == 0 || double_quote % 2 == 0)
+		return (odd_quotes(single_quote, double_quote, str));
 	else
 		return (HALF_QUOTED);
 }
@@ -34,16 +86,22 @@ int	unquote_delimiter(t_heredoc *heredoc)
 {
 	char	*tmp;
 
-	tmp = ft_strtrim(heredoc->delimiter, "\'");
-	if (!tmp)
-		return (0);
-	free(heredoc->delimiter);
-	heredoc->delimiter = tmp;
-	tmp = ft_strtrim(heredoc->delimiter, "\"");
-	if (!tmp)
-		return (0);
-	free(heredoc->delimiter);
-	heredoc->delimiter = tmp;
+	if (heredoc->quoted_delimiter == DOUBLE_QUOTED)
+	{
+		tmp = ft_strtrim(heredoc->delimiter, "\"");
+		if (!tmp)
+			return (0);
+		free(heredoc->delimiter);
+		heredoc->delimiter = tmp;
+	}
+	if (heredoc->quoted_delimiter == SIMPLE_QUOTED)
+	{
+		tmp = ft_strtrim(heredoc->delimiter, "\'");
+		if (!tmp)
+			return (0);
+		free(heredoc->delimiter);
+		heredoc->delimiter = tmp;
+	}
 	return (1);
 }
 
@@ -54,7 +112,7 @@ int	setup_for_heredoc(t_heredoc *heredoc)
 	heredoc->quoted_delimiter = type_of_quote(heredoc->delimiter);
 	if (heredoc->quoted_delimiter != HALF_QUOTED)
 	{
-		if (heredoc->quoted_delimiter == NO_QUOTED)
+		if (heredoc->quoted_delimiter != NO_QUOTED)
 		{
 			if (!unquote_delimiter(heredoc))
 				return (0);
@@ -71,19 +129,24 @@ int	setup_for_heredoc(t_heredoc *heredoc)
 int	create_file(t_redir *redir)
 {
 	char	*filename;
+	char	*id;
 
 	if (!redir || !redir->heredoc)
 		return (0);
-	filename = ft_strjoin("/tmp/heredoc_", ft_itoa(redir->heredoc->id));
+	id = ft_itoa(redir->heredoc->id);
+	if (!id)
+		return (0);
+	filename = ft_strjoin("/tmp/heredoc_", id);
 	if (!filename)
 		return (0);
+	free(id);
 	redir->heredoc->fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	free(filename);
 	if (redir->heredoc->fd < 0)
 	{
 		print_error(NULL, NULL, "failed to create heredoc file");
-		return (set_exit_status(1), 0);
+		return (free(filename), set_exit_status(1), 0);
 	}
+	redir->heredoc->path = filename;
 	return (1);
 }
 

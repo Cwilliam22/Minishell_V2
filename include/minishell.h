@@ -46,7 +46,9 @@
 
 # define NO_QUOTED 0
 # define HALF_QUOTED 1
-# define QUOTED 2
+# define DOUBLE_QUOTED 2
+# define SIMPLE_QUOTED 3
+
 
 /* ************************************************************************** */
 /*                                    ENUM                                    */
@@ -122,6 +124,7 @@ typedef struct s_heredoc
 {
 	char	*delimiter;
 	char	*content;
+	char	*path; // NEW
 	int		id;
 	int		quoted_delimiter;
 	int		fd;
