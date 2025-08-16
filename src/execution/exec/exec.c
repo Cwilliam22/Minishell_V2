@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 13:49:01 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/16 13:49:07 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/16 13:56:50 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/16 13:57:09 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	execute_commands(t_shell *shell)
 	if (!exec)
 		return ;
 	update_var_path(exec);
-	if (!shell->commands || !shell->commands->args_expanded)
+	if (!shell->commands || !shell->commands->args_expanded
+		|| !shell->commands->args_expanded[0])
 	{
 		if(shell->commands->redirections)
 			handle_redirection_only(shell->commands);
