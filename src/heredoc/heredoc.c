@@ -3,13 +3,15 @@
 
 // creer get_exec()
 
-int	is_fully_quoted(const char *str)
+int	type_of_quote(const char *str)
 {
 	int	i;
 	int	single_quote;
 	int	double_quote;
 
 	i = 0;
+	if (!str)
+		return (0);
 	single_quote = 0;
 	double_quote = 0;
 	while (str[i])
@@ -20,21 +22,18 @@ int	is_fully_quoted(const char *str)
 			double_quote++;
 		i++;
 	}
+	if (single_quote == 0 && double_quote == 0)
+		return (NO_QUOTED);
 	if (single_quote % 2 == 0 && double_quote % 2 == 0)
-		return (1);
+		return (QUOTED);
 	else
-		return (0);
+		return (HALF_QUOTED);
 }
 
 int	unquote_delimiter(t_heredoc *heredoc)
 {
 	char	*tmp;
 
-	if (!is_fully_quoted(heredoc->delimiter))
-	{
-		print_error(NULL, NULL, "heredoc delimiter not fully quoted");
-		return (set_exit_status(1), 0);
-	}
 	tmp = ft_strtrim(heredoc->delimiter, "\'");
 	if (!tmp)
 		return (0);
@@ -50,12 +49,21 @@ int	unquote_delimiter(t_heredoc *heredoc)
 
 int	setup_for_heredoc(t_heredoc *heredoc)
 {
-	if (!heredoc)
+	if (!heredoc || !heredoc->delimiter)
 		return (0);
-	if (heredoc->quoted_delimiter)
+	heredoc->quoted_delimiter = type_of_quote(heredoc->delimiter);
+	if (heredoc->quoted_delimiter != HALF_QUOTED)
 	{
-		if (!unquote_delimiter(heredoc))
-			return (0);
+		if (heredoc->quoted_delimiter == NO_QUOTED)
+		{
+			if (!unquote_delimiter(heredoc))
+				return (0);
+		}
+	}
+	else
+	{
+		print_error(NULL, NULL, "heredoc delimiter not fully quoted");
+		return (set_exit_status(2), 0);
 	}
 	return (1);
 }
@@ -127,7 +135,7 @@ char *expand_vars(char *line)
 	{
 		if (line[i] == '$')
 		{
-			result = dollar_case(line, &i, &result);
+			result = dollar_case(line, &i, result);
 		}
 		else
 		{
@@ -159,6 +167,7 @@ int	read_and_write_heredoc(t_redir *redir)
 
 	while (1)
 	{
+		printf("I'm in while(1) !!! \n");
 		line = readline("> ");
 		if (!line)
 		{
@@ -173,8 +182,8 @@ int	read_and_write_heredoc(t_redir *redir)
 		}
 		expand_heredoc_content(redir, line);
 		free(line);
-
 	}
+	return (1);
 }
 
 int	process_hd(t_redir *redir)
@@ -185,27 +194,31 @@ int	process_hd(t_redir *redir)
 	pid = fork();
 	if (pid == 0)
 	{
+		printf("I'm in the child process \n");
 		read_and_write_heredoc(redir);
-		close_and_exit();
+		//close_and_exit();
 	}
+	return (1);
 }
 
-void	handle_heredoc(t_redir *redir)
+void	heredoc(t_redir *redir)
 {
-	t_shell *shell;
 	t_redir *head;
 
-	shell = get_shell(NULL);
 	if (!redir)
 		return ;
 	head = redir;
-	while (head && head->type == REDIR_HEREDOC)
+	while (head)
 	{
-		setup_for_heredoc(head->heredoc);
-		if (!create_file(head))
-			return ;
-		if (!process_hd(head))
-			return ;
+		if (head->type == REDIR_HEREDOC)
+		{
+			if (!setup_for_heredoc(head->heredoc))
+				return ;
+			if (!create_file(head))
+				return ;
+			if (!process_hd(head))
+				return ;
+		}
 		head = head->next;
 	}
 }
