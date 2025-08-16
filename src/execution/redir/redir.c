@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 11:36:58 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 05:47:29 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/16 11:46:05 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/16 11:46:05 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	apply_redirections(t_cmd *cmd)
 			ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
 					| O_APPEND, STDOUT_FILENO);
 		else if (curr->type == REDIR_HEREDOC)
-			ret = handle_heredoc(curr->heredoc->delimiter);
+			ret = 0;
 		else
 			ret = 0;
 		if (ret)

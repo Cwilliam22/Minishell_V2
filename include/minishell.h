@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 11:43:19 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 11:43:19 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/16 13:43:15 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/16 13:43:15 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,6 +326,9 @@ void		handle_pipeline(t_cmd *cmd, t_exec *exec);
 t_heredoc	*create_heredoc(char *delimiter, int quoted);
 int			handle_heredoc(char *delimiter);
 void		free_heredoc(t_heredoc *heredoc);
+
+/* Only redir */
+void		handle_redirection_only(t_cmd *cmd);
 
 /* Redir */
 int			apply_redirections(t_cmd *cmd);

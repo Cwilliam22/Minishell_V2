@@ -190,7 +190,7 @@ int	process_hd(t_redir *redir)
 	}
 }
 
-void	heredoc(t_redir *redir)
+void	handle_heredoc(t_redir *redir)
 {
 	t_shell *shell;
 	t_redir *head;

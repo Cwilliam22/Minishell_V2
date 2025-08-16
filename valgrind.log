@@ -1,179 +1,44 @@
-==1943481== Memcheck, a memory error detector
-==1943481== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1943481== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1943481== Command: ./minishell
-==1943481== Parent PID: 1943477
-==1943481== 
-==1943529== 
-==1943529== FILE DESCRIPTORS: 11 open (3 std) at exit.
-==1943529== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open file descriptor 45: /dev/ptmx
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open AF_UNIX socket 44: <unknown>
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open file descriptor 43: /dev/ptmx
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open AF_UNIX socket 42: <unknown>
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250814T132225/ptyhost.log
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open AF_UNIX socket 24: <unknown>
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open file descriptor 2: /dev/pts/4
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== Open file descriptor 1:
-==1943529==    at 0x49DD01B: dup2 (syscall-template.S:120)
-==1943529==    by 0x404C73: setup_child_pipes_and_redir (pipe.c:18)
-==1943529==    by 0x404B74: exec_pipe (pipe.c:44)
-==1943529==    by 0x404A7A: handle_pipeline (pipe.c:101)
-==1943529==    by 0x40470F: execute_commands (exec.c:33)
-==1943529==    by 0x401851: process_input (shell_loop.c:62)
-==1943529==    by 0x401986: handle_iteration (shell_loop.c:85)
-==1943529==    by 0x401A22: run_shell_loop (shell_loop.c:104)
-==1943529==    by 0x40162C: main (main.c:78)
-==1943529== 
-==1943529== Open file descriptor 0: /dev/pts/4
-==1943529==    <inherited from parent>
-==1943529== 
-==1943529== 
-==1943529== HEAP SUMMARY:
-==1943529==     in use at exit: 204,182 bytes in 221 blocks
-==1943529==   total heap usage: 882 allocs, 661 frees, 233,458 bytes allocated
-==1943529== 
-==1943529== LEAK SUMMARY:
-==1943529==    definitely lost: 0 bytes in 0 blocks
-==1943529==    indirectly lost: 0 bytes in 0 blocks
-==1943529==      possibly lost: 0 bytes in 0 blocks
-==1943529==    still reachable: 0 bytes in 0 blocks
-==1943529==         suppressed: 204,182 bytes in 221 blocks
-==1943529== 
-==1943529== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---1943529-- 
---1943529-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,182 bytes in 221 blocks
-==1943529== 
-==1943529== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1943530== 
-==1943530== FILE DESCRIPTORS: 11 open (3 std) at exit.
-==1943530== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 45: /dev/ptmx
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open AF_UNIX socket 44: <unknown>
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 43: /dev/ptmx
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open AF_UNIX socket 42: <unknown>
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250814T132225/ptyhost.log
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open AF_UNIX socket 24: <unknown>
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 2: /dev/pts/4
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 1: /dev/pts/4
-==1943530==    <inherited from parent>
-==1943530== 
-==1943530== Open file descriptor 0:
-==1943530==    at 0x49DD01B: dup2 (syscall-template.S:120)
-==1943530==    by 0x404CB5: setup_child_pipes_and_redir (pipe.c:20)
-==1943530==    by 0x404B74: exec_pipe (pipe.c:44)
-==1943530==    by 0x404A7A: handle_pipeline (pipe.c:101)
-==1943530==    by 0x40470F: execute_commands (exec.c:33)
-==1943530==    by 0x401851: process_input (shell_loop.c:62)
-==1943530==    by 0x401986: handle_iteration (shell_loop.c:85)
-==1943530==    by 0x401A22: run_shell_loop (shell_loop.c:104)
-==1943530==    by 0x40162C: main (main.c:78)
-==1943530== 
-==1943530== 
-==1943530== HEAP SUMMARY:
-==1943530==     in use at exit: 204,182 bytes in 221 blocks
-==1943530==   total heap usage: 907 allocs, 686 frees, 233,990 bytes allocated
-==1943530== 
-==1943530== LEAK SUMMARY:
-==1943530==    definitely lost: 0 bytes in 0 blocks
-==1943530==    indirectly lost: 0 bytes in 0 blocks
-==1943530==      possibly lost: 0 bytes in 0 blocks
-==1943530==    still reachable: 0 bytes in 0 blocks
-==1943530==         suppressed: 204,182 bytes in 221 blocks
-==1943530== 
-==1943530== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---1943530-- 
---1943530-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,182 bytes in 221 blocks
-==1943530== 
-==1943530== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1943481== 
-==1943481== FILE DESCRIPTORS: 11 open (3 std) at exit.
-==1943481== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 45: /dev/ptmx
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open AF_UNIX socket 44: <unknown>
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 43: /dev/ptmx
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open AF_UNIX socket 42: <unknown>
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250814T132225/ptyhost.log
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open AF_UNIX socket 24: <unknown>
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 2: /dev/pts/4
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 1: /dev/pts/4
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== Open file descriptor 0: /dev/pts/4
-==1943481==    <inherited from parent>
-==1943481== 
-==1943481== 
-==1943481== HEAP SUMMARY:
-==1943481==     in use at exit: 208,198 bytes in 222 blocks
-==1943481==   total heap usage: 889 allocs, 667 frees, 237,583 bytes allocated
-==1943481== 
-==1943481== LEAK SUMMARY:
-==1943481==    definitely lost: 0 bytes in 0 blocks
-==1943481==    indirectly lost: 0 bytes in 0 blocks
-==1943481==      possibly lost: 0 bytes in 0 blocks
-==1943481==    still reachable: 0 bytes in 0 blocks
-==1943481==         suppressed: 208,198 bytes in 222 blocks
-==1943481== 
-==1943481== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---1943481-- 
---1943481-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,182 bytes in 221 blocks
---1943481-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
-==1943481== 
-==1943481== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2404059== Memcheck, a memory error detector
+==2404059== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2404059== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2404059== Command: ./minishell
+==2404059== Parent PID: 2404055
+==2404059== 
+==2404059== 
+==2404059== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==2404059== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==2404059==    <inherited from parent>
+==2404059== 
+==2404059== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250816T131246/ptyhost.log
+==2404059==    <inherited from parent>
+==2404059== 
+==2404059== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==2404059==    <inherited from parent>
+==2404059== 
+==2404059== Open file descriptor 2: /dev/pts/0
+==2404059==    <inherited from parent>
+==2404059== 
+==2404059== Open file descriptor 1: /dev/pts/0
+==2404059==    <inherited from parent>
+==2404059== 
+==2404059== Open file descriptor 0: /dev/pts/0
+==2404059==    <inherited from parent>
+==2404059== 
+==2404059== 
+==2404059== HEAP SUMMARY:
+==2404059==     in use at exit: 208,180 bytes in 222 blocks
+==2404059==   total heap usage: 1,057 allocs, 835 frees, 275,150 bytes allocated
+==2404059== 
+==2404059== LEAK SUMMARY:
+==2404059==    definitely lost: 0 bytes in 0 blocks
+==2404059==    indirectly lost: 0 bytes in 0 blocks
+==2404059==      possibly lost: 0 bytes in 0 blocks
+==2404059==    still reachable: 0 bytes in 0 blocks
+==2404059==         suppressed: 208,180 bytes in 222 blocks
+==2404059== 
+==2404059== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--2404059-- 
+--2404059-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--2404059-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==2404059== 
+==2404059== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

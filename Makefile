@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/08/14 11:01:08 by root             ###   ########.fr        #
+#    Updated: 2025/08/16 13:39:16 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ EXEC_SRCS =		execution/exec/exec_externe.c \
 				execution/pipe/pipe_utils.c \
 				execution/pipe/pipe.c \
 				execution/redir/heredoc.c \
+				execution/redir/only_redir.c \
 				execution/redir/redir.c
 
 EXPAND_SRCS =	expansion/expand_utils.c \

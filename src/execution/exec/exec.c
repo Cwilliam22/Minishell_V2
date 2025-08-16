@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/20 23:05:21 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/06 15:11:12 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/16 13:49:01 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/16 13:49:07 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ void	execute_commands(t_shell *shell)
 	if (!exec)
 		return ;
 	update_var_path(exec);
-	if (shell->commands && shell->commands->args_expanded[0])
+	if (!shell->commands || !shell->commands->args_expanded)
+	{
+		if(shell->commands->redirections)
+			handle_redirection_only(shell->commands);
+	}
+	else
 	{
 		cmd = shell->commands;
 		if (exec->nb_process == 1)
