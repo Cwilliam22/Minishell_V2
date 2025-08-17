@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/08/16 13:39:16 by root             ###   ########.fr        #
+#    Updated: 2025/08/17 11:20:47 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,9 +74,9 @@ EXEC_SRCS =		execution/exec/exec_externe.c \
 				execution/exec/exec_single_cmd.c \
 				execution/exec/exec_utils.c \
 				execution/exec/exec.c \
+				execution/heredoc/heredoc.c \
 				execution/pipe/pipe_utils.c \
 				execution/pipe/pipe.c \
-				execution/redir/heredoc.c \
 				execution/redir/only_redir.c \
 				execution/redir/redir.c
 
@@ -104,6 +104,7 @@ SIGNAL_SRCS = 	signals/signal_child.c \
 STRUCT_SRCS =	structures/append_assignment.c \
 				structures/assignment.c \
 				structures/t_cmd_utils.c \
+				structures/t_heredoc.c \
 				structures/t_redir_utils.c \
 
 UTILS_SRCS	= 	utils/check_args.c \

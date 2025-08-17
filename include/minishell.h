@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 13:43:15 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/16 13:43:15 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/17 11:37:08 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:37:08 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@
 # define HALF_QUOTED 1
 # define DOUBLE_QUOTED 2
 # define SIMPLE_QUOTED 3
-
 
 /* ************************************************************************** */
 /*                                    ENUM                                    */
@@ -320,6 +319,9 @@ void		free_var(t_exec *exec);
 /* Exec */
 void		execute_commands(t_shell *shell);
 
+/* Heredoc */
+void		handle_heredoc(t_redir *redir);
+
 /* Pipe_utils */
 void		kill_all_process(pid_t *pids, int count);
 int			create_pipes(t_exec *exec, int ***pipes);
@@ -328,11 +330,6 @@ void		close_pipes(int **pipes, t_exec *exec);
 
 /* Pipe */
 void		handle_pipeline(t_cmd *cmd, t_exec *exec);
-
-/* Heredoc */
-t_heredoc	*create_heredoc(char *delimiter, int quoted);
-int			handle_heredoc(char *delimiter);
-void		free_heredoc(t_heredoc *heredoc);
 
 /* Only redir */
 void		handle_redirection_only(t_cmd *cmd);
@@ -357,7 +354,6 @@ char		*extract_unquoted_section(char *str, int *index);
 char		*process_quoted_section(char *result, char *str,
 				int *index, t_shell *shell);
 int			single_quote(char *str);
-
 
 /* Quotes utilities */
 int			find_matching_quote(char *str, int start);
@@ -444,10 +440,15 @@ void		add_command(t_cmd **head, t_cmd *new_cmd);
 void		free_commands(t_cmd *commands);
 int			get_nb_commands(t_cmd *commands);
 
+/* t_heredoc */
+t_heredoc	*create_heredoc(char *delimiter, int quoted);
+void		free_heredoc(t_heredoc *heredoc);
+
 /* t_redir utils */
 t_redir		*create_redirection(int type, char *target);
 void		add_redirection(t_redir **head, t_redir *new_redir);
 void		free_redirections(t_redir *redirections);
+const char	*get_redir_types(int index);
 
 /* ============================= UTILS ===================================== */
 /* check_args */

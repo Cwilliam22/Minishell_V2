@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   debug_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 15:07:42 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/20 14:16:10 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/17 11:36:37 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:36:37 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * Get string representation of redirection type
- * @param index: Index of the redirection type
- * @return: String representation
- */
-static const char	*get_redir_types(int index)
-{
-	static const char	*redir_types[] = {
-		"REDIR IN (<)", "REDIR OUT (>)",
-		"REDIR APPEND (>>)", "HEREDOC (<<)"
-	};
-
-	return (redir_types[index]);
-}
 
 /**
  * Get string representation of redirection type

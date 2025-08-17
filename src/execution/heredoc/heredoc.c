@@ -3,7 +3,7 @@
 
 // creer get_exec()
 
-int	first_and_last_quotes(char *str)
+int	first_and_last_quotes(const char *str)
 {
 	int first;
 	int last;
@@ -27,7 +27,7 @@ int	first_and_last_quotes(char *str)
 	return (HALF_QUOTED);
 }
 
-int	odd_quotes(int s_quote, int d_quote, char *str)
+int	odd_quotes(int s_quote, int d_quote, const char *str)
 {
 	int	i;
 
@@ -264,7 +264,7 @@ int	process_hd(t_redir *redir)
 	return (1);
 }
 
-void	heredoc(t_redir *redir)
+void	handle_heredoc(t_redir *redir)
 {
 	t_redir *head;
 

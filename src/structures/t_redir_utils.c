@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*   t_redir_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 12:14:56 by root              #+#    #+#             */
-/*   Updated: 2025/07/29 19:37:30 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/17 11:36:42 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:36:50 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,19 @@ void	free_redirections(t_redir *redirections)
 		free(current);
 		current = next;
 	}
+}
+
+/**
+ * Get string representation of redirection type
+ * @param index: Index of the redirection type
+ * @return: String representation
+ */
+const char	*get_redir_types(int index)
+{
+	static const char	*redir_types[] = {
+		"REDIR IN (<)", "REDIR OUT (>)",
+		"REDIR APPEND (>>)", "HEREDOC (<<)"
+	};
+
+	return (redir_types[index]);
 }

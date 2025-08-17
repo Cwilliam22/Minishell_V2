@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 11:46:05 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/16 11:46:05 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/17 11:18:30 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:18:41 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	apply_redirections(t_cmd *cmd)
 			ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
 					| O_APPEND, STDOUT_FILENO);
 		else if (curr->type == REDIR_HEREDOC)
-			ret = 0;
+			handle_heredoc(curr);
 		else
 			ret = 0;
 		if (ret)

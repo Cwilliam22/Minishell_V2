@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 16:42:07 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 16:42:07 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/17 11:34:51 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:34:55 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ void	process_input(t_shell *shell)
 			return ;
 		}
 		tokenize_and_parse(shell);
-		//print_commands(shell->commands);
 		expand_commands(shell);
-		//print_commands_expanded(shell->commands);
-		//heredoc(.......................);
 		execute_commands(shell);
 		free_commands(shell->commands);
 		shell->commands = NULL;

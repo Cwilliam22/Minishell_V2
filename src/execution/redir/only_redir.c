@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 13:43:47 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/16 13:47:09 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/17 11:48:16 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:49:21 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static int	create_empty_file(char *filename)
 {
-	int fd;
-	
+	int	fd;
+
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1) {
+	if (fd == -1)
+	{
 		perror("minishell");
 		return (1);
 	}

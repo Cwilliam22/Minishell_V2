@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 07:38:09 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 18:41:39 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/17 11:39:44 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:39:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static void	init_env_variables(t_env *env, char **envp)
 
 	i = 0;
 	if (!envp)
-	{
-		printf("no env");
 		return ;
-	}
 	while (envp[i])
 	{
 		if (split_assignment(envp[i], &key, &value))

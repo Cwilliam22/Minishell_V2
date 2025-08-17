@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 11:43:48 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 11:43:48 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/17 11:52:42 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/17 11:54:19 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ static void	setup_child_pipes_and_redir(int i, int **pipes, t_exec *exec)
 	close_pipes(pipes, exec);
 }
 
+static void	child_process(t_cmd *current_cmd, t_exec *exec, int i,
+	int **pipes)
+{
+	child_signal();
+	setup_child_pipes_and_redir(i, pipes, exec);
+	execute_single_command(current_cmd, exec);
+}
+
 static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 {
 	int		i;
@@ -40,9 +48,7 @@ static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 		sig_core_dump_parent_signal();
 		if (pids[i] == 0)
 		{
-			child_signal();
-			setup_child_pipes_and_redir(i, pipes, exec);
-			execute_single_command(current_cmd, exec);
+			child_process(current_cmd, exec, i, pipes);
 			free_pipes(pipes, exec);
 			free(pids);
 			exit_status = exec->shell->env->last_exit_status;
