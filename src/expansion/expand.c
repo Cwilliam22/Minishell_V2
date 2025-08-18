@@ -30,7 +30,7 @@ void	expand_commands(t_shell *shell)
 			expand_assignments(current->assignments, shell);
 		if (current->redirections)
 			expand_redirections(current->redirections, shell);
-		if(current->args)
+		if (current->args)
 			expand_command_args(current, shell);
 		current = current->next;
 	}

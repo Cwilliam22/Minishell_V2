@@ -117,6 +117,8 @@ char	*handle_quotes(char *str, t_shell *shell)
 		else
 			result = process_unquoted_char(result, str, &i, shell);
 	}
+	if (ft_strcmp(result, "") == 0)
+		return (NULL);
 	return (result);
 }
 
