@@ -321,6 +321,9 @@ void		execute_commands(t_shell *shell);
 
 /* Heredoc */
 void		handle_heredoc(t_redir *redir);
+int			setup_for_heredoc(t_heredoc *heredoc);
+int			ft_iter_char(const char *str, int c);
+
 
 /* Pipe_utils */
 void		kill_all_process(pid_t *pids, int count);

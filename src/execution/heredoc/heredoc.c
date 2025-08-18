@@ -1,131 +1,6 @@
 
 #include "minishell.h"
 
-// creer get_exec()
-
-int	first_and_last_quotes(const char *str)
-{
-	int first;
-	int last;
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			first = i;
-		i++;
-	}
-	while (i > 0)
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			last = i;
-		i--;
-	}
-	if ((str[first] == str[last]) && (last != first))
-		return (0);
-	return (HALF_QUOTED);
-}
-
-int	odd_quotes(int s_quote, int d_quote, const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (first_and_last_quotes(str) == HALF_QUOTED)
-		return (HALF_QUOTED);
-	while (str[i])
-	{
-		if (str[i] == '\'')
-		{
-			if (s_quote % 2 != 0)
-				return (HALF_QUOTED);
-			else
-				return (SIMPLE_QUOTED);
-		}
-		if (str[i] == '\"')
-		{
-			if (d_quote % 2 != 0)
-				return (HALF_QUOTED);
-			else
-				return (DOUBLE_QUOTED);
-		}
-		i++;
-	}
-	return (NO_QUOTED);
-}
-
-int	type_of_quote(const char *str)
-{
-	int	i;
-	int	single_quote;
-	int	double_quote;
-
-	i = 0;
-	if (!str)
-		return (0);
-	single_quote = 0;
-	double_quote = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			single_quote++;
-		else if (str[i] == '\"')
-			double_quote++;
-		i++;
-	}
-	if (single_quote == 0 && double_quote == 0)
-		return (NO_QUOTED);
-	else if (single_quote % 2 == 0 || double_quote % 2 == 0)
-		return (odd_quotes(single_quote, double_quote, str));
-	else
-		return (HALF_QUOTED);
-}
-
-int	unquote_delimiter(t_heredoc *heredoc)
-{
-	char	*tmp;
-
-	if (heredoc->quoted_delimiter == DOUBLE_QUOTED)
-	{
-		tmp = ft_strtrim(heredoc->delimiter, "\"");
-		if (!tmp)
-			return (0);
-		free(heredoc->delimiter);
-		heredoc->delimiter = tmp;
-	}
-	if (heredoc->quoted_delimiter == SIMPLE_QUOTED)
-	{
-		tmp = ft_strtrim(heredoc->delimiter, "\'");
-		if (!tmp)
-			return (0);
-		free(heredoc->delimiter);
-		heredoc->delimiter = tmp;
-	}
-	return (1);
-}
-
-int	setup_for_heredoc(t_heredoc *heredoc)
-{
-	if (!heredoc || !heredoc->delimiter)
-		return (0);
-	heredoc->quoted_delimiter = type_of_quote(heredoc->delimiter);
-	if (heredoc->quoted_delimiter != HALF_QUOTED)
-	{
-		if (heredoc->quoted_delimiter != NO_QUOTED)
-		{
-			if (!unquote_delimiter(heredoc))
-				return (0);
-		}
-	}
-	else
-	{
-		print_error(NULL, NULL, "heredoc delimiter not fully quoted");
-		return (set_exit_status(2), 0);
-	}
-	return (1);
-}
-
 int	create_file(t_redir *redir)
 {
 	char	*filename;
@@ -230,7 +105,6 @@ int	read_and_write_heredoc(t_redir *redir)
 
 	while (1)
 	{
-		printf("I'm in while(1) !!! \n");
 		line = readline("> ");
 		if (!line)
 		{
@@ -257,7 +131,6 @@ int	process_hd(t_redir *redir)
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("I'm in the child process \n");
 		read_and_write_heredoc(redir);
 		//close_and_exit();
 	}
