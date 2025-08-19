@@ -2,8 +2,8 @@
 
 static int	first_and_last_quotes(const char *str)
 {
-	int first;
-	int last;
+	int	first;
+	int	last;
 	int	i;
 
 	i = 0;
@@ -39,7 +39,7 @@ static int	first_and_last_quotes(const char *str)
 
 static int	odd_quotes(int s_quote, int d_quote, const char *str)
 {
-	int result;
+	int	result;
 
 	result = first_and_last_quotes(str);
 	if (result != HALF_QUOTED)
@@ -65,7 +65,7 @@ static int	type_of_quote(const char *str)
 	single_quote = ft_iter_char(str, '\'');
 	double_quote = ft_iter_char(str, '\"');
 	if (single_quote == 0 && double_quote == 0)
-		return (NO_QUOTED); 
+		return (NO_QUOTED);
 	else if (single_quote % 2 == 0 && double_quote != 0)
 		return (odd_quotes(single_quote, double_quote, str));
 	else if (double_quote % 2 == 0 && single_quote != 0)

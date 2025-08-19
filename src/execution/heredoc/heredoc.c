@@ -1,35 +1,10 @@
-
 #include "minishell.h"
-
-int	create_file(t_redir *redir)
-{
-	char	*filename;
-	char	*id;
-
-	if (!redir || !redir->heredoc)
-		return (0);
-	id = ft_itoa(redir->heredoc->id);
-	if (!id)
-		return (0);
-	filename = ft_strjoin("/tmp/heredoc_", id);
-	if (!filename)
-		return (0);
-	free(id);
-	redir->heredoc->fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (redir->heredoc->fd < 0)
-	{
-		print_error(NULL, NULL, "failed to create heredoc file");
-		return (free(filename), set_exit_status(1), 0);
-	}
-	redir->heredoc->path = filename;
-	return (1);
-}
 
 char	*handle_hd_var(char *line, int *i, t_env *env, char *result)
 {
-	int start;
-	char *var_name;
-	char *value;
+	int		start;
+	char	*var_name;
+	char	*value;
 
 	start = *i;
 	while (ft_isalnum(line[*i]) || line[*i] == '_')
@@ -62,9 +37,9 @@ char	*dollar_case(char *line, int *i, char *result)
 	return (result);
 }
 
-char *expand_vars(char *line)
+char	*expand_vars(char *line)
 {
-	int	i;
+	int		i;
 	char	*result;
 
 	i = 0;
@@ -84,62 +59,9 @@ char *expand_vars(char *line)
 	return (result);
 }
 
-void expand_heredoc_content(t_redir *redir, char *line)
-{
-	char *new_line;
-	if (redir->heredoc->quoted_delimiter)
-	{
-		new_line = ft_strdup(line);
-		if (!new_line)
-			return ;
-	}
-	else
-		new_line = expand_vars(line);
-	ft_putstr_fd(new_line, redir->heredoc->fd);
-	ft_putstr_fd("\n", redir->heredoc->fd);
-}
-
-int	read_and_write_heredoc(t_redir *redir)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			close(redir->heredoc->fd);
-			// clean_up_all(exec)
-			exit(EXIT_FAILURE);
-		}
-		if (ft_strcmp(line, redir->heredoc->delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		expand_heredoc_content(redir, line);
-		free(line);
-	}
-	return (1);
-}
-
-int	process_hd(t_redir *redir)
-{
-	pid_t	pid;
-	if (!redir || !redir->heredoc)
-		return (0);
-	pid = fork();
-	if (pid == 0)
-	{
-		read_and_write_heredoc(redir);
-		//close_and_exit();
-	}
-	return (1);
-}
-
 void	handle_heredoc(t_redir *redir)
 {
-	t_redir *head;
+	t_redir	*head;
 
 	if (!redir)
 		return ;

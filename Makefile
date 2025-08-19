@@ -77,6 +77,7 @@ EXEC_SRCS =		execution/exec/exec_externe.c \
 				execution/heredoc/heredoc.c \
 				execution/heredoc/heredoc_utils.c \
 				execution/heredoc/setup_heredoc.c \
+				execution/heredoc/process_heredoc.c \
 				execution/pipe/pipe_utils.c \
 				execution/pipe/pipe.c \
 				execution/redir/only_redir.c \

@@ -323,6 +323,9 @@ void		execute_commands(t_shell *shell);
 void		handle_heredoc(t_redir *redir);
 int			setup_for_heredoc(t_heredoc *heredoc);
 int			ft_iter_char(const char *str, int c);
+int			create_file(t_redir *redir);
+int			process_hd(t_redir *redir);
+
 
 
 /* Pipe_utils */
