@@ -42,17 +42,83 @@ static int	read_and_write_heredoc(t_redir *redir)
 	return (1);
 }
 
+int	error_fork(t_heredoc *hd)
+{
+	print_error(NULL, NULL, "fork failed");
+	set_exit_status(1);
+	if (hd->fd >= 0)
+		close(hd->fd);
+	if (hd->path)
+		unlink(hd->path);
+	return (0);
+}
+
+void	in_child(t_redir *redir)
+{
+	int ok;
+	struct sigaction sa = {0};
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+	ok = read_and_write_heredoc(redir);
+	if (ok)
+		exit(EXIT_SUCCESS);
+	else
+		exit(EXIT_FAILURE);
+}
+
+int	child_conditions(t_heredoc *hd, int status)
+{
+	// Ctrl-C
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		set_exit_status(130);
+		if (hd->fd >= 0)
+			close(hd->fd);
+		if (hd->path)
+			unlink(hd->path);
+		return (0);
+	}
+	// l'enfant -> retourne une erreur
+	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+	{
+		set_exit_status(1);
+		if (hd->fd >= 0)
+			close(hd->fd);
+		if (hd->path)
+			unlink(hd->path);
+		return (0);
+	}
+	else
+		return (1);
+}
+
 int	process_hd(t_redir *redir)
 {
-	pid_t	pid;
+	t_heredoc	*hd;
+	pid_t		pid;
+	int			status;
 
 	if (!redir || !redir->heredoc)
 		return (0);
+	hd = redir->heredoc;
 	pid = fork();
-	if (pid == 0)
+	if (pid < 0)
+		return (error_fork(hd));
+	if (pid == 0) 
+		in_child(redir);
+	// parent -> attendre l'enfant
+	if (waitpid(pid, &status, 0) < 0)
 	{
-		read_and_write_heredoc(redir);
-		//close_and_exit();
+		print_error(NULL, NULL, "waitpid failed");
+		set_exit_status(1);
+		if (hd->fd >= 0)
+			close(hd->fd);
+		if (hd->path)
+			unlink(hd->path);
+		return (0);
 	}
+	if (!child_conditions(hd, status))
+		return (0);
 	return (1);
 }
