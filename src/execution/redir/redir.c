@@ -39,7 +39,6 @@ int	apply_redirections(t_cmd *cmd)
 		else if (curr->type == REDIR_HEREDOC)
 		{
 			ret = open_and_dup(curr->heredoc->path, O_RDONLY, STDIN_FILENO);
-			printf("DEBUG: unlink heredoc path"); // DEBUG
 			unlink(curr->heredoc->path);
 		}
 		else

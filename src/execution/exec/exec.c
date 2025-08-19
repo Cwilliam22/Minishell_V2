@@ -39,4 +39,5 @@ void	execute_commands(t_shell *shell)
 			handle_pipeline(cmd, exec);
 	}
 	free_exec(exec);
+	free(exec);
 }
