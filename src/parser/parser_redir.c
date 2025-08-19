@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 15:51:17 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/20 15:30:02 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/19 16:24:09 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 16:25:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	extract_redirections(t_token *tokens, t_cmd *cmd)
 				return (0);
 			redir = create_redirection(convert_token_to_redir(current->type),
 					filename);
+			if (redir && redir->type == REDIR_HEREDOC)
+				redir->heredoc->id = cmd->nb_hd++;
 			free(filename);
 			if (!redir)
 				return (0);

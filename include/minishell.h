@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:37:08 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:37:08 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 16:20:06 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 16:20:17 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ typedef struct s_redir
 	t_heredoc		*heredoc;
 	int				fd_in;
 	int				fd_out;
-	int				nb_hd;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -159,6 +158,7 @@ typedef struct s_cmd
 	t_redir			*redirections;
 	char			*cmd_path;
 	t_state_path	state_path;
+	int				nb_hd;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -324,7 +324,7 @@ void		handle_heredoc(t_redir *redir);
 int			setup_for_heredoc(t_heredoc *heredoc);
 int			ft_iter_char(const char *str, int c);
 int			create_file(t_redir *redir);
-int			process_hd(t_redir *redir);
+void		process_hd(t_redir *redir);
 
 
 

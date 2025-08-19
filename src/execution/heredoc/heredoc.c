@@ -61,22 +61,34 @@ char	*expand_vars(char *line)
 
 void	handle_heredoc(t_redir *redir)
 {
-	t_redir	*head;
+	t_redir	*current;
+	t_redir	*new_redir;
+	t_redir	*next;
 
 	if (!redir)
 		return ;
-	head = redir;
-	while (head)
+	current = redir;
+	while (current)
 	{
-		if (head->type == REDIR_HEREDOC)
+		next = current->next;
+		if (current->type == REDIR_HEREDOC)
 		{
-			if (!setup_for_heredoc(head->heredoc))
+			printf("DEBUG: Handling heredoc for delimiter: %s\n", current->heredoc->delimiter);
+			if (!setup_for_heredoc(current->heredoc))
 				return ;
-			if (!create_file(head))
+			if (!create_file(current))
 				return ;
-			if (!process_hd(head))
+			process_hd(current);
+		   new_redir = create_redirection(REDIR_IN, current->heredoc->path);
+			if (!new_redir)
 				return ;
+			new_redir->next = current->next;
+			current->next = new_redir;
+			free_heredoc(current->heredoc);
+			current->heredoc = NULL;
+			current = new_redir->next;
 		}
-		head = head->next;
+		else
+			current = next;
 	}
 }

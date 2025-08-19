@@ -18,7 +18,7 @@ static void	expand_heredoc_content(t_redir *redir, char *line)
 	ft_putstr_fd("\n", redir->heredoc->fd);
 }
 
-static int	read_and_write_heredoc(t_redir *redir)
+static void	read_and_write_heredoc(t_redir *redir)
 {
 	char	*line;
 
@@ -39,7 +39,6 @@ static int	read_and_write_heredoc(t_redir *redir)
 		expand_heredoc_content(redir, line);
 		free(line);
 	}
-	return (1);
 }
 
 int	error_fork(t_heredoc *hd)
@@ -53,72 +52,58 @@ int	error_fork(t_heredoc *hd)
 	return (0);
 }
 
-void	in_child(t_redir *redir)
+void	wait_child(pid_t last_pid)
 {
-	int ok;
-	struct sigaction sa = {0};
-	sa.sa_handler = SIG_DFL;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-	ok = read_and_write_heredoc(redir);
-	if (ok)
-		exit(EXIT_SUCCESS);
-	else
-		exit(EXIT_FAILURE);
+	int		status;
+	int		exit_status;
+	pid_t	pid;
+
+	exit_status = 0;
+	while (1)
+	{
+		pid = wait(&status);
+		if (pid <= 0)
+			break ;
+		if (pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				exit_status = 128 + WTERMSIG(status);
+			else
+				exit_status = EXIT_FAILURE;
+			set_exit_status(exit_status);
+		}
+	}
 }
 
-int	child_conditions(t_heredoc *hd, int status)
-{
-	// Ctrl-C
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-	{
-		set_exit_status(130);
-		if (hd->fd >= 0)
-			close(hd->fd);
-		if (hd->path)
-			unlink(hd->path);
-		return (0);
-	}
-	// l'enfant -> retourne une erreur
-	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
-	{
-		set_exit_status(1);
-		if (hd->fd >= 0)
-			close(hd->fd);
-		if (hd->path)
-			unlink(hd->path);
-		return (0);
-	}
-	else
-		return (1);
-}
-
-int	process_hd(t_redir *redir)
+void	process_hd(t_redir *redir)
 {
 	t_heredoc	*hd;
 	pid_t		pid;
-	int			status;
+	t_shell		*shell;
 
+	shell = get_shell(NULL);
 	if (!redir || !redir->heredoc)
-		return (0);
+		return ;
 	hd = redir->heredoc;
+	heredoc_parent_signal();
 	pid = fork();
 	if (pid < 0)
-		return (error_fork(hd));
-	if (pid == 0) 
-		in_child(redir);
-	// parent -> attendre l'enfant
-	if (waitpid(pid, &status, 0) < 0)
 	{
-		print_error(NULL, NULL, "waitpid failed");
-		set_exit_status(1);
-		if (hd->fd >= 0)
-			close(hd->fd);
-		if (hd->path)
-			unlink(hd->path);
-		return (0);
+		error_fork(hd);
+		return ;
 	}
-	if (!child_conditions(hd, status))
-		return (0);
-	return (1);
+	if (pid == 0)
+	{
+		heredoc_child_signal();
+		read_and_write_heredoc(redir);
+		exit(shell->env->last_exit_status);
+	}
+	wait_child(pid);
+	if (hd->fd >= 0)
+		close(hd->fd);
+	if (hd->path)
+		unlink(hd->path);
+	parent_signal();
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 14:43:06 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 14:53:36 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 16:30:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 16:35:20 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	handle_redirection_only(t_cmd *cmd)
 	{
 		if (head->type == REDIR_IN)
 		{
-			if (!check_command_exist(cmd->redirections->file))
+			printf("DEBUG: Handling input redirection for file: %s\n", head->file);
+			if (check_command_exist(cmd->redirections->file))
 			{
 				set_exit_status(1);
 				print_error(NULL, NULL, "so such file or directory");
@@ -52,8 +53,6 @@ void	handle_redirection_only(t_cmd *cmd)
 				print_error(NULL, NULL, "error open empty file");
 			}
 		}
-		else
-			handle_heredoc(head);
 		head = head->next;
 	}
 }

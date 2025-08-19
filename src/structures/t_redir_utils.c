@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:36:42 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:36:50 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 16:20:58 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 16:20:58 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,18 @@ t_redir	*create_redirection(int type, char *target)
 {
 	t_redir	*redir;
 
+	printf("DEBUG: Creating redirection of type %d with target '%s'\n", type, target);
 	redir = (t_redir *)safe_malloc(sizeof(t_redir));
 	redir->type = type;
 	redir->fd_in = -1;
 	redir->fd_out = -1;
 	redir->next = NULL;
-	redir->nb_hd = 0;
 	if (type == REDIR_HEREDOC)
 	{
 		redir->file = NULL;
 		redir->heredoc = create_heredoc(target, single_quote(target));
 		if (!redir->heredoc)
 			return (free(redir), NULL);
-		redir->nb_hd++;
-		redir->heredoc->id = redir->nb_hd;
 	}
 	else
 	{

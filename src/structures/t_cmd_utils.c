@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_cmd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 15:38:04 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 16:13:31 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/19 16:25:59 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 16:25:59 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_cmd	*create_command(void)
 	cmd->next = NULL;
 	cmd->cmd_path = NULL;
 	cmd->state_path = PATH_SIMPLE;
+	cmd->nb_hd = 0;
 	return (cmd);
 }
 
@@ -108,5 +109,4 @@ int	get_nb_commands(t_cmd *commands)
 	}
 	return (i);
 }
-
 
