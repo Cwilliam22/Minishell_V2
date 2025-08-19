@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/20 23:06:26 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/06 15:19:19 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/19 18:36:30 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 18:36:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,32 @@ void	free_exec(t_exec *exec)
 	if (exec->pipe_fds)
 		free(exec->pipe_fds);
 	if (exec->path)
+	{
 		free(exec->path);
+		exec->path = NULL;
+	}
 	if (exec->env_copy)
 		free_array(exec->env_copy);
-	free(exec);
+	//free(exec);
 }
 
 void	free_var(t_exec *exec)
 {
 	if (exec->path)
 		free(exec->path);
+}
+
+t_exec	*get_exec(void)
+{
+	static t_exec	*exec = NULL;
+	t_shell			*shell;
+
+	if (!exec)
+	{
+		shell = get_shell(NULL);
+		if (!shell)
+			return (NULL);
+		exec = create_exec(shell);
+	}
+	return (exec);
 }

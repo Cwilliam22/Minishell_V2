@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 15:40:03 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 15:40:03 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 18:40:10 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 18:40:35 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	apply_redirections(t_cmd *cmd)
 		else if (curr->type == REDIR_APPEND)
 			ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
 					| O_APPEND, STDOUT_FILENO);
+		else if (curr->type == REDIR_HEREDOC)
+		{
+			ret = open_and_dup(curr->heredoc->path, O_RDONLY, STDIN_FILENO);
+			printf("DEBUG: unlink heredoc path"); // DEBUG
+			unlink(curr->heredoc->path);
+		}
 		else
 			ret = 0;
 		if (ret)

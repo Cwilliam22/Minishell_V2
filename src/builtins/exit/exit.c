@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:35:18 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:35:18 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 17:18:02 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 17:18:02 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int	builtin_exit(t_exec *exec)
 	else
 		exit_code = handle_single_arg(args[1]);
 	cleanup_all(exec);
+	free(exec);
 	exit(exit_code);
 }

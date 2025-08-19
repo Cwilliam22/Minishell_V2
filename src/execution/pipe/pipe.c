@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:52:42 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:54:19 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 18:27:00 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 18:27:00 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 			free(pids);
 			exit_status = exec->shell->env->last_exit_status;
 			cleanup_all(exec);
+			free(exec);
 			exit(exit_status);
 		}
 		else if (pids[i] < 0)

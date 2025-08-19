@@ -16,6 +16,7 @@ static void	expand_heredoc_content(t_redir *redir, char *line)
 		new_line = expand_variables(line, shell);
 	ft_putstr_fd(new_line, redir->heredoc->fd);
 	ft_putstr_fd("\n", redir->heredoc->fd);
+	free(new_line);
 }
 
 static void	read_and_write_heredoc(t_redir *redir)
@@ -82,6 +83,8 @@ void	process_hd(t_redir *redir)
 	t_heredoc	*hd;
 	pid_t		pid;
 	t_shell		*shell;
+	t_exec		*exec;
+	int			exit_status;
 
 	shell = get_shell(NULL);
 	if (!redir || !redir->heredoc)
@@ -98,12 +101,17 @@ void	process_hd(t_redir *redir)
 	{
 		heredoc_child_signal();
 		read_and_write_heredoc(redir);
-		exit(shell->env->last_exit_status);
+		exec = get_exec();
+		exit_status = shell->env->last_exit_status;
+		cleanup_all(exec);
+		free(exec);
+		exit(exit_status);
 	}
 	wait_child(pid);
 	if (hd->fd >= 0)
+	{
 		close(hd->fd);
-	if (hd->path)
-		unlink(hd->path);
+		hd->fd = -1;
+	}
 	parent_signal();
 }

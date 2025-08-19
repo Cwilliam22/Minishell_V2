@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 16:20:06 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 16:20:17 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 18:24:53 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 18:24:53 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,21 +312,22 @@ void		execute_single_command(t_cmd *cmd, t_exec *exec);
 
 /* Exec_utils */
 t_exec		*create_exec(t_shell *shell);
-void		init_exec(t_exec *exec);
 void		free_exec(t_exec *exec);
 void		free_var(t_exec *exec);
+t_exec		*get_exec(void);
 
 /* Exec */
 void		execute_commands(t_shell *shell);
 
-/* Heredoc */
-void		handle_heredoc(t_redir *redir);
-int			setup_for_heredoc(t_heredoc *heredoc);
+/* Heredoc_utils*/
 int			ft_iter_char(const char *str, int c);
 int			create_file(t_redir *redir);
+void		unlink_all(t_redir *redir);
+
+/* Heredoc */
+void		handle_heredoc(t_cmd *cmds);
+int			setup_for_heredoc(t_heredoc *heredoc);
 void		process_hd(t_redir *redir);
-
-
 
 /* Pipe_utils */
 void		kill_all_process(pid_t *pids, int count);

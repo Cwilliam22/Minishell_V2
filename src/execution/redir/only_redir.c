@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 16:30:31 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 16:35:20 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 17:48:51 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 17:49:40 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	handle_redirection_only(t_cmd *cmd)
 	{
 		if (head->type == REDIR_IN)
 		{
-			printf("DEBUG: Handling input redirection for file: %s\n", head->file);
-			if (check_command_exist(cmd->redirections->file))
+			if (!check_command_exist(cmd->redirections->file))
 			{
 				set_exit_status(1);
 				print_error(NULL, NULL, "so such file or directory");

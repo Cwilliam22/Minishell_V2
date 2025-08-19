@@ -39,3 +39,4 @@ int	create_file(t_redir *redir)
 	redir->heredoc->path = filename;
 	return (1);
 }
+

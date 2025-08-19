@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 11:00:25 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 11:00:25 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 17:14:08 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 17:16:47 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static t_shell	*setup_shell(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
+	t_exec	*exec;
 	int		exit_code;
 
 	if (handle_arguments(argc, argv))
@@ -77,6 +78,8 @@ int	main(int argc, char **argv, char **envp)
 	parent_signal();
 	run_shell_loop(shell);
 	exit_code = shell->env->last_exit_status;
-	cleanup_shell(shell);
+	exec = get_exec();
+	cleanup_all(exec);
+	free(exec);
 	return (exit_code);
 }

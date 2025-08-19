@@ -1,44 +1,626 @@
-==2404059== Memcheck, a memory error detector
-==2404059== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2404059== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2404059== Command: ./minishell
-==2404059== Parent PID: 2404055
-==2404059== 
-==2404059== 
-==2404059== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==2404059== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==2404059==    <inherited from parent>
-==2404059== 
-==2404059== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250816T131246/ptyhost.log
-==2404059==    <inherited from parent>
-==2404059== 
-==2404059== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
-==2404059==    <inherited from parent>
-==2404059== 
-==2404059== Open file descriptor 2: /dev/pts/0
-==2404059==    <inherited from parent>
-==2404059== 
-==2404059== Open file descriptor 1: /dev/pts/0
-==2404059==    <inherited from parent>
-==2404059== 
-==2404059== Open file descriptor 0: /dev/pts/0
-==2404059==    <inherited from parent>
-==2404059== 
-==2404059== 
-==2404059== HEAP SUMMARY:
-==2404059==     in use at exit: 208,180 bytes in 222 blocks
-==2404059==   total heap usage: 1,057 allocs, 835 frees, 275,150 bytes allocated
-==2404059== 
-==2404059== LEAK SUMMARY:
-==2404059==    definitely lost: 0 bytes in 0 blocks
-==2404059==    indirectly lost: 0 bytes in 0 blocks
-==2404059==      possibly lost: 0 bytes in 0 blocks
-==2404059==    still reachable: 0 bytes in 0 blocks
-==2404059==         suppressed: 208,180 bytes in 222 blocks
-==2404059== 
-==2404059== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---2404059-- 
---2404059-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
---2404059-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
-==2404059== 
-==2404059== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==372108== Memcheck, a memory error detector
+==372108== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==372108== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==372108== Command: ./minishell
+==372108== Parent PID: 372104
+==372108== 
+==372160== Syscall param openat(filename) points to unaddressable byte(s)
+==372160==    at 0x49DC53B: open (open64.c:41)
+==372160==    by 0x409CC4: open_and_dup (fd_utils.c:28)
+==372160==    by 0x405EAC: apply_redirections (redir.c:41)
+==372160==    by 0x404489: execute_with_redirections (exec_single_cmd.c:45)
+==372160==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372160==    by 0x405B28: child_process (pipe.c:34)
+==372160==    by 0x405A33: exec_pipe (pipe.c:51)
+==372160==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372160==    by 0x4047E3: execute_commands (exec.c:39)
+==372160==    by 0x4018A0: process_input (shell_loop.c:62)
+==372160==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372160==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372160==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==372160== 
+==372160== Syscall param unlink(pathname) points to unaddressable byte(s)
+==372160==    at 0x49DE0AB: unlink (syscall-template.S:120)
+==372160==    by 0x405EC0: apply_redirections (redir.c:42)
+==372160==    by 0x404489: execute_with_redirections (exec_single_cmd.c:45)
+==372160==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372160==    by 0x405B28: child_process (pipe.c:34)
+==372160==    by 0x405A33: exec_pipe (pipe.c:51)
+==372160==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372160==    by 0x4047E3: execute_commands (exec.c:39)
+==372160==    by 0x4018A0: process_input (shell_loop.c:62)
+==372160==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372160==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372160==    by 0x40162C: main (main.c:79)
+==372160==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==372160== 
+==372158== 
+==372158== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==372158== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open file descriptor 45: /dev/ptmx
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open file descriptor 44: /dev/ptmx
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open AF_UNIX socket 43: <unknown>
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open AF_UNIX socket 41: <unknown>
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open file descriptor 2: /dev/pts/5
+==372158==    <inherited from parent>
+==372158== 
+==372158== Open file descriptor 1:
+==372158==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372158==    by 0x409DBA: restore_std (fd_utils.c:63)
+==372158==    by 0x4044C7: execute_with_redirections (exec_single_cmd.c:52)
+==372158==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372158==    by 0x405B28: child_process (pipe.c:34)
+==372158==    by 0x405A33: exec_pipe (pipe.c:51)
+==372158==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372158==    by 0x4047E3: execute_commands (exec.c:39)
+==372158==    by 0x4018A0: process_input (shell_loop.c:62)
+==372158==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372158==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372158==    by 0x40162C: main (main.c:79)
+==372158== 
+==372158== Open file descriptor 0: /dev/pts/5
+==372158==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372158==    by 0x409DC4: restore_std (fd_utils.c:64)
+==372158==    by 0x4044C7: execute_with_redirections (exec_single_cmd.c:52)
+==372158==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372158==    by 0x405B28: child_process (pipe.c:34)
+==372158==    by 0x405A33: exec_pipe (pipe.c:51)
+==372158==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372158==    by 0x4047E3: execute_commands (exec.c:39)
+==372158==    by 0x4018A0: process_input (shell_loop.c:62)
+==372158==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372158==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372158==    by 0x40162C: main (main.c:79)
+==372158== 
+==372158== 
+==372158== HEAP SUMMARY:
+==372158==     in use at exit: 204,164 bytes in 221 blocks
+==372158==   total heap usage: 920 allocs, 699 frees, 233,906 bytes allocated
+==372158== 
+==372158== LEAK SUMMARY:
+==372158==    definitely lost: 0 bytes in 0 blocks
+==372158==    indirectly lost: 0 bytes in 0 blocks
+==372158==      possibly lost: 0 bytes in 0 blocks
+==372158==    still reachable: 0 bytes in 0 blocks
+==372158==         suppressed: 204,164 bytes in 221 blocks
+==372158== 
+==372158== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--372158-- 
+--372158-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+==372158== 
+==372158== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==372160== 
+==372160== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==372160== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open file descriptor 45: /dev/ptmx
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open file descriptor 44: /dev/ptmx
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open AF_UNIX socket 43: <unknown>
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open AF_UNIX socket 41: <unknown>
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open file descriptor 2: /dev/pts/5
+==372160==    <inherited from parent>
+==372160== 
+==372160== Open file descriptor 1: /dev/pts/5
+==372160==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372160==    by 0x409DBA: restore_std (fd_utils.c:63)
+==372160==    by 0x4044A1: execute_with_redirections (exec_single_cmd.c:48)
+==372160==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372160==    by 0x405B28: child_process (pipe.c:34)
+==372160==    by 0x405A33: exec_pipe (pipe.c:51)
+==372160==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372160==    by 0x4047E3: execute_commands (exec.c:39)
+==372160==    by 0x4018A0: process_input (shell_loop.c:62)
+==372160==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372160==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372160==    by 0x40162C: main (main.c:79)
+==372160== 
+==372160== Open file descriptor 0:
+==372160==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372160==    by 0x409DC4: restore_std (fd_utils.c:64)
+==372160==    by 0x4044A1: execute_with_redirections (exec_single_cmd.c:48)
+==372160==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372160==    by 0x405B28: child_process (pipe.c:34)
+==372160==    by 0x405A33: exec_pipe (pipe.c:51)
+==372160==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372160==    by 0x4047E3: execute_commands (exec.c:39)
+==372160==    by 0x4018A0: process_input (shell_loop.c:62)
+==372160==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372160==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372160==    by 0x40162C: main (main.c:79)
+==372160== 
+==372160== 
+==372160== HEAP SUMMARY:
+==372160==     in use at exit: 204,164 bytes in 221 blocks
+==372160==   total heap usage: 922 allocs, 701 frees, 235,402 bytes allocated
+==372160== 
+==372160== LEAK SUMMARY:
+==372160==    definitely lost: 0 bytes in 0 blocks
+==372160==    indirectly lost: 0 bytes in 0 blocks
+==372160==      possibly lost: 0 bytes in 0 blocks
+==372160==    still reachable: 0 bytes in 0 blocks
+==372160==         suppressed: 204,164 bytes in 221 blocks
+==372160== 
+==372160== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==372160== 
+==372160== 1 errors in context 1 of 2:
+==372160== Syscall param unlink(pathname) points to unaddressable byte(s)
+==372160==    at 0x49DE0AB: unlink (syscall-template.S:120)
+==372160==    by 0x405EC0: apply_redirections (redir.c:42)
+==372160==    by 0x404489: execute_with_redirections (exec_single_cmd.c:45)
+==372160==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372160==    by 0x405B28: child_process (pipe.c:34)
+==372160==    by 0x405A33: exec_pipe (pipe.c:51)
+==372160==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372160==    by 0x4047E3: execute_commands (exec.c:39)
+==372160==    by 0x4018A0: process_input (shell_loop.c:62)
+==372160==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372160==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372160==    by 0x40162C: main (main.c:79)
+==372160==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==372160== 
+==372160== 
+==372160== 1 errors in context 2 of 2:
+==372160== Syscall param openat(filename) points to unaddressable byte(s)
+==372160==    at 0x49DC53B: open (open64.c:41)
+==372160==    by 0x409CC4: open_and_dup (fd_utils.c:28)
+==372160==    by 0x405EAC: apply_redirections (redir.c:41)
+==372160==    by 0x404489: execute_with_redirections (exec_single_cmd.c:45)
+==372160==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372160==    by 0x405B28: child_process (pipe.c:34)
+==372160==    by 0x405A33: exec_pipe (pipe.c:51)
+==372160==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372160==    by 0x4047E3: execute_commands (exec.c:39)
+==372160==    by 0x4018A0: process_input (shell_loop.c:62)
+==372160==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372160==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372160==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==372160== 
+--372160-- 
+--372160-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+==372160== 
+==372160== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==372159== 
+==372159== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==372159== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open file descriptor 45: /dev/ptmx
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open file descriptor 44: /dev/ptmx
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open AF_UNIX socket 43: <unknown>
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open AF_UNIX socket 41: <unknown>
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open file descriptor 2: /dev/pts/5
+==372159==    <inherited from parent>
+==372159== 
+==372159== Open file descriptor 1:
+==372159==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372159==    by 0x409DBA: restore_std (fd_utils.c:63)
+==372159==    by 0x4044C7: execute_with_redirections (exec_single_cmd.c:52)
+==372159==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372159==    by 0x405B28: child_process (pipe.c:34)
+==372159==    by 0x405A33: exec_pipe (pipe.c:51)
+==372159==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372159==    by 0x4047E3: execute_commands (exec.c:39)
+==372159==    by 0x4018A0: process_input (shell_loop.c:62)
+==372159==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372159==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372159==    by 0x40162C: main (main.c:79)
+==372159== 
+==372159== Open file descriptor 0:
+==372159==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372159==    by 0x409DC4: restore_std (fd_utils.c:64)
+==372159==    by 0x4044C7: execute_with_redirections (exec_single_cmd.c:52)
+==372159==    by 0x4043D7: execute_single_command (exec_single_cmd.c:67)
+==372159==    by 0x405B28: child_process (pipe.c:34)
+==372159==    by 0x405A33: exec_pipe (pipe.c:51)
+==372159==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372159==    by 0x4047E3: execute_commands (exec.c:39)
+==372159==    by 0x4018A0: process_input (shell_loop.c:62)
+==372159==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372159==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372159==    by 0x40162C: main (main.c:79)
+==372159== 
+==372159== 
+==372159== HEAP SUMMARY:
+==372159==     in use at exit: 204,164 bytes in 221 blocks
+==372159==   total heap usage: 945 allocs, 724 frees, 234,420 bytes allocated
+==372159== 
+==372159== LEAK SUMMARY:
+==372159==    definitely lost: 0 bytes in 0 blocks
+==372159==    indirectly lost: 0 bytes in 0 blocks
+==372159==      possibly lost: 0 bytes in 0 blocks
+==372159==    still reachable: 0 bytes in 0 blocks
+==372159==         suppressed: 204,164 bytes in 221 blocks
+==372159== 
+==372159== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--372159-- 
+--372159-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+==372159== 
+==372159== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==372349== 
+==372349== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==372349== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open file descriptor 45: /dev/ptmx
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open file descriptor 44: /dev/ptmx
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open AF_UNIX socket 43: <unknown>
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open AF_UNIX socket 41: <unknown>
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open file descriptor 2: /dev/pts/5
+==372349==    <inherited from parent>
+==372349== 
+==372349== Open file descriptor 1:
+==372349==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372349==    by 0x405B73: setup_child_pipes_and_redir (pipe.c:18)
+==372349==    by 0x405B1B: child_process (pipe.c:33)
+==372349==    by 0x405A33: exec_pipe (pipe.c:51)
+==372349==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372349==    by 0x4047E3: execute_commands (exec.c:39)
+==372349==    by 0x4018A0: process_input (shell_loop.c:62)
+==372349==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372349==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372349==    by 0x40162C: main (main.c:79)
+==372349== 
+==372349== Open file descriptor 0: /dev/pts/5
+==372349==    <inherited from parent>
+==372349== 
+==372349== 
+==372349== HEAP SUMMARY:
+==372349==     in use at exit: 208,180 bytes in 222 blocks
+==372349==   total heap usage: 1,026 allocs, 804 frees, 240,008 bytes allocated
+==372349== 
+==372349== LEAK SUMMARY:
+==372349==    definitely lost: 0 bytes in 0 blocks
+==372349==    indirectly lost: 0 bytes in 0 blocks
+==372349==      possibly lost: 0 bytes in 0 blocks
+==372349==    still reachable: 0 bytes in 0 blocks
+==372349==         suppressed: 208,180 bytes in 222 blocks
+==372349== 
+==372349== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--372349-- 
+--372349-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--372349-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==372349== 
+==372349== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==372108== Conditional jump or move depends on uninitialised value(s)
+==372108==    at 0x405813: wait_all_child (pipe.c:79)
+==372108==    by 0x405978: handle_pipeline (pipe.c:115)
+==372108==    by 0x4047E3: execute_commands (exec.c:39)
+==372108==    by 0x4018A0: process_input (shell_loop.c:62)
+==372108==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372108==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372108==    by 0x40162C: main (main.c:79)
+==372108== 
+==372621== 
+==372621== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==372621== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open file descriptor 45: /dev/ptmx
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open file descriptor 44: /dev/ptmx
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open AF_UNIX socket 43: <unknown>
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open AF_UNIX socket 41: <unknown>
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open file descriptor 2: /dev/pts/5
+==372621==    <inherited from parent>
+==372621== 
+==372621== Open file descriptor 1:
+==372621==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==372621==    by 0x405B73: setup_child_pipes_and_redir (pipe.c:18)
+==372621==    by 0x405B1B: child_process (pipe.c:33)
+==372621==    by 0x405A33: exec_pipe (pipe.c:51)
+==372621==    by 0x40593A: handle_pipeline (pipe.c:108)
+==372621==    by 0x4047E3: execute_commands (exec.c:39)
+==372621==    by 0x4018A0: process_input (shell_loop.c:62)
+==372621==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372621==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372621==    by 0x40162C: main (main.c:79)
+==372621== 
+==372621== Open file descriptor 0: /dev/pts/5
+==372621==    <inherited from parent>
+==372621== 
+==372621== 
+==372621== HEAP SUMMARY:
+==372621==     in use at exit: 208,180 bytes in 222 blocks
+==372621==   total heap usage: 1,129 allocs, 907 frees, 242,101 bytes allocated
+==372621== 
+==372621== LEAK SUMMARY:
+==372621==    definitely lost: 0 bytes in 0 blocks
+==372621==    indirectly lost: 0 bytes in 0 blocks
+==372621==      possibly lost: 0 bytes in 0 blocks
+==372621==    still reachable: 0 bytes in 0 blocks
+==372621==         suppressed: 208,180 bytes in 222 blocks
+==372621== 
+==372621== Use --track-origins=yes to see where uninitialised values come from
+==372621== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==372621== 
+==372621== 2 errors in context 1 of 1:
+==372621== Conditional jump or move depends on uninitialised value(s)
+==372621==    at 0x405813: wait_all_child (pipe.c:79)
+==372621==    by 0x405978: handle_pipeline (pipe.c:115)
+==372621==    by 0x4047E3: execute_commands (exec.c:39)
+==372621==    by 0x4018A0: process_input (shell_loop.c:62)
+==372621==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372621==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372621==    by 0x40162C: main (main.c:79)
+==372621== 
+--372621-- 
+--372621-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--372621-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==372621== 
+==372621== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==373026== 
+==373026== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==373026== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open file descriptor 45: /dev/ptmx
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open file descriptor 44: /dev/ptmx
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open AF_UNIX socket 43: <unknown>
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open AF_UNIX socket 41: <unknown>
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open file descriptor 2: /dev/pts/5
+==373026==    <inherited from parent>
+==373026== 
+==373026== Open file descriptor 1:
+==373026==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==373026==    by 0x405B73: setup_child_pipes_and_redir (pipe.c:18)
+==373026==    by 0x405B1B: child_process (pipe.c:33)
+==373026==    by 0x405A33: exec_pipe (pipe.c:51)
+==373026==    by 0x40593A: handle_pipeline (pipe.c:108)
+==373026==    by 0x4047E3: execute_commands (exec.c:39)
+==373026==    by 0x4018A0: process_input (shell_loop.c:62)
+==373026==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==373026==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==373026==    by 0x40162C: main (main.c:79)
+==373026== 
+==373026== Open file descriptor 0: /dev/pts/5
+==373026==    <inherited from parent>
+==373026== 
+==373026== 
+==373026== HEAP SUMMARY:
+==373026==     in use at exit: 208,180 bytes in 222 blocks
+==373026==   total heap usage: 1,232 allocs, 1,010 frees, 244,194 bytes allocated
+==373026== 
+==373026== LEAK SUMMARY:
+==373026==    definitely lost: 0 bytes in 0 blocks
+==373026==    indirectly lost: 0 bytes in 0 blocks
+==373026==      possibly lost: 0 bytes in 0 blocks
+==373026==    still reachable: 0 bytes in 0 blocks
+==373026==         suppressed: 208,180 bytes in 222 blocks
+==373026== 
+==373026== Use --track-origins=yes to see where uninitialised values come from
+==373026== ERROR SUMMARY: 4 errors from 1 contexts (suppressed: 0 from 0)
+==373026== 
+==373026== 4 errors in context 1 of 1:
+==373026== Conditional jump or move depends on uninitialised value(s)
+==373026==    at 0x405813: wait_all_child (pipe.c:79)
+==373026==    by 0x405978: handle_pipeline (pipe.c:115)
+==373026==    by 0x4047E3: execute_commands (exec.c:39)
+==373026==    by 0x4018A0: process_input (shell_loop.c:62)
+==373026==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==373026==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==373026==    by 0x40162C: main (main.c:79)
+==373026== 
+--373026-- 
+--373026-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--373026-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==373026== 
+==373026== ERROR SUMMARY: 4 errors from 1 contexts (suppressed: 0 from 0)
+==373356== 
+==373356== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==373356== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open file descriptor 45: /dev/ptmx
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open file descriptor 44: /dev/ptmx
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open AF_UNIX socket 43: <unknown>
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open AF_UNIX socket 41: <unknown>
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open file descriptor 2: /dev/pts/5
+==373356==    <inherited from parent>
+==373356== 
+==373356== Open file descriptor 1:
+==373356==    at 0x49DD01B: dup2 (syscall-template.S:120)
+==373356==    by 0x405B73: setup_child_pipes_and_redir (pipe.c:18)
+==373356==    by 0x405B1B: child_process (pipe.c:33)
+==373356==    by 0x405A33: exec_pipe (pipe.c:51)
+==373356==    by 0x40593A: handle_pipeline (pipe.c:108)
+==373356==    by 0x4047E3: execute_commands (exec.c:39)
+==373356==    by 0x4018A0: process_input (shell_loop.c:62)
+==373356==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==373356==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==373356==    by 0x40162C: main (main.c:79)
+==373356== 
+==373356== Open file descriptor 0: /dev/pts/5
+==373356==    <inherited from parent>
+==373356== 
+==373356== 
+==373356== HEAP SUMMARY:
+==373356==     in use at exit: 208,180 bytes in 222 blocks
+==373356==   total heap usage: 1,294 allocs, 1,072 frees, 245,357 bytes allocated
+==373356== 
+==373356== LEAK SUMMARY:
+==373356==    definitely lost: 0 bytes in 0 blocks
+==373356==    indirectly lost: 0 bytes in 0 blocks
+==373356==      possibly lost: 0 bytes in 0 blocks
+==373356==    still reachable: 0 bytes in 0 blocks
+==373356==         suppressed: 208,180 bytes in 222 blocks
+==373356== 
+==373356== Use --track-origins=yes to see where uninitialised values come from
+==373356== ERROR SUMMARY: 6 errors from 1 contexts (suppressed: 0 from 0)
+==373356== 
+==373356== 6 errors in context 1 of 1:
+==373356== Conditional jump or move depends on uninitialised value(s)
+==373356==    at 0x405813: wait_all_child (pipe.c:79)
+==373356==    by 0x405978: handle_pipeline (pipe.c:115)
+==373356==    by 0x4047E3: execute_commands (exec.c:39)
+==373356==    by 0x4018A0: process_input (shell_loop.c:62)
+==373356==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==373356==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==373356==    by 0x40162C: main (main.c:79)
+==373356== 
+--373356-- 
+--373356-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--373356-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==373356== 
+==373356== ERROR SUMMARY: 6 errors from 1 contexts (suppressed: 0 from 0)
+==372108== 
+==372108== FILE DESCRIPTORS: 10 open (3 std) at exit.
+==372108== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 45: /dev/ptmx
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 44: /dev/ptmx
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open AF_UNIX socket 43: <unknown>
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open AF_UNIX socket 41: <unknown>
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 40: /home/alfavre/.config/Code/logs/20250819T145938/ptyhost.log
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 2: /dev/pts/5
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 1: /dev/pts/5
+==372108==    <inherited from parent>
+==372108== 
+==372108== Open file descriptor 0: /dev/pts/5
+==372108==    <inherited from parent>
+==372108== 
+==372108== 
+==372108== HEAP SUMMARY:
+==372108==     in use at exit: 208,180 bytes in 222 blocks
+==372108==   total heap usage: 1,275 allocs, 1,053 frees, 244,909 bytes allocated
+==372108== 
+==372108== LEAK SUMMARY:
+==372108==    definitely lost: 0 bytes in 0 blocks
+==372108==    indirectly lost: 0 bytes in 0 blocks
+==372108==      possibly lost: 0 bytes in 0 blocks
+==372108==    still reachable: 0 bytes in 0 blocks
+==372108==         suppressed: 208,180 bytes in 222 blocks
+==372108== 
+==372108== Use --track-origins=yes to see where uninitialised values come from
+==372108== ERROR SUMMARY: 8 errors from 1 contexts (suppressed: 0 from 0)
+==372108== 
+==372108== 8 errors in context 1 of 1:
+==372108== Conditional jump or move depends on uninitialised value(s)
+==372108==    at 0x405813: wait_all_child (pipe.c:79)
+==372108==    by 0x405978: handle_pipeline (pipe.c:115)
+==372108==    by 0x4047E3: execute_commands (exec.c:39)
+==372108==    by 0x4018A0: process_input (shell_loop.c:62)
+==372108==    by 0x4019C6: handle_iteration (shell_loop.c:85)
+==372108==    by 0x401A62: run_shell_loop (shell_loop.c:104)
+==372108==    by 0x40162C: main (main.c:79)
+==372108== 
+--372108-- 
+--372108-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--372108-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==372108== 
+==372108== ERROR SUMMARY: 8 errors from 1 contexts (suppressed: 0 from 0)
