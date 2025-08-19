@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:48:16 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:49:21 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/19 14:43:06 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/19 14:53:36 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,51 +26,34 @@ static int	create_empty_file(char *filename)
 	return (0);
 }
 
-static int	has_input_redirection(t_redir *redir)
+void	handle_redirection_only(t_cmd *cmd)
 {
 	t_redir	*head;
 
-	head = redir;
+	if (!cmd || !cmd->redirections)
+		return ;
+	head = cmd->redirections;
 	while (head)
 	{
 		if (head->type == REDIR_IN)
-			return (1);
-		head = head->next;
-	}
-	return (0);
-}
-
-static int	has_output_redirection(t_redir *redir)
-{
-	t_redir	*head;
-
-	head = redir;
-	while (head)
-	{
-		if (head->type == REDIR_OUT)
-			return (1);
-		head = head->next;
-	}
-	return (0);
-}
-
-void	handle_redirection_only(t_cmd *cmd)
-{
-	if (has_output_redirection(cmd->redirections))
-	{
-		if (create_empty_file(cmd->redirections->file) != SUCCESS)
 		{
-			set_exit_status(1);
-			print_error(NULL, NULL, "error open empty file");
+			if (!check_command_exist(cmd->redirections->file))
+			{
+				set_exit_status(1);
+				print_error(NULL, NULL, "so such file or directory");
+				return ;
+			}
 		}
-	}
-	if (has_input_redirection(cmd->redirections))
-	{
-		if (!check_command_exist(cmd->redirections->file))
+		else if (head->type == REDIR_OUT || head->type == REDIR_APPEND)
 		{
-			set_exit_status(1);
-			print_error(NULL, NULL, "so such file or directory");
-			return ;
+			if (create_empty_file(cmd->redirections->file) != SUCCESS)
+			{
+				set_exit_status(1);
+				print_error(NULL, NULL, "error open empty file");
+			}
 		}
+		else
+			handle_heredoc(head);
+		head = head->next;
 	}
 }
