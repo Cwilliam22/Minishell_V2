@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 16:08:13 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 16:13:26 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 16:24:36 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 16:31:36 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	last_and_first_quotes(const char *str)
 	int	last_quote;
 	
 	i = 0;
-	first_quote = 0;
-	last_quote = 0;
+	first_quote = -1;
+	last_quote = -1;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if ((str[i] == '\'' || str[i] == '\"') && first_quote == -1)
 			first_quote = i;
 		i++;
 	}
@@ -33,7 +33,7 @@ static int	last_and_first_quotes(const char *str)
 			last_quote = i;
 		i--;
 	}
-	if (first_quote == 0 && last_quote == 0)
+	if (first_quote == -1 && last_quote == -1)
 		return (NO_QUOTED);
 	if (first_quote == last_quote)
 		return (-1);
@@ -73,11 +73,15 @@ static int	type_of_quote(const char *str)
 {
 	int	single_quote;
 	int	double_quote;
+	int	half_quoted;
 
 	if (!str)
 		return (0);
 	single_quote = ft_iter_char(str, '\'');
 	double_quote = ft_iter_char(str, '\"');
+	printf("single_quote: %d, double_quote: %d\n", single_quote, double_quote);
+	half_quoted = last_and_first_quotes(str);
+	printf("half_quoted: %d\n", half_quoted);
 	if (last_and_first_quotes(str) == -1)
 		return (HALF_QUOTED);
 	else if (last_and_first_quotes(str) == SIMPLE_QUOTED)
