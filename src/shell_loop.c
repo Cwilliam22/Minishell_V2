@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:03:40 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 12:07:25 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 12:25:24 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 12:25:24 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ static void	tokenize_and_parse(t_shell *shell)
 	}
 	shell->commands = parse_tokens(tokens);
 	free_tokens(tokens);
-	if (!shell->commands)
-		return ;
-	return ;
 }
 
 /**
@@ -51,7 +48,7 @@ void	process_input(t_shell *shell)
 	if (shell->commands)
 	{
 		expand_commands(shell);
-		print_commands_expanded(shell->commands);
+		//print_commands_expanded(shell->commands);
 		if (has_redirections(shell->commands))
 			handle_heredoc(shell->commands);
 		execute_commands(shell);

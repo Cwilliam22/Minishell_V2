@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 11:54:31 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 12:01:15 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 12:19:22 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 12:24:21 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,16 @@ int check_quotes(char *str)
 	first_char = str[0];
 	last_char = str[len - 1];
 	if ((first_char == '\'' || first_char == '"') && last_char == first_char)
-		return (1);
+	{
+		i = 1;
+		while (i < len - 1)
+		{
+			if (str[i++] == first_char)
+				break;
+		}
+		if (i == len - 1)
+			return (1);
+	}
 	i = 0;
 	while (str[i])
 	{
