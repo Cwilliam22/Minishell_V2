@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 11:33:27 by wcapt             #+#    #+#             */
+/*   Updated: 2025/08/20 11:34:04 by wcapt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*handle_hd_var(char *line, int *i, t_env *env, char *result)
@@ -69,7 +81,8 @@ void	handle_heredoc(t_cmd *cmds)
 	current = cmds;
 	while (current)
 	{
-		if (current->redirections && current->redirections->type == REDIR_HEREDOC)
+		if (current->redirections
+			&& current->redirections->type == REDIR_HEREDOC)
 		{
 			redir = current->redirections;
 			if (!setup_for_heredoc(redir->heredoc))

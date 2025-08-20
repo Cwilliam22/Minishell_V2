@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+static void	pipeline_or_simple(t_exec *exec, t_cmd *cmd)
+{
+	if (exec->nb_process == 1)
+	{
+		if (check_args(exec))
+			execute_single_command(cmd, exec);
+	}
+	else if (exec->nb_process > 1)
+		handle_pipeline(cmd, exec);
+}
+
 void	execute_commands(t_shell *shell)
 {
 	t_exec	*exec;
@@ -24,19 +35,13 @@ void	execute_commands(t_shell *shell)
 	if (!shell->commands || !shell->commands->args_expanded
 		|| !shell->commands->args_expanded[0])
 	{
-		if(shell->commands->redirections)
+		if (shell->commands->redirections)
 			handle_redirection_only(shell->commands);
 	}
 	else
 	{
 		cmd = shell->commands;
-		if (exec->nb_process == 1)
-		{
-			if (check_args(exec))
-				execute_single_command(cmd, exec);
-		}
-		else if (exec->nb_process > 1)
-			handle_pipeline(cmd, exec);
+		pipeline_or_simple(exec, cmd);
 	}
 	free_exec(exec);
 	free(exec);

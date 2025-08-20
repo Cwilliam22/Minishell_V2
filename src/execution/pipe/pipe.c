@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:27:00 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 18:27:00 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/20 12:08:30 by wcapt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,25 @@ static void	setup_child_pipes_and_redir(int i, int **pipes, t_exec *exec)
 }
 
 static void	child_process(t_cmd *current_cmd, t_exec *exec, int i,
-	int **pipes)
+	int **pipes, pid_t *pids)
 {
+	int		exit_status;
+
 	child_signal();
 	setup_child_pipes_and_redir(i, pipes, exec);
 	execute_single_command(current_cmd, exec);
+	free_pipes(pipes, exec);
+	free(pids);
+	exit_status = exec->shell->env->last_exit_status;
+	cleanup_all(exec);
+	free(exec);
+	exit(exit_status);
 }
 
 static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 {
 	int		i;
 	t_cmd	*current_cmd;
-	int		exit_status;
 
 	i = 0;
 	current_cmd = cmd;
@@ -47,15 +54,7 @@ static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 		pids[i] = fork();
 		sig_core_dump_parent_signal();
 		if (pids[i] == 0)
-		{
-			child_process(current_cmd, exec, i, pipes);
-			free_pipes(pipes, exec);
-			free(pids);
-			exit_status = exec->shell->env->last_exit_status;
-			cleanup_all(exec);
-			free(exec);
-			exit(exit_status);
-		}
+			child_process(current_cmd, exec, i, pipes, pids);
 		else if (pids[i] < 0)
 		{
 			kill_all_process(pids, i);

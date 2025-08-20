@@ -1,23 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_heredoc.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 11:35:22 by wcapt             #+#    #+#             */
+/*   Updated: 2025/08/20 12:02:35 by wcapt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-static void	expand_heredoc_content(t_redir *redir, char *line)
-{
-	char	*new_line;
-	t_shell	*shell;
-
-	shell = get_shell(NULL);
-	if (redir->heredoc->quoted_delimiter)
-	{
-		new_line = ft_strdup(line);
-		if (!new_line)
-			return ;
-	}
-	else
-		new_line = expand_variables(line, shell);
-	ft_putstr_fd(new_line, redir->heredoc->fd);
-	ft_putstr_fd("\n", redir->heredoc->fd);
-	free(new_line);
-}
 
 static void	read_and_write_heredoc(t_redir *redir)
 {
@@ -78,18 +71,31 @@ void	wait_child(pid_t last_pid)
 	}
 }
 
+static void	in_child(t_redir *redir, int exit_status)
+{
+	t_shell		*shell;
+	t_exec		*exec;
+
+	shell = get_shell(NULL);
+	heredoc_child_signal();
+	read_and_write_heredoc(redir);
+	exec = get_exec();
+	exit_status = shell->env->last_exit_status;
+	cleanup_all(exec);
+	free(exec);
+	exit(exit_status);
+}
+
 void	process_hd(t_redir *redir)
 {
 	t_heredoc	*hd;
 	pid_t		pid;
-	t_shell		*shell;
-	t_exec		*exec;
 	int			exit_status;
 
-	shell = get_shell(NULL);
 	if (!redir || !redir->heredoc)
 		return ;
 	hd = redir->heredoc;
+	exit_status = 0;
 	heredoc_parent_signal();
 	pid = fork();
 	if (pid < 0)
@@ -98,15 +104,7 @@ void	process_hd(t_redir *redir)
 		return ;
 	}
 	if (pid == 0)
-	{
-		heredoc_child_signal();
-		read_and_write_heredoc(redir);
-		exec = get_exec();
-		exit_status = shell->env->last_exit_status;
-		cleanup_all(exec);
-		free(exec);
-		exit(exit_status);
-	}
+		in_child(redir, exit_status);
 	wait_child(pid);
 	if (hd->fd >= 0)
 	{

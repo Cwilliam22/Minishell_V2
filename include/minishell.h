@@ -323,6 +323,7 @@ void		execute_commands(t_shell *shell);
 int			ft_iter_char(const char *str, int c);
 int			create_file(t_redir *redir);
 void		unlink_all(t_redir *redir);
+void	expand_heredoc_content(t_redir *redir, char *line);
 
 /* Heredoc */
 void		handle_heredoc(t_cmd *cmds);

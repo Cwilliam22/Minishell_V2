@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setup_heredoc.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 11:36:11 by wcapt             #+#    #+#             */
+/*   Updated: 2025/08/20 12:03:22 by wcapt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	first_and_last_quotes(const char *str)
@@ -7,26 +19,18 @@ static int	first_and_last_quotes(const char *str)
 	int	i;
 
 	i = 0;
-	printf("str : %s\n", str);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			first = i;
-		printf("str[i] : %c\n", str[i]);
 		i++;
 	}
-	printf("first : %d\n", first);
-	printf("i : %d\n", i);
-	i--;
 	while (i >= 0)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			last = i;
-		printf("str[i] : %c\n", str[i]);
 		i--;
 	}
-	printf("first : %d\n", first);
-	printf("last : %d\n", last);
 	if ((str[first] == str[last]) && (last != first))
 	{
 		if (str[first] == '\'')

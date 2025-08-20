@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 11:34:58 by wcapt             #+#    #+#             */
+/*   Updated: 2025/08/20 12:01:08 by wcapt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_iter_char(const char *str, int c)
@@ -40,3 +52,21 @@ int	create_file(t_redir *redir)
 	return (1);
 }
 
+void	expand_heredoc_content(t_redir *redir, char *line)
+{
+	char	*new_line;
+	t_shell	*shell;
+
+	shell = get_shell(NULL);
+	if (redir->heredoc->quoted_delimiter)
+	{
+		new_line = ft_strdup(line);
+		if (!new_line)
+			return ;
+	}
+	else
+		new_line = expand_variables(line, shell);
+	ft_putstr_fd(new_line, redir->heredoc->fd);
+	ft_putstr_fd("\n", redir->heredoc->fd);
+	free(new_line);
+}
