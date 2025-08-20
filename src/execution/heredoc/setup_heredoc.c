@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   setup_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 11:36:11 by wcapt             #+#    #+#             */
-/*   Updated: 2025/08/20 16:04:13 by wcapt            ###   ########.fr       */
+/*   Created: 2025/08/20 16:08:13 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 16:13:26 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	last_and_first_quotes(char *str)
+static int	last_and_first_quotes(const char *str)
 {
 	int	i;
 	int	first_quote;
 	int	last_quote;
 	
 	i = 0;
+	first_quote = 0;
+	last_quote = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -31,6 +33,8 @@ static int	last_and_first_quotes(char *str)
 			last_quote = i;
 		i--;
 	}
+	if (first_quote == 0 && last_quote == 0)
+		return (NO_QUOTED);
 	if (first_quote == last_quote)
 		return (-1);
 	if (str[first_quote] == '\'' && str[last_quote] == '\'')
