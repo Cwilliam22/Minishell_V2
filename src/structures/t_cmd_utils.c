@@ -109,4 +109,3 @@ int	get_nb_commands(t_cmd *commands)
 	}
 	return (i);
 }
-

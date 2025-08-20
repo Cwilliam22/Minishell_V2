@@ -88,12 +88,29 @@ static int	command_permission(char *name_cmd)
 	return (1);
 }
 
-static int	apply_path(t_cmd *cmd, char **paths)
+static int	path_is_not_simple(t_cmd *cmd, t_exec *exec)
 {
+	char	**paths;
+	int		result;
+
+	if (!exec->path)
+	{
+		exec->current_cmd->cmd_path = NULL;
+		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+	}
+	paths = ft_split(exec->path, ':');
+	if (!paths || !paths[0])
+	{
+		free_array(paths);
+		cmd->cmd_path = NULL;
+		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+	}
 	if (find_simple_in_path(cmd, paths))
-		return (command_permission(cmd->cmd_path));
+		result = command_permission(cmd->cmd_path);
 	else
-		return (0);
+		result = 0;
+	free_array(paths);
+	return (result);
 }
 
 /**
@@ -103,11 +120,8 @@ static int	apply_path(t_cmd *cmd, char **paths)
  * @param access_mode: F_OK (existence) ou X_OK (exécutable)
  * @return: 1 si trouvé, 0 sinon
  */
-int	apply_cmd_path(t_cmd *cmd, t_exec * exec)
+int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 {
-	char	**paths;
-	int		result;
-
 	if (!cmd)
 		return (0);
 	if (cmd->state_path != PATH_SIMPLE)
@@ -118,21 +132,5 @@ int	apply_cmd_path(t_cmd *cmd, t_exec * exec)
 			return (0);
 	}
 	else
-	{
-		if (!exec->path)
-		{
-			exec->current_cmd->cmd_path = NULL;
-			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
-		}
-		paths = ft_split(exec->path, ':');
-		if (!paths || !paths[0])
-		{
-			free_array(paths);
-			cmd->cmd_path = NULL;
-			return (print_error(NULL, NULL, "No PATH variable found!"), 0);
-		}
-		result = apply_path(cmd, paths);
-		free_array(paths);
-		return (result);
-	}
+		return (path_is_not_simple(cmd, exec));
 }

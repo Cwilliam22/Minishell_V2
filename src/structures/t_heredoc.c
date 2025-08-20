@@ -57,4 +57,3 @@ void	free_heredoc(t_heredoc *heredoc)
 		free(heredoc->path);
 	free(heredoc);
 }
-
