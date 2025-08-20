@@ -48,6 +48,8 @@
 # define HALF_QUOTED 1
 # define DOUBLE_QUOTED 2
 # define SIMPLE_QUOTED 3
+# define SIMPLE_DOUBLE_QUOTED 4
+
 
 /* ************************************************************************** */
 /*                                    ENUM                                    */
