@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 17:18:02 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 17:18:02 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 13:16:36 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 13:16:36 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	builtin_exit(t_exec *exec)
 	ssize_t	exit_code;
 
 	args = exec->shell->commands->args_expanded;
-	printf("exit\n");
+	//printf("exit\n");
 	if (!args[1])
 		exit_code = exec->shell->env->last_exit_status;
 	else if (args[2])

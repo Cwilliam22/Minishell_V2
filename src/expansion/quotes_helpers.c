@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/06 14:21:03 by alfavre           #+#    #+#             */
-/*   Updated: 2025/07/06 14:21:07 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/20 13:41:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 13:41:45 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ char	*process_unquoted_char(char *result, char *str,
 	int		start;
 
 	start = *index;
+	if (str[start] == '$' && (str[start + 1] == '"' || str[start + 1] == '\''))
+	{
+		(*index)++;
+		return (result);
+	}
 	while (str[*index] && str[*index] != '\'' && str[*index] != '"')
 		(*index)++;
 	if (*index > start)

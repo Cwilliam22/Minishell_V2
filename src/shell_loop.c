@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:25:24 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 12:25:24 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 13:59:26 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 14:06:01 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	process_input(t_shell *shell)
 		tokenize_and_parse(shell);
 	if (shell->commands)
 	{
-		expand_commands(shell);
 		//print_commands_expanded(shell->commands);
 		if (has_redirections(shell->commands))
 			handle_heredoc(shell->commands);
+		expand_commands(shell);
 		execute_commands(shell);
 		free_commands(shell->commands);
 		shell->commands = NULL;
@@ -66,7 +66,21 @@ int	handle_iteration(t_shell *shell)
 {
 	int	pos;
 
-	shell->input_line = readline(PROMPT);
+	if (isatty(fileno(stdin)))
+		shell->input_line = readline(PROMPT);
+	else
+	{
+		char *line;
+		line = get_next_line(fileno(stdin));
+		if (!line)
+		{
+			shell->running = 0;
+			return (0);
+		}
+		shell->input_line = ft_strtrim(line, "\n");
+		free(line);
+	}
+	/*shell->input_line = readline(PROMPT);*/
 	if (!shell->input_line)
 	{
 		printf("exit\n");

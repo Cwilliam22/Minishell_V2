@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:19:22 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 12:24:21 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 13:42:15 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 13:56:50 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,22 @@ char	*expand_variables(char *str, t_shell *shell)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1])
+		if (str[i] == '\\' && str[i + 1])
+		{
+			if (str[i + 1] == '\\')
+			{
+				result = append_char_to_str(result, '\\');
+				i += 2;
+			}
+			else if (str[i + 1] == '$')
+			{
+				result = append_char_to_str(result, '$');
+				i += 2;
+			}
+			else
+				result = append_char_to_str(result, str[i++]);
+		}
+		else if (str[i] == '$' && str[i + 1])
 		{
 			temp = process_variable(str, &i, shell);
 			result = join_and_free(result, temp);
@@ -117,8 +132,6 @@ char	*handle_quotes(char *str, t_shell *shell)
 		else
 			result = process_unquoted_char(result, str, &i, shell);
 	}
-	if (ft_strcmp(result, "") == 0)
-		return (NULL);
 	return (result);
 }
 
