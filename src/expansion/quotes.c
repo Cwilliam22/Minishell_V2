@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/31 17:37:05 by root              #+#    #+#             */
-/*   Updated: 2025/08/06 14:35:06 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/20 11:54:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 12:01:15 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,26 +127,27 @@ char	*handle_quotes(char *str, t_shell *shell)
  * @param str: String to check
  * @return: 1 if balanced, 0 otherwise
  */
-int	check_quotes(char *str)
+int check_quotes(char *str)
 {
-	int		i;
-	int		in_quote;
-	char	quote_type;
-
-	if (!str)
+	int len, i;
+	char first_char, last_char;
+	int single_count = 0, double_count = 0;
+	
+	if (!str || !str[0])
+		return (1);
+	len = strlen(str);
+	first_char = str[0];
+	last_char = str[len - 1];
+	if ((first_char == '\'' || first_char == '"') && last_char == first_char)
 		return (1);
 	i = 0;
-	in_quote = 0;
 	while (str[i])
 	{
-		if (!in_quote && (str[i] == '\'' || str[i] == '"'))
-		{
-			quote_type = str[i];
-			in_quote = 1;
-		}
-		else if (in_quote && str[i] == quote_type)
-			in_quote = 0;
+		if (str[i] == '\'')
+			single_count++;
+		else if (str[i] == '"')
+			double_count++;
 		i++;
 	}
-	return (!in_quote);
+	return (single_count % 2 == 0 && double_count % 2 == 0);
 }

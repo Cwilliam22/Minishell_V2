@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_token_syntax.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 15:49:09 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/19 17:08:21 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/20 11:48:37 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 11:49:20 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	check_token_syntax(t_token *tokens)
 		return (1);
 	current = tokens;
 	result = 1;
+	if (check_token_quotes(tokens) == 0)
+		return (print_syntax_error("unclosed quotes"), SYNTAX_ERROR);
 	if (current->type == T_PIPE)
 		return (print_syntax_error("|"), SYNTAX_ERROR);
 	while (current)

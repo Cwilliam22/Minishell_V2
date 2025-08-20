@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 15:30:59 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/29 19:38:24 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/20 11:45:49 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 11:46:48 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,23 @@ void	free_tokens(t_token *tokens)
 		free(current);
 		current = next;
 	}
+}
+
+int	check_token_quotes(t_token *tokens)
+{
+	t_token	*current;
+
+	if (!tokens)
+		return (1);
+	current = tokens;
+	while (current)
+	{
+		if (current->type == T_WORD || current->type == T_VAR)
+		{
+			if (!check_quotes(current->value))
+				return (0);
+		}
+		current = current->next;
+	}
+	return (1);
 }

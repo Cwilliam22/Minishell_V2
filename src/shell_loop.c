@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 18:17:22 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 18:22:26 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 12:03:40 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 12:07:25 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,9 @@ void	process_input(t_shell *shell)
 		return ;
 	pos = skip_whitespace(shell->input_line, 0);
 	if (shell->input_line[pos])
-	{
-		if (!check_quotes(shell->input_line))
-		{
-			print_error(NULL, NULL, "unclosed quotes");
-			set_exit_status(SYNTAX_ERROR);
-			return ;
-		}
 		tokenize_and_parse(shell);
+	if (shell->commands)
+	{
 		expand_commands(shell);
 		print_commands_expanded(shell->commands);
 		if (has_redirections(shell->commands))

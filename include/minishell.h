@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:24:53 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 18:24:53 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/20 11:50:31 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,6 +390,7 @@ t_token		*tokenize(char *input);
 t_token		*create_token(char *value, int type);
 void		add_token(t_token **head, t_token *new_token);
 void		free_tokens(t_token *tokens);
+int			check_token_quotes(t_token *tokens);
 
 /* ============================= PARSER ==================================== */
 /* Check token syntax */
