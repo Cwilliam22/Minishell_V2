@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 13:59:26 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 14:06:01 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/20 15:51:16 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/20 15:52:08 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,7 @@ int	handle_iteration(t_shell *shell)
 {
 	int	pos;
 
-	if (isatty(fileno(stdin)))
-		shell->input_line = readline(PROMPT);
-	else
-	{
-		char *line;
-		line = get_next_line(fileno(stdin));
-		if (!line)
-		{
-			shell->running = 0;
-			return (0);
-		}
-		shell->input_line = ft_strtrim(line, "\n");
-		free(line);
-	}
-	/*shell->input_line = readline(PROMPT);*/
+	shell->input_line = readline(PROMPT);
 	if (!shell->input_line)
 	{
 		printf("exit\n");
