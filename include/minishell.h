@@ -325,12 +325,13 @@ void		execute_commands(t_shell *shell);
 int			ft_iter_char(const char *str, int c);
 int			create_file(t_redir *redir);
 void		unlink_all(t_redir *redir);
-void	expand_heredoc_content(t_redir *redir, char *line);
+void		expand_heredoc_content(t_redir *redir, char *line);
 
 /* Heredoc */
 void		handle_heredoc(t_cmd *cmds);
 int			setup_for_heredoc(t_heredoc *heredoc);
 void		process_hd(t_redir *redir);
+int			type_of_quote(const char *str);
 
 /* Pipe_utils */
 void		kill_all_process(pid_t *pids, int count);
