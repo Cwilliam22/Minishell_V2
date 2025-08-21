@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 13:42:15 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 13:56:50 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 12:31:26 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 12:31:32 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ char	*handle_quotes(char *str, t_shell *shell)
 		else
 			result = process_unquoted_char(result, str, &i, shell);
 	}
+	if (!result || ft_strlen(result) == 0)
+	{
+		free(result);
+		return (NULL);
+	}
 	return (result);
 }
 
@@ -142,34 +147,32 @@ char	*handle_quotes(char *str, t_shell *shell)
  */
 int check_quotes(char *str)
 {
-	int len, i;
-	char first_char, last_char;
-	int single_count = 0, double_count = 0;
+	int i;
 	
 	if (!str || !str[0])
 		return (1);
-	len = strlen(str);
-	first_char = str[0];
-	last_char = str[len - 1];
-	if ((first_char == '\'' || first_char == '"') && last_char == first_char)
-	{
-		i = 1;
-		while (i < len - 1)
-		{
-			if (str[i++] == first_char)
-				break;
-		}
-		if (i == len - 1)
-			return (1);
-	}
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			single_count++;
-		else if (str[i] == '"')
-			double_count++;
+	while (str[i] && str[i] != '\'' && str[i] != '"')
 		i++;
+	if (str[i] == '"')
+	{
+		i++;
+		while (str[i] && str[i] != '"')
+			i++;
+		if (!str[i])
+			return (0); // Unmatched double quote
+		if (str[i] && str[i] == '"')
+			return (check_quotes(str + i + 1)); // Matched double quote
 	}
-	return (single_count % 2 == 0 && double_count % 2 == 0);
+	else if (str[i] == '\'')
+	{
+		i++;
+		while (str[i] && str[i] != '\'')
+			i++;
+		if (!str[i])
+			return (0); // Unmatched single quote
+		if (str[i] && str[i] == '\'')
+			return (check_quotes(str + i + 1)); // Matched single quote
+	}
+	return (1); // No quotes or unmatched quotes
 }

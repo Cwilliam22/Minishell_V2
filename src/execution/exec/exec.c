@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 18:37:01 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 18:38:24 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 11:28:55 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 11:30:06 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,21 @@ static void	pipeline_or_simple(t_exec *exec, t_cmd *cmd)
 void	execute_commands(t_shell *shell)
 {
 	t_exec	*exec;
-	t_cmd	*cmd;
+	t_cmd	*cmds;
 
 	exec = create_exec(shell);
 	if (!exec)
 		return ;
 	update_var_path(exec);
-	if (!shell->commands || !shell->commands->args_expanded
-		|| !shell->commands->args_expanded[0])
+	cmds = shell->commands;
+	if (!cmds || !cmds->args_expanded
+		|| !cmds->args_expanded[0])
 	{
-		if (shell->commands->redirections)
-			handle_redirection_only(shell->commands);
+		if (cmds->redirections)
+			handle_redirection_only(cmds);
 	}
 	else
-	{
-		cmd = shell->commands;
-		pipeline_or_simple(exec, cmd);
-	}
+		pipeline_or_simple(exec, cmds);
 	free_exec(exec);
 	free(exec);
 }
