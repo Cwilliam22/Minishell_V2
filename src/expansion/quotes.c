@@ -66,6 +66,37 @@ static char	*process_variable(char *str, int *i, t_shell *shell)
 	return (result);
 }
 
+static int	conditions_expand_var(t_shell *shell, char *temp, int *i, char *str)
+{
+	char	*result;
+
+	result = ft_strdup("");
+	if (str[*i] == '\\' && str[*i + 1])
+	{
+		if (str[*i + 1] == '\\')
+		{
+			result = append_char_to_str(result, '\\');
+			i += 2;
+		}
+		else if (str[*i + 1] == '$')
+		{
+			result = append_char_to_str(result, '$');
+			i += 2;
+		}
+		else
+			result = append_char_to_str(result, str[*i++]);
+	}
+	else if (str[*i] == '$' && str[*i + 1])
+	{
+		temp = process_variable(str, &i, shell);
+		result = join_and_free(result, temp);
+	}
+	else
+		result = append_char_to_str(result, str[*i++]);
+	return (result);
+}
+
+
 /**
  * Expand variables in a string
  * @param str: Input string
@@ -80,33 +111,9 @@ char	*expand_variables(char *str, t_shell *shell)
 
 	if (!str)
 		return (NULL);
-	result = ft_strdup("");
 	i = 0;
 	while (str[i])
-	{
-		if (str[i] == '\\' && str[i + 1])
-		{
-			if (str[i + 1] == '\\')
-			{
-				result = append_char_to_str(result, '\\');
-				i += 2;
-			}
-			else if (str[i + 1] == '$')
-			{
-				result = append_char_to_str(result, '$');
-				i += 2;
-			}
-			else
-				result = append_char_to_str(result, str[i++]);
-		}
-		else if (str[i] == '$' && str[i + 1])
-		{
-			temp = process_variable(str, &i, shell);
-			result = join_and_free(result, temp);
-		}
-		else
-			result = append_char_to_str(result, str[i++]);
-	}
+		result = conditions_expand_var(shell, temp, &i, str);
 	return (result);
 }
 
@@ -145,10 +152,10 @@ char	*handle_quotes(char *str, t_shell *shell)
  * @param str: String to check
  * @return: 1 if balanced, 0 otherwise
  */
-int check_quotes(char *str)
+int	check_quotes(char *str)
 {
-	int i;
-	
+	int	i;
+
 	if (!str || !str[0])
 		return (1);
 	i = 0;
@@ -160,9 +167,9 @@ int check_quotes(char *str)
 		while (str[i] && str[i] != '"')
 			i++;
 		if (!str[i])
-			return (0); // Unmatched double quote
+			return (0);
 		if (str[i] && str[i] == '"')
-			return (check_quotes(str + i + 1)); // Matched double quote
+			return (check_quotes(str + i + 1));
 	}
 	else if (str[i] == '\'')
 	{
@@ -170,9 +177,9 @@ int check_quotes(char *str)
 		while (str[i] && str[i] != '\'')
 			i++;
 		if (!str[i])
-			return (0); // Unmatched single quote
+			return (0);
 		if (str[i] && str[i] == '\'')
-			return (check_quotes(str + i + 1)); // Matched single quote
+			return (check_quotes(str + i + 1));
 	}
-	return (1); // No quotes or unmatched quotes
+	return (1);
 }
