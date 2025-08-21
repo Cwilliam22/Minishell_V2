@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 18:25:06 by wcapt             #+#    #+#             */
-/*   Updated: 2025/08/04 11:05:39 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/21 15:28:27 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 15:29:24 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	builtin_cd(t_exec *exec)
 	char	**args;
 
 	args = exec->shell->commands->args_expanded;
-	if (!args[1])
+	if (!args[1] || ft_strcmp(args[1], "~") == 0)
 		return (handle_cd_home(exec));
 	if (args[2])
 	{
