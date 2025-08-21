@@ -18,6 +18,29 @@
  * @param shell: Shell structure for signal handling
  * @return: 0 on success, 1 on error, EXIT_SIGINT if interrupted
  */
+
+static int conditions_apply_redirections(t_redir *curr)
+{
+	int	ret;
+
+	if (curr->type == REDIR_IN)
+		ret = open_and_dup(curr->file, O_RDONLY, STDIN_FILENO);
+	else if (curr->type == REDIR_OUT)
+		ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
+				| O_TRUNC, STDOUT_FILENO);
+	else if (curr->type == REDIR_APPEND)
+		ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
+				| O_APPEND, STDOUT_FILENO);
+	else if (curr->type == REDIR_HEREDOC)
+	{
+		ret = open_and_dup(curr->heredoc->path, O_RDONLY, STDIN_FILENO);
+		unlink(curr->heredoc->path);
+	}
+	else
+		ret = 0;
+	return (ret);
+}
+
 int	apply_redirections(t_cmd *cmd)
 {
 	t_redir	*curr;
@@ -28,21 +51,7 @@ int	apply_redirections(t_cmd *cmd)
 	{
 		if (g_signal_received == SIGINT)
 			return (EXIT_SIGINT);
-		if (curr->type == REDIR_IN)
-			ret = open_and_dup(curr->file, O_RDONLY, STDIN_FILENO);
-		else if (curr->type == REDIR_OUT)
-			ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
-					| O_TRUNC, STDOUT_FILENO);
-		else if (curr->type == REDIR_APPEND)
-			ret = open_and_dup(curr->file, O_WRONLY | O_CREAT
-					| O_APPEND, STDOUT_FILENO);
-		else if (curr->type == REDIR_HEREDOC)
-		{
-			ret = open_and_dup(curr->heredoc->path, O_RDONLY, STDIN_FILENO);
-			unlink(curr->heredoc->path);
-		}
-		else
-			ret = 0;
+		ret = conditions_apply_redirections(curr);
 		if (ret)
 			return (ret);
 		curr = curr->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   only_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:48:51 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 17:49:40 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/21 12:20:25 by wcapt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ static int	create_empty_file(char *filename)
 	return (0);
 }
 
+static void	condition_handle_redirection_only(t_cmd *cmd, t_redir *head)
+{
+	if (head->type == REDIR_IN)
+	{
+		if (!check_command_exist(cmd->redirections->file))
+		{
+			set_exit_status(1);
+			print_error(NULL, NULL, "so such file or directory");
+			return ;
+		}
+	}
+	else if (head->type == REDIR_OUT || head->type == REDIR_APPEND)
+	{
+		if (create_empty_file(cmd->redirections->file) != SUCCESS)
+		{
+			set_exit_status(1);
+			print_error(NULL, NULL, "error open empty file");
+		}
+	}
+}
+
 void	handle_redirection_only(t_cmd *cmd)
 {
 	t_redir	*head;
@@ -35,23 +56,7 @@ void	handle_redirection_only(t_cmd *cmd)
 	head = cmd->redirections;
 	while (head)
 	{
-		if (head->type == REDIR_IN)
-		{
-			if (!check_command_exist(cmd->redirections->file))
-			{
-				set_exit_status(1);
-				print_error(NULL, NULL, "so such file or directory");
-				return ;
-			}
-		}
-		else if (head->type == REDIR_OUT || head->type == REDIR_APPEND)
-		{
-			if (create_empty_file(cmd->redirections->file) != SUCCESS)
-			{
-				set_exit_status(1);
-				print_error(NULL, NULL, "error open empty file");
-			}
-		}
+		condition_handle_redirection_only(cmd, head);
 		head = head->next;
 	}
 }
