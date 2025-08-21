@@ -31,18 +31,25 @@ static int	is_all_spaces(const char *s)
 int	check_args(t_exec *exec)
 {
 	t_shell	*shell;
-	char	**process;
+	char	**args;
+	char	*cmd_name;
 
 	shell = exec->shell;
-	if (!shell || !shell->commands || !shell->commands->args)
-		return (GENERAL_ERROR);
-	process = shell->commands->args_expanded;
-	if (!process || !process[0] || !process[0][0] || is_all_spaces(process[0]))
+	if (!shell || !shell->commands)
+		return (0);
+	args = shell->commands->args_expanded;
+	if (!args || !args[0])
+		return (set_exit_status(127), 0);
+	cmd_name = args[0];
+	if (!cmd_name || cmd_name[0] == '\0')
 	{
-		if (process[0] && process[0][0] == '\0')
-			print_error("Command", process[0], "not found");
-		else if (is_all_spaces(process[0]))
-			print_error(NULL, process[0], "command not found");
+		print_error("Command", "''", "not found");
+		set_exit_status(127);
+		return (0);
+	}
+	if (is_all_spaces(cmd_name))
+	{
+		print_error(NULL, cmd_name, "command not found");
 		set_exit_status(127);
 		return (0);
 	}

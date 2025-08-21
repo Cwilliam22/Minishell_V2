@@ -87,6 +87,5 @@ int	builtin_exit(t_exec *exec)
 	else
 		exit_code = handle_single_arg(args[1]);
 	cleanup_all(exec);
-	free(exec);
 	exit(exit_code);
 }

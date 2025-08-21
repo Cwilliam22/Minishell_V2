@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+int	get_exit_status(t_exec *exec)
+{
+	if (!exec || !exec->shell || !exec->shell->env)
+		return (0);
+	return (exec->shell->env->last_exit_status);
+}
+
 void	set_exit_status(int exit_value)
 {
 	t_shell	*shell;

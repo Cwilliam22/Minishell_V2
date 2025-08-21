@@ -14,13 +14,15 @@
 
 static void	pipeline_or_simple(t_exec *exec, t_cmd *cmd)
 {
-	if (exec->nb_process == 1)
+	if (exec->is_pipe)
+		handle_pipeline(cmd, exec);
+	else
 	{
 		if (check_args(exec))
 			execute_single_command(cmd, exec);
+		else
+			set_exit_status(127);
 	}
-	else if (exec->nb_process > 1)
-		handle_pipeline(cmd, exec);
 }
 
 void	execute_commands(t_shell *shell)
@@ -28,19 +30,20 @@ void	execute_commands(t_shell *shell)
 	t_exec	*exec;
 	t_cmd	*cmds;
 
+	if (!shell || !shell->commands)
+		return ;
 	exec = create_exec(shell);
 	if (!exec)
 		return ;
-	update_var_path(exec);
 	cmds = shell->commands;
-	if (!cmds || !cmds->args_expanded
-		|| !cmds->args_expanded[0])
+	if (exec->nb_process == 0 || !cmds->args_expanded
+		|| !cmds->args_expanded[0] || cmds->args_expanded[0][0] == '\0')
 	{
 		if (cmds->redirections)
 			handle_redirection_only(cmds);
+		free_exec(exec);
+		return ;
 	}
-	else
-		pipeline_or_simple(exec, cmds);
+	pipeline_or_simple(exec, cmds);
 	free_exec(exec);
-	free(exec);
 }

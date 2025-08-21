@@ -12,45 +12,24 @@
 
 #include "minishell.h"
 
-static int	its_absolute_path(t_cmd *cmd)
-{
-	if (!cmd || !cmd->args_expanded || !cmd->args_expanded[0])
-		return (0);
-	if (cmd->args_expanded[0][0] == '/')
-		cmd->cmd_path = ft_strdup(cmd->args_expanded[0]);
-	if (!cmd->cmd_path)
-		return (0);
-	return (1);
-}
-
-static int	its_relative_path(t_cmd *cmd)
-{
-	if (!cmd || !cmd->args_expanded || !cmd->args_expanded[0])
-		return (0);
-	if (cmd->args_expanded[0][0] == '.'
-		&& cmd->args_expanded[0][1] == '/')
-		cmd->cmd_path = ft_strdup(cmd->args_expanded[0]);
-	if (!cmd->cmd_path)
-		return (0);
-	return (1);
-}
-
 int	update_state_path(t_cmd *cmd)
 {
-	t_cmd	*current;
+	char	*first_arg;
 
-	if (!cmd)
+	if (!cmd || !cmd->args_expanded || !cmd->args_expanded[0])
 		return (0);
-	current = cmd;
-	while (current)
+	first_arg = cmd->args_expanded[0];
+	if (first_arg[0] == '/')
 	{
-		if (its_absolute_path(current))
-			return (current->state_path = PATH_ABSOLUTE, 1);
-		if (its_relative_path(current))
-			return (current->state_path = PATH_RELATIVE, 1);
-		current->state_path = PATH_SIMPLE;
-		current = current->next;
+		cmd->state_path = PATH_ABSOLUTE;
+		return (1);
 	}
+	if (ft_strchr(first_arg, '/'))
+	{
+		cmd->state_path = PATH_RELATIVE;
+		return (1);
+	}
+	cmd->state_path = PATH_SIMPLE;
 	return (1);
 }
 

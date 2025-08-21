@@ -16,20 +16,23 @@ t_exec	*create_exec(t_shell *shell)
 {
 	t_exec	*exec;
 
+	if (!shell)
+		return (NULL);
 	exec = (t_exec *)safe_malloc(sizeof(t_exec));
 	exec->shell = shell;
 	exec->current_cmd = NULL;
-	exec->pipe_fds = NULL;
-	exec->path = get_env_var("PATH", exec->shell->env);
-	exec->env_copy = NULL;
+	exec->path = get_env_var("PATH", shell->env);
+	exec->env_copy = env_to_string(shell->env);
+	if (!exec->env_copy)
+		return (free_exec(exec), NULL);
 	exec->nb_arg = 0;
-	exec->is_pipe = 0;
-	exec->saved_stdin = -1;
-	exec->saved_stdout = -1;
-	exec->saved_stderr = -1;
-	exec->nb_var_env = exec->shell->env->nbr_var_env;
-	exec->nb_process = get_nb_commands(exec->shell->commands);
+	exec->nb_var_env = shell->env->nbr_var_env;
+	exec->nb_process = get_nb_commands(shell->commands);
 	exec->nbr_pipes = exec->nb_process - 1;
+	if (exec->nb_process > 1)
+		exec->is_pipe = 1;
+	else
+		exec->is_pipe = 0;
 	return (exec);
 }
 
@@ -37,21 +40,11 @@ void	free_exec(t_exec *exec)
 {
 	if (!exec)
 		return ;
-	if (exec->pipe_fds)
-		free(exec->pipe_fds);
 	if (exec->path)
-	{
 		free(exec->path);
-		exec->path = NULL;
-	}
 	if (exec->env_copy)
 		free_array(exec->env_copy);
-}
-
-void	free_var(t_exec *exec)
-{
-	if (exec->path)
-		free(exec->path);
+	free(exec);
 }
 
 t_exec	*get_exec(void)

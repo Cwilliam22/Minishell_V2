@@ -29,7 +29,6 @@ static int	find_other_in_path(t_cmd *cmd)
 		}
 		return (1);
 	}
-	print_error(name_cmd, NULL, "No such file or directory");
 	return (0);
 }
 
@@ -57,7 +56,6 @@ static int	find_simple_in_path(t_cmd *cmd, char **paths)
 		free(path_cmd);
 		i++;
 	}
-	print_error(NULL, NULL, "command not found");
 	return (0);
 }
 
@@ -68,14 +66,17 @@ static int	command_permission(char *name_cmd)
 {
 	struct stat	file_stat;
 
-	if (stat(name_cmd, &file_stat) == 0)
+	if (stat(name_cmd, &file_stat) != 0)
 	{
-		if (S_ISDIR(file_stat.st_mode))
-		{
-			print_error(name_cmd, NULL, "Is a directory");
-			set_exit_status(126);
-			return (0);
-		}
+		print_error(name_cmd, NULL, "No such file or directory");
+		set_exit_status(127);
+		return (0);
+	}
+	if (S_ISDIR(file_stat.st_mode))
+	{
+		print_error(name_cmd, NULL, "Is a directory");
+		set_exit_status(126);
+		return (0);
 	}
 	if (access(name_cmd, X_OK) != 0)
 	{
@@ -83,32 +84,25 @@ static int	command_permission(char *name_cmd)
 		set_exit_status(126);
 		return (0);
 	}
-	if (file_stat.st_size == 0)
-		return (0);
 	return (1);
 }
 
-static int	path_is_not_simple(t_cmd *cmd, t_exec *exec)
+static int	search_in_path(t_cmd *cmd, t_exec *exec)
 {
 	char	**paths;
 	int		result;
 
-	if (!exec->path)
-	{
-		exec->current_cmd->cmd_path = NULL;
-		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
-	}
+	result = 0;
+	if (!exec->path || !exec->path[0])
+		return (0);
 	paths = ft_split(exec->path, ':');
 	if (!paths || !paths[0])
 	{
 		free_array(paths);
-		cmd->cmd_path = NULL;
-		return (print_error(NULL, NULL, "No PATH variable found!"), 0);
+		return (0);
 	}
 	if (find_simple_in_path(cmd, paths))
 		result = command_permission(cmd->cmd_path);
-	else
-		result = 0;
 	free_array(paths);
 	return (result);
 }
@@ -126,11 +120,22 @@ int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 		return (0);
 	if (cmd->state_path != PATH_SIMPLE)
 	{
-		if (find_other_in_path(cmd))
-			return (command_permission(cmd->cmd_path));
-		else
+		if (!find_other_in_path(cmd))
+		{
+			print_error(cmd->args_expanded[0], NULL, "No such file or directory");
+			set_exit_status(127);
 			return (0);
+		}
+		if (!command_permission(cmd->cmd_path))
+			return (0);
+		return (1);
 	}
 	else
-		return (path_is_not_simple(cmd, exec));
+	{
+		if (search_in_path(cmd, exec))
+			return (1);
+		print_error(cmd->args_expanded[0], NULL, "command not found");
+		set_exit_status(127);
+		return (0);
+	}
 }

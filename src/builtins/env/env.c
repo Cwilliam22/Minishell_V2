@@ -47,14 +47,11 @@ int	builtin_env(t_exec *exec)
 	free(pwd);
 	set_env_var("_", new_command, exec->shell->env, 0);
 	free(new_command);
-	if (exec->nb_arg == 1)
+	if (arg[1])
 	{
-		print_env(exec->shell->env);
-		return (0);
-	}
-	else
-	{
-		print_error("env", arg[1], "No such file or directory");
+		print_error("env", arg[1], "Too many arguments");
 		return (127);
 	}
+	print_env(exec->shell->env);
+	return (0);
 }

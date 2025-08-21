@@ -80,6 +80,5 @@ int	main(int argc, char **argv, char **envp)
 	exit_code = shell->env->last_exit_status;
 	exec = get_exec();
 	cleanup_all(exec);
-	free(exec);
 	return (exit_code);
 }

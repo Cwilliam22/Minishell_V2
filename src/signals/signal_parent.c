@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:09:19 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 16:09:19 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/21 19:30:38 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ void	parent_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	heredoc_parent_signal(void)
+static void	heredoc_sigint_handler(int sig)
 {
-	signal(SIGINT, handler_child_sigint);
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+}
+
+void	handle_heredoc_signal(void)
+{
+	signal(SIGINT, heredoc_sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 

@@ -12,63 +12,32 @@
 
 #include "minishell.h"
 
-int	execute_direct(t_cmd *cmd, t_exec *exec)
-{
-	if (is_builtin(cmd))
-	{
-		return (execute_builtin(cmd, exec));
-	}
-	else
-	{
-		return (execute_externe(cmd, exec));
-	}
-}
-
-static int	execute_with_redirections(t_cmd *cmd, t_exec *exec)
-{
-	int	saved_stdout;
-	int	saved_stdin;
-	int	exit_code;
-	int	redir_status;
-
-	saved_stdout = dup(STDOUT_FILENO);
-	saved_stdin = dup(STDIN_FILENO);
-	if (saved_stdout == -1 || saved_stdin == -1)
-	{
-		if (saved_stdout != -1)
-			close(saved_stdout);
-		if (saved_stdin != -1)
-			close(saved_stdin);
-		print_error(NULL, NULL, "dup");
-		return (1);
-	}
-	redir_status = apply_redirections(cmd);
-	if (redir_status != 0)
-	{
-		restore_std(saved_stdout, saved_stdin);
-		return (redir_status);
-	}
-	exit_code = execute_direct(cmd, exec);
-	restore_std(saved_stdout, saved_stdin);
-	return (exit_code);
-}
-
 /**
  * Nb_arg compte le nom d'argument avant expension
  */
 void	execute_single_command(t_cmd *cmd, t_exec *exec)
 {
-	int		exit_code;
+	pid_t	pid;
+	int		status;
 
-	exit_code = 0;
-	exec->nb_arg = get_nb_command_args(cmd);
-	if (has_redirections(cmd))
+	if (is_builtin(cmd) && !cmd->redirections)
 	{
-		exit_code = execute_with_redirections(cmd, exec);
+		execute_builtin(cmd, exec);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		child_process(cmd, exec);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		update_exit_status_from_child(status);
 	}
 	else
 	{
-		exit_code = execute_direct(cmd, exec);
+		perror("fork");
+		set_exit_status(1);
 	}
-	set_exit_status(exit_code);
 }

@@ -124,8 +124,7 @@ typedef struct s_token
 typedef struct s_heredoc
 {
 	char	*delimiter;
-	char	*content;
-	char	*path; // NEW
+	char	*path;
 	int		id;
 	int		quoted_delimiter;
 	int		fd;
@@ -189,22 +188,17 @@ typedef struct s_shell
 	int		running;		//flag a utiliser? pour exit -> exit()
 }	t_shell;
 
-typedef struct s_exec
-{
+typedef struct s_exec {
 	t_shell	*shell;
 	t_cmd	*current_cmd;
-	int		*pipe_fds;
 	char	*path;
 	char	**env_copy;
 	int		nb_arg;
-	int		is_pipe;
-	int		saved_stdin;
-	int		saved_stdout;
-	int		saved_stderr;
 	int		nb_var_env;
-	int		nbr_pipes;
 	int		nb_process;
-}	t_exec;
+	int		nbr_pipes;
+	int		is_pipe;
+} t_exec;
 
 typedef struct s_builtin
 {
@@ -273,7 +267,7 @@ int			builtin_unset(t_exec *exec);
 
 /* builtins */
 int			is_builtin(t_cmd *cmd);
-int			execute_builtin(t_cmd *cmd, t_exec *exec);
+void		execute_builtin(t_cmd *cmd, t_exec *exec);
 /* ==================================== DEBUG ============================== */
 /*Debug commands */
 void		print_commands(t_cmd *commands);
@@ -305,9 +299,6 @@ void		free_env_vars(t_env_var *vars);
 int			ft_shlvl(t_shell *shell);
 
 /* ============================= EXECUTION ================================== */
-/* Exec_externe */
-int			execute_externe(t_cmd *cmd, t_exec *exec);
-
 /* Exec_single_cmd */
 int			execute_direct(t_cmd *cmd, t_exec *exec);
 void		execute_single_command(t_cmd *cmd, t_exec *exec);
@@ -315,39 +306,46 @@ void		execute_single_command(t_cmd *cmd, t_exec *exec);
 /* Exec_utils */
 t_exec		*create_exec(t_shell *shell);
 void		free_exec(t_exec *exec);
-void		free_var(t_exec *exec);
 t_exec		*get_exec(void);
+void		update_exit_status_from_child(int status);
 
 /* Exec */
 void		execute_commands(t_shell *shell);
 
-/* Heredoc_utils*/
-int			ft_iter_char(const char *str, int c);
-int			create_file(t_redir *redir);
-void		unlink_all(t_redir *redir);
-void		expand_heredoc_content(t_redir *redir, char *line);
+/* Process utils*/
+void		update_exit_status_from_child(int status);
+void		child_process(t_cmd *cmd, t_exec *exec);
+
+/* Heredoc_expand*/
+char		*expand_heredoc_content(t_redir *redir, char *line);
 
 /* Heredoc */
-void		handle_heredoc(t_cmd *cmds);
-int			setup_for_heredoc(t_heredoc *heredoc);
-void		process_hd(t_redir *redir);
-int			type_of_quote(const char *str);
+int			has_heredocs(t_cmd *cmds);
+int			handle_heredocs(t_cmd *cmds);
+
+/* Process heredoc */
+int			process_heredoc(t_redir *redir);
+
+/* Quotes_heredoc */
+int			conditions_type_of_quotes(int s_quote, int d_quote,
+				const char *str);
+
+/* Setup heredoc */
+int			create_heredoc_file(t_redir *redir);
 
 /* Pipe_utils */
-void		kill_all_process(pid_t *pids, int count);
-int			create_pipes(t_exec *exec, int ***pipes);
-int			free_pipes(int **pipes, t_exec *exec);
-void		close_pipes(int **pipes, t_exec *exec);
+void		wait_all_pipeline_children(pid_t *pids, int nb_process);
 
 /* Pipe */
 void		handle_pipeline(t_cmd *cmd, t_exec *exec);
 
-/* Only redir */
+/* apply redir */
+int			apply_redirections(t_cmd *cmd);
 void		handle_redirection_only(t_cmd *cmd);
 
-/* Redir */
-int			apply_redirections(t_cmd *cmd);
-int			has_redirections(t_cmd *commands);
+/* Redir utils */
+int			has_file_redirections(t_cmd *cmds);
+int			validate_file_redirections(t_cmd *cmds);
 
 /* ============================= EXPAND ==================================== */
 /* Expand_utils */
@@ -419,7 +417,7 @@ void		handler_child_sigint(int sig);
 
 /* Parent */
 void		parent_signal(void);
-void		heredoc_parent_signal(void);
+void		handle_heredoc_signal(void);
 void		sig_core_dump_parent_signal(void);
 
 /* Signals */
@@ -484,11 +482,8 @@ void		restore_std(int saved_stdout, int saved_stdin);
 /* Malloc */
 void		*safe_malloc(size_t size);
 
-/* Path_utils*/
-char		*get_path(t_env *env);
-void		update_var_path(t_exec *exec);
-
 /* Shell_utils */
+int			get_exit_status(t_exec *exec);
 void		set_exit_status(int exit_value);
 void		print_welcome(void);
 t_shell		*get_shell(char **envp);

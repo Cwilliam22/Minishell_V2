@@ -3,125 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 15:57:42 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 16:06:55 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/21 23:36:29 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	setup_child_pipes_and_redir(int i, int **pipes, t_exec *exec)
+static void	manage_parent_fds(int *prev_read, int pipe_fds[2],
+				int cmd_index, t_exec *exec)
 {
-	if (i == 0 && exec->nb_process > 1)
-		dup2(pipes[i][1], STDOUT_FILENO);
-	else if (i == exec->nb_process - 1 && exec->nb_process > 1)
-		dup2(pipes[i - 1][0], STDIN_FILENO);
-	else if (i > 0 && i < exec->nb_process - 1)
+	if (*prev_read != -1)
+		close(*prev_read);
+	if (cmd_index < exec->nb_process - 1)
 	{
-		dup2(pipes[i - 1][0], STDIN_FILENO);
-		dup2(pipes[i][1], STDOUT_FILENO);
+		close(pipe_fds[1]);
+		*prev_read = pipe_fds[0];
 	}
-	close_pipes(pipes, exec);
 }
 
-static void	child_process(t_exec *exec, int **pipes, pid_t *pids, int i)
+static void	setup_child_pipeline_fds(int prev_read, int pipe_fds[2],
+				int cmd_index, t_exec *exec)
 {
-	int		exit_status;
-
-	setup_child_pipes_and_redir(i, pipes, exec);
-	execute_single_command(exec->current_cmd, exec);
-	free_pipes(pipes, exec);
-	free(pids);
-	exit_status = exec->shell->env->last_exit_status;
-	cleanup_all(exec);
-	free(exec);
-	exit(exit_status);
-}
-
-static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
-{
-	int		i;
-	t_cmd	*current_cmd;
-
-	i = 0;
-	current_cmd = cmd;
-	while (i < exec->nb_process && current_cmd)
+	if (cmd_index > 0)
 	{
-		pids[i] = fork();
-		if (pids[i] == 0)
-		{
-			exec->current_cmd = current_cmd;
-			child_signal();
-			child_process(exec, pipes, pids, i);
-		}
-		else if (pids[i] < 0)
-		{
-			kill_all_process(pids, i);
-			return (print_error(NULL, NULL, "Error in fork\n"), 0);
-		}
-		current_cmd = current_cmd->next;
-		i++;
+		dup2(prev_read, STDIN_FILENO);
+		close(prev_read);
 	}
-	return (1);
-}
-
-void	wait_all_child(t_exec *exec, pid_t *pids)
-{
-	int	i;
-	int	status;
-	int	exit_status;
-
-	i = 0;
-	while (i < exec->nb_process)
+	if (cmd_index < exec->nb_process - 1)
 	{
-		if (pids[i] > 0)
-		{
-			waitpid(pids[i], &status, 0);
-			if (i == exec->nb_process - 1)
-			{
-				if (WIFEXITED(status))
-					exit_status = WEXITSTATUS(status);
-				else if (WIFSIGNALED(status))
-				{
-					int sig = WTERMSIG(status);
-					exit_status = 128 + sig;
-					if (sig == SIGINT)
-						write(STDERR_FILENO, "\n", 1);
-					else if (sig == SIGQUIT)
-						write(STDERR_FILENO, "Quit (core dumped)\n", 19);
-				}
-				else
-					exit_status = EXIT_FAILURE;
-			}
-		}
-		i++;
+		dup2(pipe_fds[1], STDOUT_FILENO);
+		close(pipe_fds[1]);
+		close(pipe_fds[0]);
 	}
-	set_exit_status(exit_status);
 }
 
-void	handle_pipeline(t_cmd *cmd, t_exec *exec)
+static int	create_pipe_if_needed(int cmd_index, t_exec *exec, int pipe_fds[2])
 {
-	int		**pipes;
+	if (cmd_index < exec->nb_process - 1)
+	{
+		if (pipe(pipe_fds) == -1)
+		{
+			perror("pipe");
+			return (-1);
+		}
+	}
+	return (0);
+}
+
+static pid_t	create_pipeline_process(t_cmd *cmd, t_exec *exec,
+					int *prev_read, int cmd_index)
+{
+	pid_t	pid;
+	int		pipe_fds[2];
+
+	if (create_pipe_if_needed(cmd_index, exec, pipe_fds) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == 0)
+	{
+		setup_child_pipeline_fds(*prev_read, pipe_fds, cmd_index, exec);
+		child_process(cmd, exec);
+	}
+	else if (pid > 0)
+		manage_parent_fds(prev_read, pipe_fds, cmd_index, exec);
+	else
+		perror("fork");
+	return (pid);
+}
+
+void	handle_pipeline(t_cmd *cmds, t_exec *exec)
+{
 	pid_t	*pids;
+	int		prev_read;
+	int		i;
 
-	if (!create_pipes(exec, &pipes))
-	{
-		print_error(NULL, NULL, "Error creating pipes\n");
+	pids = malloc(sizeof(pid_t) * exec->nb_process);
+	if (!pids)
 		return ;
-	}
-	pids = (pid_t *)safe_malloc(sizeof(pid_t) * exec->nb_process);
-	sig_core_dump_parent_signal();
-	if (!exec_pipe(cmd, exec, pipes, pids))
+	prev_read = -1;
+	i = 0;
+	while (cmds && i < exec->nb_process)
 	{
-		free(pids);
-		free_pipes(pipes, exec);
-		return ;
+		pids[i] = create_pipeline_process(cmds, exec, &prev_read, i);
+		if (pids[i] == -1)
+		{
+			free(pids);
+			return ;
+		}
+		cmds = cmds->next;
+		i++;
 	}
-	close_pipes(pipes, exec);
-	wait_all_child(exec, pids);
-	free_pipes(pipes, exec);
+	wait_all_pipeline_children(pids, exec->nb_process);
 	free(pids);
-	parent_signal();
 }

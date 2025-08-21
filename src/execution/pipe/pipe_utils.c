@@ -3,67 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 12:57:50 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/12 13:18:25 by alfavre          ###   ########.fr       */
+/*   Updated: 2025/08/21 23:37:26 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	kill_all_process(pid_t *pids, int count)
+void	wait_all_pipeline_children(pid_t *pids, int nb_process)
 {
 	int	i;
+	int	status;
+	int	last_exit_code;
 
+	last_exit_code = 0;
 	i = 0;
-	while (i < count)
+	while (i < nb_process)
 	{
-		if (pids[i] > 0)
-			kill(pids[i], SIGKILL);
+		waitpid(pids[i], &status, 0);
+		if (i == nb_process - 1)
+		{
+			if (WIFEXITED(status))
+				last_exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				last_exit_code = 128 + WTERMSIG(status);
+		}
 		i++;
 	}
-}
-
-int	create_pipes(t_exec *exec, int ***pipes)
-{
-	int	i;
-
-	i = 0;
-	*pipes = (int **)safe_malloc(sizeof(int *) * exec->nbr_pipes);
-	while (i < exec->nbr_pipes)
-	{
-		(*pipes)[i] = (int *)safe_malloc(sizeof(int) * 2);
-		if (pipe((*pipes)[i]) == -1)
-			return (free_pipes(*pipes, exec), 0);
-		i++;
-	}
-	return (1);
-}
-
-int	free_pipes(int **pipes, t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	while (i < exec->nbr_pipes)
-	{
-		free(pipes[i]);
-		i++;
-	}
-	free(pipes);
-	return (0);
-}
-
-void	close_pipes(int **pipes, t_exec *exec)
-{
-	int	j;
-
-	j = 0;
-	while (j < exec->nbr_pipes)
-	{
-		close(pipes[j][0]);
-		close(pipes[j][1]);
-		j++;
-	}
+	set_exit_status(last_exit_code);
 }

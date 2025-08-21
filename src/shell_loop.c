@@ -31,11 +31,25 @@ static void	tokenize_and_parse(t_shell *shell)
 	free_tokens(tokens);
 }
 
-/**
- * Process input line through all parsing stages
- * @param shell: Shell structure
- * @return: Exit code
- */
+static int	prepare_and_validate(t_shell *shell)
+{
+	if (has_heredocs(shell->commands))
+		if (handle_heredocs(shell->commands) == -1)
+			return (-1);
+	expand_commands(shell);
+	return (0);
+}
+
+static void	process_commands_pipeline(t_shell *shell)
+{
+	if (prepare_and_validate(shell) == 0)
+	{
+		execute_commands(shell);
+	}
+	free_commands(shell->commands);
+	shell->commands = NULL;
+}
+
 void	process_input(t_shell *shell)
 {
 	int		pos;
@@ -43,46 +57,11 @@ void	process_input(t_shell *shell)
 	if (!shell->input_line || shell->input_line[0] == '\0')
 		return ;
 	pos = skip_whitespace(shell->input_line, 0);
-	if (shell->input_line[pos])
-		tokenize_and_parse(shell);
+	if (!shell->input_line[pos])
+		return ;
+	tokenize_and_parse(shell);
 	if (shell->commands)
-	{
-		//print_commands_expanded(shell->commands);
-		if (has_redirections(shell->commands))
-			handle_heredoc(shell->commands);
-		expand_commands(shell);
-		execute_commands(shell);
-		free_commands(shell->commands);
-		shell->commands = NULL;
-	}
-}
-
-/**
- * Handle one iteration of shell input
- * @param shell: Shell structure
- * @return: 1 to continue, 0 to exit
- */
-int	handle_iteration(t_shell *shell)
-{
-	int	pos;
-
-	shell->input_line = readline(PROMPT);
-	if (!shell->input_line)
-	{
-		printf("exit\n");
-		set_exit_status(SUCCESS);
-		return (0);
-	}
-	handle_signal();
-	process_input(shell);
-	if (shell->input_line && shell->input_line[0] != '\0')
-	{
-		pos = skip_whitespace(shell->input_line, 0);
-		if (shell->input_line[pos])
-			add_history(shell->input_line);
-	}
-	cleanup_iteration(shell);
-	return (shell->running);
+		process_commands_pipeline(shell);
 }
 
 /**
@@ -91,9 +70,27 @@ int	handle_iteration(t_shell *shell)
  */
 void	run_shell_loop(t_shell *shell)
 {
+	int	pos;
+
 	while (shell->running)
 	{
-		if (!handle_iteration(shell))
+		shell->input_line = readline(PROMPT);
+		if (!shell->input_line)
+		{
+			printf("exit\n");
+			set_exit_status(SUCCESS);
 			break ;
+		}
+		handle_signal();
+		if (shell->input_line && shell->input_line[0] != '\0')
+		{
+			pos = skip_whitespace(shell->input_line, 0);
+			if (shell->input_line[pos])
+			{
+				add_history(shell->input_line);
+				process_input(shell);
+			}
+		}
+		cleanup_iteration(shell);
 	}
 }

@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+static void	update_var_path(t_exec *exec)
+{
+	if (exec->path)
+	{
+		free(exec->path);
+		exec->path = NULL;
+	}
+	exec->path = get_env_var("PATH", exec->shell->env);
+}
+
 int	is_a_valid_identifier(char *str)
 {
 	int	i;
@@ -21,7 +31,7 @@ int	is_a_valid_identifier(char *str)
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (0);
 	i = 1;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
@@ -61,9 +71,10 @@ int	builtin_export(t_exec *exec)
 	error = 0;
 	if (exec->current_cmd->assignments)
 		error = export_with_assignment(exec);
-	else if (exec->nb_arg > 1)
+	else if (exec->current_cmd->args_expanded[1])
 		error = export_args_only(exec);
 	else
 		print_env_sorted(exec);
+	update_var_path(exec);
 	return (error);
 }

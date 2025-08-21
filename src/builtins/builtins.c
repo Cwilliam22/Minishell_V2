@@ -33,7 +33,7 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
-int	execute_builtin(t_cmd *cmd, t_exec *exec)
+void	execute_builtin(t_cmd *cmd, t_exec *exec)
 {
 	int				i;
 	const t_builtin	tab_link[] = {
@@ -54,9 +54,12 @@ int	execute_builtin(t_cmd *cmd, t_exec *exec)
 	while (tab_link[i].builtin != NULL)
 	{
 		if (ft_strcmp(name_cmd, tab_link[i].builtin) == 0)
-			return (tab_link[i].fonction(exec));
+		{
+			set_exit_status(tab_link[i].fonction(exec));
+			return ;
+		}
 		i++;
 	}
 	print_error(NULL, NULL, "command not found");
-	return (COMMAND_NOT_FOUND);
+	set_exit_status(COMMAND_NOT_FOUND);
 }

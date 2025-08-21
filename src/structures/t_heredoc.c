@@ -31,7 +31,6 @@ t_heredoc	*create_heredoc(char *delimiter, int quoted)
 		free(heredoc);
 		return (NULL);
 	}
-	heredoc->content = NULL;
 	heredoc->quoted_delimiter = quoted;
 	heredoc->fd = -1;
 	heredoc->id = 0;
@@ -49,8 +48,6 @@ void	free_heredoc(t_heredoc *heredoc)
 		return ;
 	if (heredoc->delimiter)
 		free(heredoc->delimiter);
-	if (heredoc->content)
-		free(heredoc->content);
 	if (heredoc->fd != -1)
 		close(heredoc->fd);
 	if (heredoc->path)

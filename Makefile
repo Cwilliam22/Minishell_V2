@@ -70,19 +70,19 @@ ENV_SRCS =		environment/env_get.c \
 				environment/env_var_utils.c \
 				environment/shell_lvl.c \
 				
-EXEC_SRCS =		execution/exec/exec_externe.c \
-				execution/exec/exec_single_cmd.c \
+EXEC_SRCS =		execution/exec/exec_single_cmd.c \
 				execution/exec/exec_utils.c \
 				execution/exec/exec.c \
+				execution/exec/process_utils.c \
+				execution/heredoc/heredoc_expand.c \
 				execution/heredoc/heredoc.c \
-				execution/heredoc/heredoc_utils.c \
-				execution/heredoc/setup_heredoc.c \
 				execution/heredoc/process_heredoc.c \
 				execution/heredoc/quotes_heredoc.c \
+				execution/heredoc/setup_heredoc.c \
 				execution/pipe/pipe_utils.c \
 				execution/pipe/pipe.c \
-				execution/redir/only_redir.c \
-				execution/redir/redir.c
+				execution/redir/apply_redir.c \
+				execution/redir/redir_utils.c
 
 EXPAND_SRCS =	expansion/expand_utils.c \
 				expansion/expand.c \
@@ -118,7 +118,6 @@ UTILS_SRCS	= 	utils/check_args.c \
 				utils/error.c \
 				utils/fd_utils.c \
 				utils/malloc.c \
-				utils/path_utils.c \
 				utils/shell_utils.c \
 				utils/utils.c \
 

@@ -27,11 +27,22 @@ int	open_and_dup(const char *file, int flags, int target_fd)
 
 	fd = open(file, flags, 0644);
 	if (fd < 0)
-		return (print_error(NULL, (char *)file, "No such file or directory"), 1);
+	{
+		if (errno == ENOENT)
+			print_error(NULL, (char *)file, "No such file or directory");
+		else if (errno == EACCES)
+			print_error(NULL, (char *)file, "Permission denied");
+		else if (errno == EISDIR)
+			print_error(NULL, (char *)file, "Is a directory");
+		else
+			print_error(NULL, (char *)file, strerror(errno));
+		return (1);
+	}
 	if (dup2(fd, target_fd) < 0)
 	{
 		close(fd);
-		return (perror("dup2"), 1);
+		perror("dup2");
+		return (1);
 	}
 	close(fd);
 	return (0);

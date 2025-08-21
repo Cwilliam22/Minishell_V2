@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:05:58 by wcapt             #+#    #+#             */
-/*   Updated: 2025/08/21 12:09:58 by wcapt            ###   ########.fr       */
+/*   Updated: 2025/08/21 18:11:10 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	order_of_quotes(const char *str)
 	return (SIMPLE_DOUBLE_QUOTED);
 }
 
-static int	conditions_type_of_quotes(int s_quote, int d_quote, const char *str)
+int	conditions_type_of_quotes(int s_quote, int d_quote, const char *str)
 {
 	if (last_and_first_quotes(str) == -1)
 		return (HALF_QUOTED);
@@ -101,16 +101,4 @@ static int	conditions_type_of_quotes(int s_quote, int d_quote, const char *str)
 	}
 	else
 		return (NO_QUOTED);
-}
-
-int	type_of_quote(const char *str)
-{
-	int	single_quote;
-	int	double_quote;
-
-	if (!str)
-		return (0);
-	single_quote = ft_iter_char(str, '\'');
-	double_quote = ft_iter_char(str, '\"');
-	return (conditions_type_of_quotes(single_quote, double_quote, str));
 }
