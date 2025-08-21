@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 15:40:47 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/02 22:53:17 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/21 14:42:56 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 14:43:57 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	open_and_dup(const char *file, int flags, int target_fd)
 
 	fd = open(file, flags, 0644);
 	if (fd < 0)
-		return (perror(file), 1);
+		return (print_error(NULL, (char *)file, "No such file or directory"), 1);
 	if (dup2(fd, target_fd) < 0)
 	{
 		close(fd);
