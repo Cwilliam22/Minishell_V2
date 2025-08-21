@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 16:40:29 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 16:40:35 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 16:08:30 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 16:09:04 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ int	execute_externe(t_cmd *cmd, t_exec *exec)
 	update_state_path(cmd);
 	if (!apply_cmd_path(cmd, exec))
 		return (exec->shell->env->last_exit_status);
-	pid = fork();
 	sig_core_dump_parent_signal();
+	pid = fork();
 	if (pid == 0)
 	{
+		child_signal();
 		child_process(cmd, exec);
 		exit(COMMAND_NOT_EXECUTABLE);
 	}

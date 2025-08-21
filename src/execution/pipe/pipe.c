@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:32:24 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:32:24 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 15:57:42 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 16:06:55 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 	while (i < exec->nb_process && current_cmd)
 	{
 		pids[i] = fork();
-		sig_core_dump_parent_signal();
 		if (pids[i] == 0)
 		{
 			exec->current_cmd = current_cmd;
@@ -85,7 +84,14 @@ void	wait_all_child(t_exec *exec, pid_t *pids)
 				if (WIFEXITED(status))
 					exit_status = WEXITSTATUS(status);
 				else if (WIFSIGNALED(status))
-					exit_status = 128 + WTERMSIG(status);
+				{
+					int sig = WTERMSIG(status);
+					exit_status = 128 + sig;
+					if (sig == SIGINT)
+						write(STDERR_FILENO, "\n", 1);
+					else if (sig == SIGQUIT)
+						write(STDERR_FILENO, "Quit (core dumped)\n", 19);
+				}
 				else
 					exit_status = EXIT_FAILURE;
 			}
@@ -106,6 +112,7 @@ void	handle_pipeline(t_cmd *cmd, t_exec *exec)
 		return ;
 	}
 	pids = (pid_t *)safe_malloc(sizeof(pid_t) * exec->nb_process);
+	sig_core_dump_parent_signal();
 	if (!exec_pipe(cmd, exec, pipes, pids))
 	{
 		free(pids);
