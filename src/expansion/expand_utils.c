@@ -6,7 +6,7 @@
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:03:51 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:03:51 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/21 14:49:29 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*process_variable(char *str, int *i, t_shell *shell)
 		return ((*i) += 2, ft_itoa(shell->env->last_exit_status));
 	var_name = extract_var_name(str + *i + 1, i);
 	if (!var_name || var_name[0] == '\0')
-		return ((*i)++, ft_strdup("$"));
+		return ((*i)++, free(var_name), ft_strdup("$"));
 	var_value = get_env_var(var_name, shell->env);
 	if (var_value && ft_strlen(var_value) > 0)
 		result = var_value;

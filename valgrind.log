@@ -1,99 +1,44 @@
-==569329== Memcheck, a memory error detector
-==569329== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==569329== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==569329== Command: ./minishell
-==569329== Parent PID: 569325
-==569329== 
-==569361== 
-==569361== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==569361== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==569361==    <inherited from parent>
-==569361== 
-==569361== Open file descriptor 41: /home/wcapt/.config/Code/logs/20250821T132616/ptyhost.log
-==569361==    <inherited from parent>
-==569361== 
-==569361== Open file descriptor 3: /home/wcapt/Desktop/Minishell/valgrind.log
-==569361==    <inherited from parent>
-==569361== 
-==569361== Open file descriptor 2: /dev/pts/1
-==569361==    <inherited from parent>
-==569361== 
-==569361== Open file descriptor 1: /dev/pts/1
-==569361==    <inherited from parent>
-==569361== 
-==569361== Open file descriptor 0: /dev/pts/1
-==569361==    <inherited from parent>
-==569361== 
-==569361== 
-==569361== HEAP SUMMARY:
-==569361==     in use at exit: 204,138 bytes in 221 blocks
-==569361==   total heap usage: 860 allocs, 639 frees, 235,621 bytes allocated
-==569361== 
-==569361== LEAK SUMMARY:
-==569361==    definitely lost: 0 bytes in 0 blocks
-==569361==    indirectly lost: 0 bytes in 0 blocks
-==569361==      possibly lost: 0 bytes in 0 blocks
-==569361==    still reachable: 0 bytes in 0 blocks
-==569361==         suppressed: 204,138 bytes in 221 blocks
-==569361== 
-==569361== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---569361-- 
---569361-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,138 bytes in 221 blocks
-==569361== 
-==569361== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==569329== 
-==569329== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==569329== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==569329==    <inherited from parent>
-==569329== 
-==569329== Open file descriptor 41: /home/wcapt/.config/Code/logs/20250821T132616/ptyhost.log
-==569329==    <inherited from parent>
-==569329== 
-==569329== Open file descriptor 3: /home/wcapt/Desktop/Minishell/valgrind.log
-==569329==    <inherited from parent>
-==569329== 
-==569329== Open file descriptor 2: /dev/pts/1
-==569329==    <inherited from parent>
-==569329== 
-==569329== Open file descriptor 1: /dev/pts/1
-==569329==    at 0x49DD01B: dup2 (syscall-template.S:120)
-==569329==    by 0x40A1FA: restore_std (fd_utils.c:63)
-==569329==    by 0x404467: execute_with_redirections (exec_single_cmd.c:52)
-==569329==    by 0x404377: execute_single_command (exec_single_cmd.c:67)
-==569329==    by 0x40478C: pipeline_or_simple (exec.c:20)
-==569329==    by 0x404733: execute_commands (exec.c:43)
-==569329==    by 0x401858: process_input (shell_loop.c:54)
-==569329==    by 0x401966: handle_iteration (shell_loop.c:77)
-==569329==    by 0x401A02: run_shell_loop (shell_loop.c:96)
-==569329==    by 0x40162C: main (main.c:79)
-==569329== 
-==569329== Open file descriptor 0: /dev/pts/1
-==569329==    at 0x49DD01B: dup2 (syscall-template.S:120)
-==569329==    by 0x40A204: restore_std (fd_utils.c:64)
-==569329==    by 0x404467: execute_with_redirections (exec_single_cmd.c:52)
-==569329==    by 0x404377: execute_single_command (exec_single_cmd.c:67)
-==569329==    by 0x40478C: pipeline_or_simple (exec.c:20)
-==569329==    by 0x404733: execute_commands (exec.c:43)
-==569329==    by 0x401858: process_input (shell_loop.c:54)
-==569329==    by 0x401966: handle_iteration (shell_loop.c:77)
-==569329==    by 0x401A02: run_shell_loop (shell_loop.c:96)
-==569329==    by 0x40162C: main (main.c:79)
-==569329== 
-==569329== 
-==569329== HEAP SUMMARY:
-==569329==     in use at exit: 208,174 bytes in 222 blocks
-==569329==   total heap usage: 909 allocs, 687 frees, 241,475 bytes allocated
-==569329== 
-==569329== LEAK SUMMARY:
-==569329==    definitely lost: 0 bytes in 0 blocks
-==569329==    indirectly lost: 0 bytes in 0 blocks
-==569329==      possibly lost: 0 bytes in 0 blocks
-==569329==    still reachable: 0 bytes in 0 blocks
-==569329==         suppressed: 208,174 bytes in 222 blocks
-==569329== 
-==569329== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
---569329-- 
---569329-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,158 bytes in 221 blocks
---569329-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
-==569329== 
-==569329== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==650532== Memcheck, a memory error detector
+==650532== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==650532== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==650532== Command: ./minishell
+==650532== Parent PID: 650528
+==650532== 
+==650532== 
+==650532== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==650532== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==650532==    <inherited from parent>
+==650532== 
+==650532== Open file descriptor 41: /home/alfavre/.config/Code/logs/20250821T132233/ptyhost.log
+==650532==    <inherited from parent>
+==650532== 
+==650532== Open file descriptor 3: /home/alfavre/Documents/42_github/Minishell_V2/valgrind.log
+==650532==    <inherited from parent>
+==650532== 
+==650532== Open file descriptor 2: /dev/pts/0
+==650532==    <inherited from parent>
+==650532== 
+==650532== Open file descriptor 1: /dev/pts/0
+==650532==    <inherited from parent>
+==650532== 
+==650532== Open file descriptor 0: /dev/pts/0
+==650532==    <inherited from parent>
+==650532== 
+==650532== 
+==650532== HEAP SUMMARY:
+==650532==     in use at exit: 208,180 bytes in 222 blocks
+==650532==   total heap usage: 853 allocs, 631 frees, 237,571 bytes allocated
+==650532== 
+==650532== LEAK SUMMARY:
+==650532==    definitely lost: 0 bytes in 0 blocks
+==650532==    indirectly lost: 0 bytes in 0 blocks
+==650532==      possibly lost: 0 bytes in 0 blocks
+==650532==    still reachable: 0 bytes in 0 blocks
+==650532==         suppressed: 208,180 bytes in 222 blocks
+==650532== 
+==650532== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--650532-- 
+--650532-- used_suppression:     62 readline_leak .valgrind_readline:2 suppressed: 204,164 bytes in 221 blocks
+--650532-- used_suppression:      1 add_history_leak .valgrind_readline:9 suppressed: 4,016 bytes in 1 blocks
+==650532== 
+==650532== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
