@@ -29,7 +29,8 @@ static int	check_pipe_syntax(t_token *current)
  */
 static int	check_redir_syntax(t_token *current)
 {
-	if (!current->next || (current->next->type != T_WORD && current->next->type != T_VAR))
+	if (!current->next || (current->next->type != T_WORD
+			&& current->next->type != T_VAR))
 	{
 		if (current->next)
 			print_syntax_error(current->next->value);

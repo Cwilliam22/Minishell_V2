@@ -19,7 +19,7 @@
  * @return: 0 on success, 1 on error, EXIT_SIGINT if interrupted
  */
 
-static int conditions_apply_redirections(t_redir *curr)
+static int	conditions_apply_redirections(t_redir *curr)
 {
 	int	ret;
 
