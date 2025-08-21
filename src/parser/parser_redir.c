@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 18:03:37 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 18:27:15 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 14:07:04 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 14:07:10 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,56 @@ static t_redir_type	convert_token_to_redir(t_token_type token_type)
 	return (REDIR_IN);
 }
 
-/**
- * Extract redirections from token list
- * @param tokens: Starting token
- * @param cmd: Command to fill
- * @return: 1 on success, 0 on error
- */
+static int	is_valid_redirection_target(t_token *token)
+{
+	if (!token)
+		return (0);
+	if (token->type == T_WORD || token->type == T_VAR)
+		return (1);
+	return (0);
+}
+
+static t_redir	*create_redir_from_token(t_token *current, t_cmd *cmd)
+{
+	char	*filename;
+	t_redir	*redir;
+
+	filename = ft_strdup(current->next->value);
+	if (!filename)
+		return (NULL);
+	redir = create_redirection(convert_token_to_redir(current->type),
+			filename);
+	if (redir && redir->type == REDIR_HEREDOC)
+		redir->heredoc->id = cmd->nb_hd++;
+	free(filename);
+	return (redir);
+}
+
+static int	process_redirection(t_token **current, t_cmd *cmd)
+{
+	t_redir	*redir;
+
+	if (!is_valid_redirection_target((*current)->next))
+		return (0);
+	redir = create_redir_from_token(*current, cmd);
+	if (!redir)
+		return (0);
+	add_redirection(&cmd->redirections, redir);
+	*current = (*current)->next;
+	return (1);
+}
+
 int	extract_redirections(t_token *tokens, t_cmd *cmd)
 {
-	t_token			*current;
-	t_redir			*redir;
-	char			*filename;
+	t_token	*current;
 
 	current = tokens;
 	while (current && current->type != T_PIPE)
 	{
 		if (current->type >= T_REDIR_IN && current->type <= T_HEREDOC)
 		{
-			if (!current->next || (current->next->type != T_WORD
-					&& current->next->type != T_VAR))
+			if (!process_redirection(&current, cmd))
 				return (0);
-			filename = ft_strdup(current->next->value);
-			if (!filename)
-				return (0);
-			redir = create_redirection(convert_token_to_redir(current->type),
-					filename);
-			if (redir && redir->type == REDIR_HEREDOC)
-				redir->heredoc->id = cmd->nb_hd++;
-			free(filename);
-			if (!redir)
-				return (0);
-			add_redirection(&cmd->redirections, redir);
-			current = current->next;
 		}
 		current = current->next;
 	}
