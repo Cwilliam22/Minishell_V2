@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 18:27:00 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 12:15:08 by wcapt            ###   ########.fr       */
+/*   Created: 2025/08/21 13:37:24 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 13:39:25 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,23 @@ static void	setup_child_pipes_and_redir(int i, int **pipes, t_exec *exec)
 	close_pipes(pipes, exec);
 }
 
+static void	child_process(t_exec *exec, int **pipes, pid_t *pids, int i)
+{
+	int		exit_status;
+
+	setup_child_pipes_and_redir(i, pipes, exec);
+	execute_single_command(exec->current_cmd, exec);
+	free_pipes(pipes, exec);
+	free(pids);
+	exit_status = exec->shell->env->last_exit_status;
+	cleanup_all(exec);
+	free(exec);
+	exit(exit_status);
+}
+
 static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 {
 	int		i;
-	int		exit_status;
 	t_cmd	*current_cmd;
 
 	i = 0;
@@ -40,15 +53,9 @@ static int	exec_pipe(t_cmd *cmd, t_exec *exec, int **pipes, pid_t *pids)
 		sig_core_dump_parent_signal();
 		if (pids[i] == 0)
 		{
+			exec->current_cmd = current_cmd;
 			child_signal();
-			setup_child_pipes_and_redir(i, pipes, exec);
-			execute_single_command(current_cmd, exec);
-			free_pipes(pipes, exec);
-			free(pids);
-			exit_status = exec->shell->env->last_exit_status;
-			cleanup_all(exec);
-			free(exec);
-			exit(exit_status);
+			child_process(exec, pipes, pids, i);
 		}
 		else if (pids[i] < 0)
 		{
