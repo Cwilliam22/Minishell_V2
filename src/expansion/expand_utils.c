@@ -5,12 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 13:56:36 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 13:56:36 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 14:03:51 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 14:03:51 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*extract_var_name(char *str, int *index)
+{
+	char	*var_name;
+	int		len;
+
+	if (!str || !index)
+		return (NULL);
+	if (str[0] == '?')
+		return (*index += 2, ft_strdup("?"));
+	if (ft_isdigit(str[0]))
+	{
+		*index += 2;
+		var_name = ft_substr(str, 0, 1);
+		return (var_name);
+	}
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (ft_strdup(""));
+	len = 0;
+	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_'))
+		len++;
+	*index += len + 1;
+	var_name = ft_substr(str, 0, len);
+	return (var_name);
+}
 
 static char	*process_variable(char *str, int *i, t_shell *shell)
 {

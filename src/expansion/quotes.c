@@ -5,43 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 13:56:28 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 13:56:28 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 14:04:07 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 14:04:23 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * Extract variable name from string and update index
- * @param str: String starting at variable name
- * @param index: Pointer to current index (updated)
- * @return: Variable name or NULL on error
- */
-char	*extract_var_name(char *str, int *index)
-{
-	char	*var_name;
-	int		len;
-
-	if (!str || !index)
-		return (NULL);
-	if (str[0] == '?')
-		return (*index += 2, ft_strdup("?"));
-	if (ft_isdigit(str[0]))
-	{
-		*index += 2;
-		var_name = ft_substr(str, 0, 1);
-		return (var_name);
-	}
-	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (ft_strdup(""));
-	len = 0;
-	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_'))
-		len++;
-	*index += len + 1;
-	var_name = ft_substr(str, 0, len);
-	return (var_name);
-}
 
 /**
  * Process quoted sections and handle variable expansion
@@ -73,11 +42,36 @@ char	*handle_quotes(char *str, t_shell *shell)
 	return (result);
 }
 
-/**
- * Check if quotes are properly balanced
- * @param str: String to check
- * @return: 1 if balanced, 0 otherwise
- */
+static int	handle_double_quotes(char *str, int *i)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '"')
+		(*i)++;
+	if (!str[*i])
+		return (0);
+	if (str[*i] && str[*i] == '"')
+	{
+		(*i)++;
+		return (1);
+	}
+	return (0);
+}
+
+static int	handle_single_quotes(char *str, int *i)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != '\'')
+		(*i)++;
+	if (!str[*i])
+		return (0);
+	if (str[*i] && str[*i] == '\'')
+	{
+		(*i)++;
+		return (1);
+	}
+	return (0);
+}
+
 int	check_quotes(char *str)
 {
 	int	i;
@@ -89,23 +83,15 @@ int	check_quotes(char *str)
 		i++;
 	if (str[i] == '"')
 	{
-		i++;
-		while (str[i] && str[i] != '"')
-			i++;
-		if (!str[i])
+		if (!handle_double_quotes(str, &i))
 			return (0);
-		if (str[i] && str[i] == '"')
-			return (check_quotes(str + i + 1));
+		return (check_quotes(str + i));
 	}
 	else if (str[i] == '\'')
 	{
-		i++;
-		while (str[i] && str[i] != '\'')
-			i++;
-		if (!str[i])
+		if (!handle_single_quotes(str, &i))
 			return (0);
-		if (str[i] && str[i] == '\'')
-			return (check_quotes(str + i + 1));
+		return (check_quotes(str + i));
 	}
 	return (1);
 }

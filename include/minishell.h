@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 13:55:01 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 13:55:03 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 14:05:06 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 14:05:11 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,8 +372,6 @@ int			is_valid_var_char(char c);
 int			has_quotes(char *str);
 
 /* Quotes*/
-char		*extract_var_name(char *str, int *index);
-char		*expand_variables(char *str, t_shell *shell);
 char		*handle_quotes(char *str, t_shell *shell);
 int			check_quotes(char *str);
 
