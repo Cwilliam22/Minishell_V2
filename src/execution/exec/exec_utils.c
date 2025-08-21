@@ -46,7 +46,6 @@ void	free_exec(t_exec *exec)
 	}
 	if (exec->env_copy)
 		free_array(exec->env_copy);
-	//free(exec);
 }
 
 void	free_var(t_exec *exec)

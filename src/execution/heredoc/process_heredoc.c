@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:34:43 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 15:34:53 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/21 14:02:01 by wcapt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	read_and_write_heredoc(t_redir *redir)
 		if (!line)
 		{
 			close(redir->heredoc->fd);
-			// clean_up_all(exec)
 			exit(EXIT_FAILURE);
 		}
 		if (ft_strcmp(line, redir->heredoc->delimiter) == 0)
