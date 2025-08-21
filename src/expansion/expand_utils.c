@@ -3,99 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 15:33:41 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/13 14:09:29 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/21 13:56:36 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 13:56:36 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * Expand variables in assignments
- * @param assignments: List of assignments to expand
- * @param shell: Shell context
- */
-void	expand_assignments(t_ass *assignments, t_shell *shell)
+static char	*process_variable(char *str, int *i, t_shell *shell)
 {
-	t_ass	*current;
-	char	*expanded_value;
+	char	*var_name;
+	char	*var_value;
+	char	*result;
 
-	current = assignments;
-	while (current)
+	if (str [*i + 1] == '?')
+		return ((*i) += 2, ft_itoa(shell->env->last_exit_status));
+	var_name = extract_var_name(str + *i + 1, i);
+	if (!var_name || var_name[0] == '\0')
+		return ((*i)++, ft_strdup("$"));
+	var_value = get_env_var(var_name, shell->env);
+	if (var_value && ft_strlen(var_value) > 0)
+		result = var_value;
+	else
 	{
-		expanded_value = handle_quotes(current->value, shell);
-		free(current->value);
-		current->value = expanded_value;
-		current = current->next;
+		result = ft_strdup("");
+		free(var_value);
 	}
+	free(var_name);
+	return (result);
 }
 
-/**
- * Expand variables in heredoc delimiter
- * @param heredoc: Heredoc to expand
- * @param shell: Shell context
- */
-static void	expand_heredoc(t_heredoc *heredoc, t_shell *shell)
+static char	*handle_backslash(char *result, char *str, int *index)
 {
-	char	*expanded_delimiter;
-
-	if (!heredoc || !heredoc->delimiter)
-		return ;
-	heredoc->quoted_delimiter = has_quotes(heredoc->delimiter);
-	expanded_delimiter = handle_quotes(heredoc->delimiter, shell);
-	free(heredoc->delimiter);
-	heredoc->delimiter = expanded_delimiter;
-}
-
-/**
- * Expand variables in redirections
- * @param redirections: List of redirections to expand
- * @param shell: Shell context
- */
-void	expand_redirections(t_redir *redirections, t_shell *shell)
-{
-	t_redir	*current;
-	char	*expanded_file;
-
-	current = redirections;
-	while (current)
+	if (str[*index + 1] == '\\')
 	{
-		if (current->type == REDIR_HEREDOC && current->heredoc)
-			expand_heredoc(current->heredoc, shell);
-		else if (current->file)
-		{
-			expanded_file = handle_quotes(current->file, shell);
-			free(current->file);
-			current->file = expanded_file;
-		}
-		current = current->next;
+		result = append_char_to_str(result, '\\');
+		*index += 2;
 	}
+	else if (str[*index + 1] == '$')
+	{
+		result = append_char_to_str(result, '$');
+		*index += 2;
+	}
+	else
+	{
+		result = append_char_to_str(result, str[*index]);
+		(*index)++;
+	}
+	return (result);
 }
 
 /**
- * Version complète de expand_command_args avec handle_quotes
- * @param cmd: Command to expand
- * @param shell: Shell context
+ * Expand variables in a string
+ * @param str: Input string
+ * @param shell: Shell structure
+ * @return: New string with variables expanded
  */
-void	expand_command_args(t_cmd *cmd, t_shell *shell)
+char	*expand_variables(char *str, t_shell *shell)
 {
+	char	*result;
+	char	*temp;
 	int		i;
-	int		j;
-	char	*expanded;
-	int		size;
 
+	if (!str)
+		return (NULL);
+	result = ft_strdup("");
 	i = 0;
-	j = 0;
-	size = get_nb_command_args(cmd);
-	cmd->args_expanded = (char **)safe_malloc(sizeof(char *) * (size + 1));
-	while (cmd->args[i])
+	while (str[i])
 	{
-		expanded = handle_quotes(cmd->args[i], shell);
-		if (expanded)
-			cmd->args_expanded[j++] = expanded;
-		i++;
+		if (str[i] == '\\' && str[i + 1])
+			result = handle_backslash(result, str, &i);
+		else if (str[i] == '$' && str[i + 1])
+		{
+			temp = process_variable(str, &i, shell);
+			result = join_and_free(result, temp);
+		}
+		else
+			result = append_char_to_str(result, str[i++]);
 	}
-	cmd->args_expanded[j] = NULL;
+	return (result);
 }

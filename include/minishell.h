@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 15:32:31 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 15:33:45 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/21 13:55:01 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/21 13:55:03 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -351,9 +351,7 @@ int			has_redirections(t_cmd *commands);
 
 /* ============================= EXPAND ==================================== */
 /* Expand_utils */
-void		expand_assignments(t_ass *assignments, t_shell *shell);
-void		expand_redirections(t_redir *redirections, t_shell *shell);
-void		expand_command_args(t_cmd *cmd, t_shell *shell);
+char		*expand_variables(char *str, t_shell *shell);
 
 /* Expand */
 void		expand_commands(t_shell *shell);
