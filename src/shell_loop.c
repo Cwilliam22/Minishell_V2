@@ -74,16 +74,7 @@ void	run_shell_loop(t_shell *shell)
 
 	while (shell->running)
 	{
-		//shell->input_line = readline(PROMPT);
-		if (isatty(fileno(stdin)))
 		shell->input_line = readline(PROMPT);
-		else
-		{
-			char *line;
-			line = get_next_line(fileno(stdin));
-			shell->input_line = ft_strtrim(line, "\n");
-			free(line);
-		}
 		if (!shell->input_line)
 		{
 			printf("exit\n");

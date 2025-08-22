@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:57:48 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:58:04 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/22 15:00:20 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,18 @@ static void	execute_externe(t_cmd *cmd, t_exec *exec)
 
 void	child_process(t_cmd *cmd, t_exec *exec)
 {
+	int	exit_status;
+
+	exit_status = 0;
 	child_signal();
 	if (apply_redirections(cmd) != 0)
 		exit(1);
 	if (is_builtin(cmd))
 	{
 		execute_builtin(cmd, exec);
+		exit_status = get_exit_status(exec);
 		cleanup_all(exec);
-		exit(get_exit_status(exec));
+		exit(exit_status);
 	}
 	else
 		execute_externe(cmd, exec);

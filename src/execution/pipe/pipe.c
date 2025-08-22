@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:58:18 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:58:18 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/22 15:37:47 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,33 @@ static pid_t	create_pipeline_process(t_cmd *cmd, t_exec *exec,
 
 void	handle_pipeline(t_cmd *cmds, t_exec *exec)
 {
-	pid_t	*pids;
 	int		prev_read;
 	int		i;
 
-	pids = malloc(sizeof(pid_t) * exec->nb_process);
-	if (!pids)
-		return ;
+	exec->pids = NULL;
 	prev_read = -1;
 	i = 0;
 	sig_core_dump_parent_signal();
 	while (cmds && i < exec->nb_process)
 	{
-		pids[i] = create_pipeline_process(cmds, exec, &prev_read, i);
-		if (pids[i] == -1)
+		if (i == 0)
 		{
-			free(pids);
+			exec->pids = malloc(sizeof(pid_t) * exec->nb_process);
+			if (!exec->pids)
+				return ;
+		}
+		exec->pids[i] = create_pipeline_process(cmds, exec, &prev_read, i);
+		if (exec->pids[i] == -1)
+		{
+			free(exec->pids);
+			exec->pids = NULL;
 			return ;
 		}
 		cmds = cmds->next;
 		i++;
 	}
-	wait_all_pipeline_children(pids, exec->nb_process);
-	free(pids);
+	wait_all_pipeline_children(exec->pids, exec->nb_process);
+	free(exec->pids);
+	exec->pids = NULL;
 	parent_signal();
 }

@@ -36,6 +36,11 @@ void	cleanup_all(t_exec *exec)
 		cleanup_shell(exec->shell);
 		exec->shell = NULL;
 	}
+	if (exec->pids)
+	{
+		free(exec->pids);
+		exec->pids = NULL;
+	}
 	free_exec(exec);
 	exec = NULL;
 }

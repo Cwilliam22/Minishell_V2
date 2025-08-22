@@ -191,6 +191,7 @@ typedef struct s_exec
 {
 	t_shell	*shell;
 	t_cmd	*current_cmd;
+	pid_t	*pids;
 	char	*path;
 	char	**env_copy;
 	int		nb_arg;

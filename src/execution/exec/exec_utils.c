@@ -21,6 +21,7 @@ t_exec	*create_exec(t_shell *shell)
 	exec = (t_exec *)safe_malloc(sizeof(t_exec));
 	exec->shell = shell;
 	exec->current_cmd = NULL;
+	exec->pids = NULL;
 	exec->path = get_env_var("PATH", shell->env);
 	exec->env_copy = env_to_string(shell->env);
 	if (!exec->env_copy)
