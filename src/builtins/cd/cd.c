@@ -66,13 +66,13 @@ int	builtin_cd(t_exec *exec)
 	char	**args;
 
 	args = exec->shell->commands->args_expanded;
-	if (!args[1] || ft_strcmp(args[1], "~") == 0)
-		return (handle_cd_home(exec));
 	if (args[2])
 	{
 		print_error("cd", NULL, "too many arguments");
 		return (GENERAL_ERROR);
 	}
+	if (!args[1] || ft_strcmp(args[1], "~") == 0)
+		return (handle_cd_home(exec));
 	if (ft_strcmp(args[1], "-") == 0)
 		return (handle_cd_previous(exec));
 	return (handle_cd_path(exec, args[1]));

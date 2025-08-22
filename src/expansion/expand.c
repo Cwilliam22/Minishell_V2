@@ -93,8 +93,10 @@ static void	expand_command_args(t_cmd *cmd, t_shell *shell)
 	while (cmd->args[i])
 	{
 		expanded = handle_quotes(cmd->args[i], shell);
-		if (expanded)
+		if (expanded && expanded[0] != '\0')
 			cmd->args_expanded[j++] = expanded;
+		else if (expanded)
+			free(expanded);
 		i++;
 	}
 	cmd->args_expanded[j] = NULL;

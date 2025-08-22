@@ -6,7 +6,7 @@
 /*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 12:27:17 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 22:49:54 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/22 23:17:01 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,21 @@ static void	read_and_write_heredoc(t_redir *redir)
 
 	while (1)
 	{
-		line = readline("> ");
+		//line = readline("> ");
+		if (isatty(fileno(stdin)))
+			line = readline("> ");
+		else
+		{
+			char *gnl;
+			gnl = get_next_line(fileno(stdin));
+			if (gnl)
+			{
+				line = ft_strtrim(gnl, "\n");
+				free(gnl);
+			}
+			else
+				line = NULL;
+		}
 		if (!line)
 		{
 			print_error(NULL, "warning", "here-document delimited by eof");

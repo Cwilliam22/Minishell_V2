@@ -76,7 +76,8 @@ int	builtin_exit(t_exec *exec)
 	ssize_t	exit_code;
 
 	args = exec->shell->commands->args_expanded;
-	printf("exit\n");
+	if (isatty(fileno(stdin)))
+		printf("exit\n");
 	if (!args[1])
 		exit_code = exec->shell->env->last_exit_status;
 	else if (args[2])

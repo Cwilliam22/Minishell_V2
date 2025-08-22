@@ -40,7 +40,7 @@ char	*process_unquoted_char(char *result, char *str,
 		section = ft_substr(str, start, *index - start);
 		processed = expand_variables(section, shell);
 		if (!processed || ft_strcmp(processed, "") == 0)
-			result = ft_strjoin(result, "");
+			free(processed);
 		else
 			result = join_and_free(result, processed);
 		free(section);
