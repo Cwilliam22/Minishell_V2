@@ -28,20 +28,45 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g3 -g
 
 # Include paths
-INCLUDES	= -I$(INCDIR) -I$(LIBFTDIR)/include
+CPPFLAGS    = -I$(INCDIR) -I$(LIBFTDIR)/include
+LDFLAGS     =
+LDLIBS      =
 
 # Readline paths (ajustez selon votre système)
-ifeq ($(shell uname), Darwin)
-	# macOS avec Homebrew
-	INCLUDES += -I$(HOME)/.brew/opt/readline/include
-	LDFLAGS = -L$(HOME)/.brew/opt/readline/lib -L$(LIBFTDIR) -lreadline -lft
-else ifeq ($(shell uname), Linux)
-	# Linux standard
-	LDFLAGS = -L$(LIBFTDIR) -lreadline -lft
+UNAME := $(shell uname -s)
+
+ifeq ($(UNAME),Darwin)
+    # macOS (Homebrew)
+    # Essaye d'abord /opt/homebrew (Apple Silicon), puis /usr/local (Intel),
+    # puis le prefix dynamique si 'brew' existe.
+    ifneq ("$(wildcard /opt/homebrew/opt/readline)","")
+        CPPFLAGS += -I/opt/homebrew/opt/readline/include
+        LDFLAGS  += -L/opt/homebrew/opt/readline/lib
+    else ifneq ("$(wildcard /usr/local/opt/readline)","")
+        CPPFLAGS += -I/usr/local/opt/readline/include
+        LDFLAGS  += -L/usr/local/opt/readline/lib
+    else ifeq ($(shell command -v brew >/dev/null 2>&1 && echo yes),yes)
+        READLINE_PREFIX := $(shell brew --prefix readline 2>/dev/null)
+        ifneq ($(READLINE_PREFIX),)
+            CPPFLAGS += -I$(READLINE_PREFIX)/include
+            LDFLAGS  += -L$(READLINE_PREFIX)/lib
+        endif
+    endif
+    # Sur macOS, -lreadline suffit en général
+    LDLIBS += -lreadline
 else
-	# WSL ou autres
-	LDFLAGS = -L$(LIBFTDIR) -lreadline -lft
+    # Linux — privilégie pkg-config
+    ifeq ($(shell pkg-config --exists readline && echo yes),yes)
+        CPPFLAGS += $(shell pkg-config --cflags readline)
+        LDLIBS   += $(shell pkg-config --libs readline)
+    else
+        # Fallback : souvent besoin de ncurses/tinfo
+        LDLIBS   += -lreadline -lncurses
+    endif
 endif
+
+LDFLAGS += -L$(LIBFTDIR)
+LDLIBS  += -lft
 
 # Source files organized by modules
 MAIN_SRCS	=	cleanup.c \
@@ -161,14 +186,14 @@ all: $(NAME)
 # Main target
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "$(CYAN)Linking $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(NAME) $(LDLIBS)
 	@echo "$(GREEN)✅ $(NAME) compiled successfully!$(RESET)"
 
 # Compile object files with automatic directory creation
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling $<...$(RESET)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # Compile libft
 $(LIBFT):
