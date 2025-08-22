@@ -209,17 +209,5 @@ norm:
 	@echo "$(PURPLE)Checking norminette...$(RESET)"
 	@norminette $(SRCDIR) $(INCDIR) $(LIBFTDIR) 2>/dev/null || echo "$(YELLOW)norminette not found or errors detected$(RESET)"
 
-# Create project structure
-setup:
-	@echo "$(CYAN)Creating project structure...$(RESET)"
-	@mkdir -p $(SRCDIR)/parser
-	@mkdir -p $(SRCDIR)/executor
-	@mkdir -p $(SRCDIR)/builtins
-	@mkdir -p $(SRCDIR)/utils
-	@mkdir -p $(SRCDIR)/signals
-	@mkdir -p $(INCDIR)
-	@mkdir -p $(OBJDIR)
-	@echo "$(GREEN)✅ Project structure created!$(RESET)"
-
 # Phony targets
 .PHONY: all clean fclean re debug test_compile test_libft norm setup help show install_readline debug_vars

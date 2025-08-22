@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 12:27:17 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 12:27:17 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/22 14:29:42 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,8 @@ void	wait_child(pid_t last_pid)
 
 static void	in_child(t_redir *redir)
 {
-	t_shell		*shell;
 	t_exec		*exec;
 
-	shell = get_shell(NULL);
 	heredoc_child_signal();
 	read_and_write_heredoc(redir);
 	exec = get_exec();
@@ -81,12 +79,10 @@ int	process_heredoc(t_redir *redir)
 {
 	t_heredoc	*hd;
 	pid_t		pid;
-	int			exit_status;
 
 	if (!redir || !redir->heredoc)
 		return (0);
 	hd = redir->heredoc;
-	exit_status = 0;
 	heredoc_parent_signal();
 	pid = fork();
 	if (pid < 0)
