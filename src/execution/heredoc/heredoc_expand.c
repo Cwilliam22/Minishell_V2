@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:56:27 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 10:56:27 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/22 14:49:00 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ void	expand_heredoc_content(t_redir *redir, char *line)
 		new_line = expand_vars(line);
 	write(redir->heredoc->fd, new_line, ft_strlen(new_line));
 	write(redir->heredoc->fd, "\n", 1);
+	free(new_line);
 }
