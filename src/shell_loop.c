@@ -43,9 +43,7 @@ static int	prepare_and_validate(t_shell *shell)
 static void	process_commands_pipeline(t_shell *shell)
 {
 	if (prepare_and_validate(shell) == 0)
-	{
 		execute_commands(shell);
-	}
 	free_commands(shell->commands);
 	shell->commands = NULL;
 }

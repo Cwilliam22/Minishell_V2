@@ -41,24 +41,11 @@ void	free_exec(t_exec *exec)
 {
 	if (!exec)
 		return ;
+	if (exec->pids)
+		free(exec->pids);
 	if (exec->path)
 		free(exec->path);
 	if (exec->env_copy)
 		free_array(exec->env_copy);
 	free(exec);
-}
-
-t_exec	*get_exec(void)
-{
-	static t_exec	*exec = NULL;
-	t_shell			*shell;
-
-	if (!exec)
-	{
-		shell = get_shell(NULL);
-		if (!shell)
-			return (NULL);
-		exec = create_exec(shell);
-	}
-	return (exec);
 }

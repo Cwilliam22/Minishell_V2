@@ -22,11 +22,6 @@ static int	find_other_in_path(t_cmd *cmd)
 		if (cmd->cmd_path)
 			free(cmd->cmd_path);
 		cmd->cmd_path = ft_strdup(name_cmd);
-		if (!cmd->cmd_path)
-		{
-			print_error(NULL, NULL, "Memory allocation failed!");
-			cleanup_and_exit(2);
-		}
 		return (1);
 	}
 	return (0);

@@ -36,11 +36,6 @@ void	cleanup_all(t_exec *exec)
 		cleanup_shell(exec->shell);
 		exec->shell = NULL;
 	}
-	if (exec->pids)
-	{
-		free(exec->pids);
-		exec->pids = NULL;
-	}
 	free_exec(exec);
 	exec = NULL;
 }
@@ -70,12 +65,8 @@ void	cleanup_shell(t_shell *shell)
 	shell = NULL;
 }
 
-void	cleanup_and_exit(int exit_code)
+void	cleanup_and_exit(int exit_code, t_exec *exec)
 {
-	t_shell	*shell;
-
-	shell = get_shell(NULL);
-	if (shell)
-		cleanup_shell(shell);
+	cleanup_all(exec);
 	exit(exit_code);
 }

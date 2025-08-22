@@ -6,7 +6,7 @@
 /*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 12:27:17 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 14:29:42 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/22 22:49:54 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,8 @@ void	wait_child(pid_t last_pid)
 
 static void	in_child(t_redir *redir)
 {
-	t_exec		*exec;
-
 	heredoc_child_signal();
 	read_and_write_heredoc(redir);
-	exec = get_exec();
-	cleanup_all(exec);
 	exit(0);
 }
 

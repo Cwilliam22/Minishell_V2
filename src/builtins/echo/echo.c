@@ -12,21 +12,30 @@
 
 #include "minishell.h"
 
-static int	skip_n(char **arg)
+static int	is_valid_n_flag(char *arg)
 {
 	int	i;
-	int	j;
+
+	i = 0;
+	if (!arg || arg[0] != '-')
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (i > 1);
+}
+
+static int	skip_all_n_flags(char **args)
+{
+	int	i;
 
 	i = 1;
-	j = 1;
-	if (!arg)
-		return (-1);
-	while (arg[j])
-	{
-		if (ft_strncmp("-n", arg[i], 2) == 0)
-			i++;
-		j++;
-	}
+	while (args[i] && is_valid_n_flag(args[i]))
+		i++;
 	return (i);
 }
 
@@ -72,8 +81,9 @@ int	builtin_echo(t_exec *exec)
 {
 	int		i;
 	char	**arg;
+	int		suppress_newline;
 
-	i = 1;
+	suppress_newline = 0;
 	arg = exec->current_cmd->args_expanded;
 	if (arg[1] == NULL)
 	{
@@ -82,16 +92,10 @@ int	builtin_echo(t_exec *exec)
 		write(STDOUT_FILENO, "\n", 1);
 		return (0);
 	}
-	if (ft_strncmp("-n", arg[1], 2) == 0)
-	{
-		i = skip_n(arg);
-		if (i == -1 || !ft_printf_arg(arg, i, 1))
-			return (1);
-	}
-	else
-	{
-		if (!ft_printf_arg(arg, i, 0))
-			return (1);
-	}
+	i = skip_all_n_flags(arg);
+	if (i > 1)
+		suppress_newline = 1;
+	if (!ft_printf_arg(arg, i, suppress_newline))
+		return (1);
 	return (0);
 }

@@ -40,7 +40,7 @@ void	execute_commands(t_shell *shell)
 		|| !cmds->args_expanded[0] || cmds->args_expanded[0][0] == '\0')
 	{
 		if (cmds->redirections)
-			handle_redirection_only(cmds);
+			handle_redirection_only(cmds, exec);
 		free_exec(exec);
 		return ;
 	}

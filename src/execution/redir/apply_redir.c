@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 09:50:02 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 09:51:15 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/22 22:38:36 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	apply_redirections(t_cmd *cmd)
 	return (0);
 }
 
-void	handle_redirection_only(t_cmd *cmd)
+void	handle_redirection_only(t_cmd *cmd, t_exec *exec)
 {
 	pid_t	pid;
 	int		status;
@@ -55,7 +55,7 @@ void	handle_redirection_only(t_cmd *cmd)
 	{
 		child_signal();
 		apply_redirections(cmd);
-		exit(0);
+		cleanup_and_exit(0, exec);
 	}
 	else if (pid > 0)
 	{

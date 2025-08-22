@@ -221,7 +221,7 @@ extern int	g_signal_received;
 void		cleanup_iteration(t_shell *shell);
 void		cleanup_all(t_exec *exec);
 void		cleanup_shell(t_shell *shell);
-void		cleanup_and_exit(int exit_code);
+void		cleanup_and_exit(int exit_code, t_exec *exec);
 
 /* Init */
 t_shell		*init_shell(char **envp);
@@ -307,8 +307,6 @@ void		execute_single_command(t_cmd *cmd, t_exec *exec);
 /* Exec_utils */
 t_exec		*create_exec(t_shell *shell);
 void		free_exec(t_exec *exec);
-t_exec		*get_exec(void);
-void		update_exit_status_from_child(int status);
 
 /* Exec */
 void		execute_commands(t_shell *shell);
@@ -342,7 +340,7 @@ void		handle_pipeline(t_cmd *cmd, t_exec *exec);
 
 /* apply redir */
 int			apply_redirections(t_cmd *cmd);
-void		handle_redirection_only(t_cmd *cmd);
+void		handle_redirection_only(t_cmd *cmd, t_exec *exec);
 
 /* Redir utils */
 int			has_file_redirections(t_cmd *cmds);

@@ -67,7 +67,6 @@ static t_shell	*setup_shell(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
-	t_exec	*exec;
 	int		exit_code;
 
 	if (handle_arguments(argc, argv))
@@ -78,7 +77,6 @@ int	main(int argc, char **argv, char **envp)
 	parent_signal();
 	run_shell_loop(shell);
 	exit_code = shell->env->last_exit_status;
-	exec = get_exec();
-	cleanup_all(exec);
+	cleanup_shell(shell);
 	return (exit_code);
 }

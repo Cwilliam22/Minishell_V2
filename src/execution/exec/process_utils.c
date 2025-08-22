@@ -6,7 +6,7 @@
 /*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:57:48 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 15:00:20 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/22 22:36:50 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,23 @@ void	update_exit_status_from_child(int status)
 
 static void	execute_externe(t_cmd *cmd, t_exec *exec)
 {
+	int	exit_code;
+
 	exec->current_cmd = cmd;
 	update_state_path(cmd);
 	if (!apply_cmd_path(cmd, exec))
-		exit(get_exit_status(exec));
+	{
+		exit_code = get_exit_status(exec);
+		cleanup_and_exit(exit_code, exec);
+	}
 	if (access(cmd->cmd_path, X_OK) != 0)
 	{
 		print_error(cmd->args_expanded[0], NULL, "Permission denied");
-		exit(126);
+		cleanup_and_exit(126, exec);
 	}
 	execve(cmd->cmd_path, cmd->args_expanded, exec->env_copy);
 	perror(cmd->args_expanded[0]);
-	exit(126);
+	cleanup_and_exit(126, exec);
 }
 
 void	child_process(t_cmd *cmd, t_exec *exec)
@@ -45,13 +50,12 @@ void	child_process(t_cmd *cmd, t_exec *exec)
 	exit_status = 0;
 	child_signal();
 	if (apply_redirections(cmd) != 0)
-		exit(1);
+		cleanup_and_exit(1, exec);
 	if (is_builtin(cmd))
 	{
 		execute_builtin(cmd, exec);
 		exit_status = get_exit_status(exec);
-		cleanup_all(exec);
-		exit(exit_status);
+		cleanup_and_exit(exit_status, exec);
 	}
 	else
 		execute_externe(cmd, exec);

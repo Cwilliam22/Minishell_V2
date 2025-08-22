@@ -20,7 +20,20 @@ void	*safe_malloc(size_t size)
 	if (!ptr)
 	{
 		print_error(NULL, NULL, "fatal: memory allocation failed");
-		cleanup_and_exit(2);
+		exit(2);
+	}
+	return (ptr);
+}
+
+void	*safe_malloc_exec(size_t size, t_exec *exec)
+{
+	void	*ptr;
+
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		print_error(NULL, NULL, "fatal: memory allocation failed");
+		cleanup_and_exit(2, exec);
 	}
 	return (ptr);
 }

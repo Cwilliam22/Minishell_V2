@@ -75,8 +75,6 @@ char	*extract_word(char *input, int start, int *end)
 	}
 	*end = i;
 	result = ft_strndup(input + start, i - start);
-	if (!result)
-		cleanup_and_exit(2);
 	return (result);
 }
 
