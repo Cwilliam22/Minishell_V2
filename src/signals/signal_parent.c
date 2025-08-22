@@ -3,35 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 16:09:19 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 19:30:38 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 11:52:38 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 11:52:38 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	sigint_handler(int sig)
+{
+	write (1, "\n", STDOUT_FILENO);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	g_signal_received = sig;
+}
+
+static void	sigquit_handler(int sig)
+{
+	(void)sig;
+	ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+}
+
 void	parent_signal(void)
 {
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-static void	heredoc_sigint_handler(int sig)
+void	heredoc_parent_signal(void)
 {
-	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
-}
-
-void	handle_heredoc_signal(void)
-{
-	signal(SIGINT, heredoc_sigint_handler);
+	signal(SIGINT, sigint_handler_child);
 	signal(SIGQUIT, SIG_IGN);
 }
 
 void	sig_core_dump_parent_signal(void)
 {
-	signal(SIGINT, handler_child_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGINT, sigint_handler_child);
+	signal(SIGQUIT, sigquit_handler);
 }

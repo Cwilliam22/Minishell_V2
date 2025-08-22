@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 16:24:36 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 20:05:57 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 10:51:35 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 10:51:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,13 @@ int	create_heredoc_file(t_redir *redir)
 		return (free(id), 1);
 	free(id);
 	redir->heredoc->path = filename;
+	redir->heredoc->fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (redir->heredoc->fd < 0)
+	{
+		perror("create heredoc file");
+		free(filename);
+		redir->heredoc->path = NULL;
+		return (1);
+	}
 	return (0);
 }

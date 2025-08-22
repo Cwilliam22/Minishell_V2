@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 15:17:10 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 00:30:17 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 10:56:27 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 10:56:27 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,16 @@ static char	*expand_vars(char *line)
 	return (result);
 }
 
-char	*expand_heredoc_content(t_redir *redir, char *line)
+void	expand_heredoc_content(t_redir *redir, char *line)
 {
 	char	*new_line;
 
 	if (!redir || !redir->heredoc || !line)
-		return (NULL);
+		return ;
 	if (redir->heredoc->quoted_delimiter)
 		new_line = ft_strdup(line);
 	else
 		new_line = expand_vars(line);
-	return (new_line);
+	write(redir->heredoc->fd, new_line, ft_strlen(new_line));
+	write(redir->heredoc->fd, "\n", 1);
 }

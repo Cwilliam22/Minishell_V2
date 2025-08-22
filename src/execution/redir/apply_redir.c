@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 17:48:51 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 23:41:11 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 09:50:02 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 09:51:15 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	handle_redirection_only(t_cmd *cmd)
 	pid = fork();
 	if (pid == 0)
 	{
+		child_signal();
 		apply_redirections(cmd);
 		exit(0);
 	}

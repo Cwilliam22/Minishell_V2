@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 15:57:42 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 23:36:29 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 11:58:18 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 11:58:18 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	handle_pipeline(t_cmd *cmds, t_exec *exec)
 		return ;
 	prev_read = -1;
 	i = 0;
+	sig_core_dump_parent_signal();
 	while (cmds && i < exec->nb_process)
 	{
 		pids[i] = create_pipeline_process(cmds, exec, &prev_read, i);
@@ -98,4 +99,5 @@ void	handle_pipeline(t_cmd *cmds, t_exec *exec)
 	}
 	wait_all_pipeline_children(pids, exec->nb_process);
 	free(pids);
+	parent_signal();
 }

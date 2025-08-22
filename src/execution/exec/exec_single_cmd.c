@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:38:33 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:39:00 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/22 11:26:27 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 11:26:42 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	execute_single_command(t_cmd *cmd, t_exec *exec)
 		execute_builtin(cmd, exec);
 		return ;
 	}
+	sig_core_dump_parent_signal();
 	pid = fork();
 	if (pid == 0)
 	{
@@ -40,4 +41,5 @@ void	execute_single_command(t_cmd *cmd, t_exec *exec)
 		perror("fork");
 		set_exit_status(1);
 	}
+	parent_signal();
 }

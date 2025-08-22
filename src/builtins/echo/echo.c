@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 15:23:56 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 15:26:30 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/22 09:43:46 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 09:43:51 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	skip_n(char **arg)
 
 static int	ft_printf_arg(char **tab_arg, int index, int option)
 {
-	int	i;
+	int		i;
 	t_shell	*g_shell;
 
 	g_shell = get_shell(NULL);

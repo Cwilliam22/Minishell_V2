@@ -3,52 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 15:34:43 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 00:43:19 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 11:17:58 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 11:17:58 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	process_heredoc_line(t_redir *redir, char *line)
-{
-	char	*processed_line;
-
-	if (!redir->heredoc->quoted_delimiter)
-	{
-		processed_line = expand_heredoc_content(redir, line);
-		if (!processed_line)
-			return (-1);
-	}
-	else
-	{
-		processed_line = ft_strdup(line);
-		if (!processed_line)
-			return (-1);
-	}
-	if (write(redir->heredoc->fd, processed_line,
-			ft_strlen(processed_line)) == -1)
-		return (free(processed_line), -1);
-	if (write(redir->heredoc->fd, "\n", 1) == -1)
-		return (free(processed_line), -1);
-	free(processed_line);
-	return (0);
-}
-
-static void	read_and_write_heredoc(t_redir *redir, int *result)
+static void	read_and_write_heredoc(t_redir *redir)
 {
 	char	*line;
 
-	if (!redir || !redir->heredoc)
-		return ;
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
 		{
-			print_error(NULL, "warning", "here-document delimited by end-of-file");
+			print_error(NULL, "warning", "here-document delimited by eof");
 			break ;
 		}
 		if (ft_strcmp(line, redir->heredoc->delimiter) == 0)
@@ -56,59 +29,80 @@ static void	read_and_write_heredoc(t_redir *redir, int *result)
 			free(line);
 			break ;
 		}
-		if (process_heredoc_line(redir, line) == -1)
-		{
-			free(line);
-			*result = 1;
-			break ;
-		}
+		expand_heredoc_content(redir, line);
 		free(line);
 	}
 }
 
-static void	cleanup_heredoc_files(t_heredoc *heredoc, int result)
+int	error_fork(t_heredoc *hd)
 {
-	if (!heredoc)
-		return ;
-	if (heredoc->fd != -1)
+	print_error(NULL, NULL, "fork failed");
+	set_exit_status(1);
+	if (hd->fd >= 0)
+		close(hd->fd);
+	if (hd->path)
+		unlink(hd->path);
+	return (0);
+}
+
+void	wait_child(pid_t last_pid)
+{
+	int		status;
+	int		exit_status;
+
+	exit_status = 0;
+	waitpid(last_pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
 	{
-		if (close(heredoc->fd) == -1)
-		{
-			print_error(NULL, heredoc->path, "Failed to close heredoc file");
-			set_exit_status(1);
-		}
-		heredoc->fd = -1;
+		if (WTERMSIG(status) == SIGINT)
+			exit_status = EXIT_SIGINT;
+		else
+			exit_status = 128 + WTERMSIG(status);
 	}
-	if (result == 1)
-	{
-		if (heredoc->path)
-		{
-			unlink(heredoc->path);
-			free(heredoc->path);
-			heredoc->path = NULL;
-		}
-	}
+	set_exit_status(exit_status);
+}
+
+static void	in_child(t_redir *redir)
+{
+	t_shell		*shell;
+	t_exec		*exec;
+
+	shell = get_shell(NULL);
+	heredoc_child_signal();
+	read_and_write_heredoc(redir);
+	exec = get_exec();
+	cleanup_all(exec);
+	exit(0);
 }
 
 int	process_heredoc(t_redir *redir)
 {
-	int	result;
+	t_heredoc	*hd;
+	pid_t		pid;
+	int			exit_status;
 
 	if (!redir || !redir->heredoc)
-		return (-1);
-	result = 0;
-	handle_heredoc_signal();
-	if (create_heredoc_file(redir) == 1)
-		return (parent_signal(), 1);
-	redir->heredoc->fd = open(redir->heredoc->path, O_WRONLY | O_CREAT
-			| O_TRUNC, 0644);
-	if (redir->heredoc->fd < 0)
+		return (0);
+	hd = redir->heredoc;
+	exit_status = 0;
+	heredoc_parent_signal();
+	pid = fork();
+	if (pid < 0)
 	{
-		cleanup_heredoc_files(redir->heredoc, 1);
-		return (parent_signal(), 1);
+		error_fork(hd);
+		return (1);
 	}
-	read_and_write_heredoc(redir, &result);
-	cleanup_heredoc_files(redir->heredoc, result);
+	if (pid == 0)
+		in_child(redir);
+	wait_child(pid);
+	if (hd->fd >= 0)
+	{
+		close(hd->fd);
+		hd->fd = -1;
+	}
 	parent_signal();
-	return (result);
+	return (0);
 }
+

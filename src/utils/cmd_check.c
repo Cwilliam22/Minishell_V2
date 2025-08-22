@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 16:38:17 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 16:39:58 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/22 09:44:29 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 09:44:29 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 	{
 		if (!find_other_in_path(cmd))
 		{
-			print_error(cmd->args_expanded[0], NULL, "No such file or directory");
+			print_error(cmd->args_expanded[0], NULL,
+				"No such file or directory");
 			set_exit_status(127);
 			return (0);
 		}

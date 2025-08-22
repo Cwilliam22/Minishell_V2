@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:05:06 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:05:11 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/22 11:18:42 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 11:18:42 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 # define DOUBLE_QUOTED 2
 # define SIMPLE_QUOTED 3
 # define SIMPLE_DOUBLE_QUOTED 4
-
 
 /* ************************************************************************** */
 /*                                    ENUM                                    */
@@ -188,7 +187,8 @@ typedef struct s_shell
 	int		running;		//flag a utiliser? pour exit -> exit()
 }	t_shell;
 
-typedef struct s_exec {
+typedef struct s_exec
+{
 	t_shell	*shell;
 	t_cmd	*current_cmd;
 	char	*path;
@@ -198,7 +198,7 @@ typedef struct s_exec {
 	int		nb_process;
 	int		nbr_pipes;
 	int		is_pipe;
-} t_exec;
+}	t_exec;
 
 typedef struct s_builtin
 {
@@ -317,7 +317,7 @@ void		update_exit_status_from_child(int status);
 void		child_process(t_cmd *cmd, t_exec *exec);
 
 /* Heredoc_expand*/
-char		*expand_heredoc_content(t_redir *redir, char *line);
+void		expand_heredoc_content(t_redir *redir, char *line);
 
 /* Heredoc */
 int			has_heredocs(t_cmd *cmds);
@@ -413,18 +413,16 @@ t_cmd		*parse_tokens(t_token *tokens);
 /* Child */
 void		heredoc_child_signal(void);
 void		child_signal(void);
-void		handler_child_sigint(int sig);
+void		sigint_handler_child(int sig);
 
 /* Parent */
 void		parent_signal(void);
-void		handle_heredoc_signal(void);
+void		heredoc_parent_signal(void);
 void		sig_core_dump_parent_signal(void);
 
 /* Signals */
 void		handle_signal(void);
-void		handle_sigint(int sig);
-void		handle_sigquit(int sig);
-void		handle_signal_heredoc(int sig);
+
 
 /* ============================= STRUCTURE ================================ */
 /* Append assignement */

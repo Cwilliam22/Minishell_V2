@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 23:01:39 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/21 23:04:40 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/22 10:35:59 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 10:56:33 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ int	handle_heredocs(t_cmd *cmds)
 		{
 			if (current_redir->type == REDIR_HEREDOC)
 			{
-				if (process_heredoc(current_redir) == -1)
-					return (-1);
+				if (create_heredoc_file(current_redir) == 1)
+					return (1);
+				if (process_heredoc(current_redir) == 1)
+					return (1);
 				free(current_redir->file);
 				current_redir->file = ft_strdup(current_redir->heredoc->path);
 				current_redir->type = REDIR_IN;
