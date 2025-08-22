@@ -68,6 +68,16 @@ endif
 LDFLAGS += -L$(LIBFTDIR)
 LDLIBS  += -lft
 
+# --- Valgrind via Linux container (pour macOS) ---
+VALGRIND_FLAGS = -s --leak-check=full --log-file=valgrind.log \
+                 --show-leak-kinds=all --track-origins=yes --track-fds=all \
+                 --default-suppressions=yes --suppressions=.valgrind_readline
+
+VALGRIND_IMAGE ?= debian:stable-slim
+
+DOCKER ?= docker
+HAS_DOCKER := $(shell command -v $(DOCKER) >/dev/null 2>&1 && echo yes || echo no)
+
 # Source files organized by modules
 MAIN_SRCS	=	cleanup.c \
 				init.c \
@@ -224,10 +234,27 @@ debug: $(NAME)
 	@echo "$(BLUE)✅ Debug version compiled!$(RESET)"
 
 # Exécution avec valgrind (Linux uniquement)
+
+
+# Exécution avec Valgrind
 valgrind:
-	@echo "Running with valgrind..."
-#env -i valgrind -s --leak-check=full --log-file=valgrind.log --show-leak-kinds=all --track-fds=all --track-origins=yes --default-suppressions=yes --suppressions=.valgrind_readline ./$(NAME)
-	valgrind -s --leak-check=full --log-file=valgrind.log --show-leak-kinds=all --track-fds=all --default-suppressions=yes --suppressions=.valgrind_readline ./$(NAME)
+ifeq ($(UNAME),Darwin)
+ifeq ($(HAS_DOCKER),yes)
+	@echo "$(BLUE)[macOS] Running Valgrind inside $(DOCKER) ($(VALGRIND_IMAGE))...$(RESET)"
+	@$(DOCKER) run --rm -it \
+		-v "$$(pwd)":/work -w /work $(VALGRIND_IMAGE) \
+		bash -lc 'apt-get update && apt-get install -y build-essential valgrind libreadline-dev pkg-config && \
+		          make -s re && \
+		          valgrind $(VALGRIND_FLAGS) ./$(NAME)'
+else
+	@echo "$(RED)Docker introuvable.$(RESET) Installe Docker Desktop (brew install --cask docker) ou Colima (brew install colima docker && colima start)."
+	@echo "Ou bien lance:  make asan  (sanitizer natif macOS)."
+	@false
+endif
+else
+	@echo "$(BLUE)[Linux] Running Valgrind natively...$(RESET)"
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
+endif
 
 # Check for norm errors (if norminette is installed)
 norm:
