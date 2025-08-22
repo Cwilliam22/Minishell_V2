@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 11:18:42 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:18:42 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/22 12:27:08 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 12:27:08 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,7 +422,6 @@ void		sig_core_dump_parent_signal(void);
 
 /* Signals */
 void		handle_signal(void);
-
 
 /* ============================= STRUCTURE ================================ */
 /* Append assignement */

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 11:17:58 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:17:58 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/22 12:27:17 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/22 12:27:17 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,3 @@ int	process_heredoc(t_redir *redir)
 	parent_signal();
 	return (0);
 }
-
