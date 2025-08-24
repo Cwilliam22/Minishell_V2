@@ -33,23 +33,6 @@ static void	expand_assignments(t_ass *assignments, t_shell *shell)
 }
 
 /**
- * Expand variables in heredoc delimiter
- * @param heredoc: Heredoc to expand
- * @param shell: Shell context
- */
-static void	expand_heredoc(t_heredoc *heredoc, t_shell *shell)
-{
-	char	*expanded_delimiter;
-
-	if (!heredoc || !heredoc->delimiter)
-		return ;
-	heredoc->quoted_delimiter = has_quotes(heredoc->delimiter);
-	expanded_delimiter = handle_quotes(heredoc->delimiter, shell);
-	free(heredoc->delimiter);
-	heredoc->delimiter = expanded_delimiter;
-}
-
-/**
  * Expand variables in redirections
  * @param redirections: List of redirections to expand
  * @param shell: Shell context
@@ -62,9 +45,7 @@ static void	expand_redirections(t_redir *redirections, t_shell *shell)
 	current = redirections;
 	while (current)
 	{
-		if (current->type == REDIR_HEREDOC && current->heredoc)
-			expand_heredoc(current->heredoc, shell);
-		else if (current->file)
+		if (current->file)
 		{
 			expanded_file = handle_quotes(current->file, shell);
 			free(current->file);
@@ -79,7 +60,7 @@ static void	expand_redirections(t_redir *redirections, t_shell *shell)
  * @param cmd: Command to expand
  * @param shell: Shell context
  */
-static void	expand_command_args(t_cmd *cmd, t_shell *shell)
+/*static void	expand_command_args(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	int		j;
@@ -93,14 +74,12 @@ static void	expand_command_args(t_cmd *cmd, t_shell *shell)
 	while (cmd->args[i])
 	{
 		expanded = handle_quotes(cmd->args[i], shell);
-		if (expanded && expanded[0] != '\0')
+		if (expanded)
 			cmd->args_expanded[j++] = expanded;
-		else if (expanded)
-			free(expanded);
 		i++;
 	}
 	cmd->args_expanded[j] = NULL;
-}
+}*/
 
 /**
  * Expand variables in all commands

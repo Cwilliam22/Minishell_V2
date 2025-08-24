@@ -90,23 +90,13 @@ int	is_valid_var_char(char c)
 	return (ft_isalnum(c) || c == '_' || c == '?');
 }
 
-/**
- * Check if string contains quotes
- * @param str: String to check
- * @return: 1 if contains quotes, 0 otherwise
- */
-int	has_quotes(char *str)
+int	is_quoted_arg(char *arg)
 {
-	int	i;
+	int	len;
 
-	if (!str)
+	if (!arg || !arg[0])
 		return (0);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-			return (1);
-		i++;
-	}
-	return (0);
+	len = ft_strlen(arg);
+	return ((arg[0] == '"' && arg[len - 1] == '"')
+		|| (arg[0] == '\'' && arg[len - 1] == '\''));
 }

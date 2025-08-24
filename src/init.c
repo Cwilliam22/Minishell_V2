@@ -27,6 +27,9 @@ t_shell	*init_shell(char **envp)
 	shell->input_line = NULL;
 	shell->interactive = isatty(STDIN_FILENO);
 	shell->running = 1;
+	shell->all_lines = NULL;
+	shell->current_line_index = 0;
+	shell->total_lines = 0;
 	return (shell);
 }
 

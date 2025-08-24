@@ -3,85 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   setup_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:51:35 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 10:51:44 by alfavre          ###   ########.ch       */
+/*   Updated: 2025/08/24 15:32:04 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_iter_char(const char *str, int c)
+static char	*unquote_delimiter(char *result, char *str, int *index)
 {
-	int	count;
-	int	i;
+	char	*section;
+	char	*processed;
+	int		quote_end;
 
+	quote_end = find_matching_quote(str, *index);
+	if (quote_end == -1)
+		return (free(result), NULL);
+	section = ft_substr(str, *index + 1, quote_end - *index - 1);
+	if (str[*index] == '"' || str[*index] == '\'')
+		processed = ft_strdup(section);
+	else
+		return (free(section), free(result), NULL);
+	result = join_and_free(result, processed);
+	free(section);
+	*index = quote_end + 1;
+	return (result);
+}
+
+static char	*update_delimiter(t_heredoc *heredoc)
+{
+	char	*result;
+	int		i;
+	char	*str;
+	char	tmp[2];
+
+	if (!heredoc || !heredoc->delimiter)
+		return (NULL);
+	str = heredoc->delimiter;
+	result = ft_strdup("");
+	if (ft_strchr(str, '\'') || ft_strchr(str, '"'))
+		heredoc->quoted_delimiter = 1;
 	i = 0;
-	count = 0;
 	while (str[i])
 	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-static int	type_of_quote(const char *str)
-{
-	int	single_quote;
-	int	double_quote;
-
-	if (!str)
-		return (0);
-	single_quote = ft_iter_char(str, '\'');
-	double_quote = ft_iter_char(str, '\"');
-	return (conditions_type_of_quotes(single_quote, double_quote, str));
-}
-
-static int	unquote_delimiter(t_heredoc *heredoc)
-{
-	char	*tmp;
-
-	if (heredoc->quoted_delimiter == DOUBLE_QUOTED)
-	{
-		tmp = ft_strtrim(heredoc->delimiter, "\"");
-		if (!tmp)
-			return (0);
-		free(heredoc->delimiter);
-		heredoc->delimiter = tmp;
-	}
-	if (heredoc->quoted_delimiter == SIMPLE_QUOTED)
-	{
-		tmp = ft_strtrim(heredoc->delimiter, "\'");
-		if (!tmp)
-			return (0);
-		free(heredoc->delimiter);
-		heredoc->delimiter = tmp;
-	}
-	return (1);
-}
-
-static int	update_delimiter(t_heredoc *heredoc)
-{
-	if (!heredoc || !heredoc->delimiter)
-		return (0);
-	heredoc->quoted_delimiter = type_of_quote(heredoc->delimiter);
-	if (heredoc->quoted_delimiter != HALF_QUOTED)
-	{
-		if (heredoc->quoted_delimiter != NO_QUOTED)
+		if (str[i] == '\'' || str[i] == '"')
+			result = unquote_delimiter(result, str, &i);
+		else
 		{
-			if (!unquote_delimiter(heredoc))
-				return (0);
+			tmp[0] = str[i];
+			tmp[1] = '\0';
+			result = join_and_free(result, ft_strdup(tmp));
+			i++;
 		}
 	}
-	else
-	{
-		print_error(NULL, NULL, "heredoc delimiter not fully quoted");
-		return (set_exit_status(2), 0);
-	}
-	return (1);
+	return (free(heredoc->delimiter), result);
 }
 
 int	create_heredoc_file(t_redir *redir)
@@ -91,8 +68,7 @@ int	create_heredoc_file(t_redir *redir)
 
 	if (!redir || !redir->heredoc)
 		return (0);
-	if (!update_delimiter(redir->heredoc))
-		return (1);
+	redir->heredoc->delimiter = update_delimiter(redir->heredoc);
 	id = ft_itoa(redir->heredoc->id);
 	if (!id)
 		return (1);

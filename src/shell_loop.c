@@ -33,10 +33,18 @@ static void	tokenize_and_parse(t_shell *shell)
 
 static int	prepare_and_validate(t_shell *shell)
 {
+	t_cmd	*head;
+
 	if (has_heredocs(shell->commands))
 		if (handle_heredocs(shell->commands) == -1)
 			return (-1);
 	expand_commands(shell);
+	head = shell->commands;
+	while (head)
+	{
+		first_valid_argument(head);
+		head = head->next;
+	}
 	return (0);
 }
 
@@ -66,32 +74,17 @@ void	process_input(t_shell *shell)
  * Run the main shell loop
  * @param shell: Shell structure
  */
-void	run_shell_loop(t_shell *shell)
+//void	run_shell_loop(t_shell *shell)
+static void	run_interactive_shell(t_shell *shell)
 {
 	int	pos;
 
 	while (shell->running)
 	{
-		//shell->input_line = readline(PROMPT);
-		if (isatty(fileno(stdin)))
-			shell->input_line = readline(PROMPT);
-		else
-		{
-			char *line;
-			line = get_next_line(fileno(stdin));
-			if (line)
-			{
-				shell->input_line = ft_strtrim(line, "\n");
-				free(line);
-			}
-			else
-				shell->input_line = NULL;
-		}
+		shell->input_line = readline(PROMPT);
 		if (!shell->input_line)
 		{
-			if (isatty(fileno(stdin)))
-				printf("exit\n");
-			set_exit_status(SUCCESS);
+			printf("exit\n");
 			break ;
 		}
 		handle_signal();
@@ -106,4 +99,70 @@ void	run_shell_loop(t_shell *shell)
 		}
 		cleanup_iteration(shell);
 	}
+}
+/* Fonction pour utilsier minishell depuis un script*/
+static void	run_batch_shell(t_shell *shell, char **all_lines, int line_count)
+{
+	int	i;
+	int	pos;
+	static int	heredoc_index = 0;
+
+	i = 0;
+	shell->all_lines = all_lines;      // Stockez pour les heredocs
+		shell->current_line_index = &heredoc_index;
+	shell->current_line_index = &heredoc_index;    // Pointeur pour que heredocs puissent avancer
+	shell->total_lines = line_count;
+	while (i < line_count && shell->running)
+	{
+		if (heredoc_index > i)
+		{
+			i = heredoc_index;
+			continue ;
+		}
+		shell->input_line = all_lines[i];
+		i++;
+		if (shell->input_line && shell->input_line[0] != '\0')
+		{
+			pos = skip_whitespace(shell->input_line, 0);
+			if (shell->input_line[pos]) {
+				process_input(shell);
+			}
+		}
+	}
+}
+
+/* Fonction pour le tester */
+static char	**read_all_input(int *line_count)
+{
+	char **all_lines = NULL;
+	char *line;
+	int count = 0;
+	int capacity = 10;
+
+	all_lines = malloc(sizeof(char*) * capacity);
+	while ((line = get_next_line(fileno(stdin))) != NULL) {
+		if (count >= capacity) {
+			capacity *= 2;
+			all_lines = realloc(all_lines, sizeof(char*) * capacity);
+		}
+		all_lines[count] = ft_strtrim(line, "\n");
+		free(line);
+		count++;
+	}
+	*line_count = count;
+	return (all_lines);
+}
+
+void run_shell_loop(t_shell *shell)
+{
+    char **all_lines = NULL;
+    int line_count = 0;
+
+    if (isatty(fileno(stdin))) {
+        run_interactive_shell(shell);
+    } else {
+        all_lines = read_all_input(&line_count);
+        run_batch_shell(shell, all_lines, line_count);
+        free_array(all_lines);
+    }
 }

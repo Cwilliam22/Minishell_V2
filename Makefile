@@ -119,7 +119,8 @@ EXEC_SRCS =		execution/exec/exec_single_cmd.c \
 				execution/redir/apply_redir.c \
 				execution/redir/redir_utils.c
 
-EXPAND_SRCS =	expansion/expand_utils.c \
+EXPAND_SRCS =	expansion/expand_cmd_arg.c \
+				expansion/expand_utils.c \
 				expansion/expand.c \
 				expansion/quotes_helpers.c \
 				expansion/quotes_utils.c \

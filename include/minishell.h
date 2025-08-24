@@ -183,8 +183,11 @@ typedef struct s_shell
 	t_env	*env;
 	t_cmd	*commands;
 	char	*input_line;
+	int		running;
 	int		interactive;
-	int		running;		//flag a utiliser? pour exit -> exit()
+	char	**all_lines;			// Stockez pour les heredocs
+	int		*current_line_index;	// Pointeur pour que heredocs puissent avancer
+	int		total_lines;		//Partie heredoc 
 }	t_shell;
 
 typedef struct s_exec
@@ -347,6 +350,9 @@ int			has_file_redirections(t_cmd *cmds);
 int			validate_file_redirections(t_cmd *cmds);
 
 /* ============================= EXPAND ==================================== */
+/* Expand command args */
+void		expand_command_args(t_cmd *cmd, t_shell *shell);
+
 /* Expand_utils */
 char		*expand_variables(char *str, t_shell *shell);
 
@@ -366,7 +372,7 @@ int			find_matching_quote(char *str, int start);
 char		*append_char_to_str(char *str, char c);
 char		*join_and_free(char *str1, char *str2);
 int			is_valid_var_char(char c);
-int			has_quotes(char *str);
+int			is_quoted_arg(char *arg);
 
 /* Quotes*/
 char		*handle_quotes(char *str, t_shell *shell);
@@ -465,6 +471,7 @@ int			apply_cmd_path(t_cmd *cmd, t_exec *exec);
 /* Cmd_utils */
 int			update_state_path(t_cmd *cmd);
 int			check_command_exist(char *name);
+void		first_valid_argument(t_cmd *cmd);
 
 /* Error */
 void		print_syntax_error(char *token);

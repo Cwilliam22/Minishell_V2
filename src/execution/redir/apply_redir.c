@@ -6,7 +6,7 @@
 /*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 09:50:02 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 22:38:36 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/24 15:38:16 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	apply_redirections(t_cmd *cmd)
 	while (curr)
 	{
 		if (apply_single_redirection(curr) != 0)
-			return (-1);
+			return (1);
 		curr = curr->next;
 	}
 	return (0);
@@ -49,13 +49,15 @@ void	handle_redirection_only(t_cmd *cmd, t_exec *exec)
 {
 	pid_t	pid;
 	int		status;
+	int		exit_code;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		child_signal();
-		apply_redirections(cmd);
-		cleanup_and_exit(0, exec);
+		exit_code = apply_redirections(cmd);
+		set_exit_status(exit_code);
+		cleanup_and_exit(exit_code, exec);
 	}
 	else if (pid > 0)
 	{

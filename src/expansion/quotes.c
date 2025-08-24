@@ -34,11 +34,6 @@ char	*handle_quotes(char *str, t_shell *shell)
 		else
 			result = process_unquoted_char(result, str, &i, shell);
 	}
-	if (!result || ft_strlen(result) == 0)
-	{
-		free(result);
-		return (NULL);
-	}
 	return (result);
 }
 

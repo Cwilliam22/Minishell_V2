@@ -36,8 +36,7 @@ void	execute_commands(t_shell *shell)
 	if (!exec)
 		return ;
 	cmds = shell->commands;
-	if (exec->nb_process == 0 || !cmds->args_expanded
-		|| !cmds->args_expanded[0] || cmds->args_expanded[0][0] == '\0')
+	if (exec->nb_process == 0 || !cmds->args_expanded)
 	{
 		if (cmds->redirections)
 			handle_redirection_only(cmds, exec);

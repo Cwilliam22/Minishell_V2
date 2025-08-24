@@ -20,11 +20,15 @@ void	cleanup_iteration(t_shell *shell)
 {
 	if (!shell)
 		return ;
-	if (shell->input_line)
+	/*if (shell->input_line)
 	{
 		free(shell->input_line);
 		shell->input_line = NULL;
-	}
+	}*/
+	if (isatty(fileno(stdin)) && shell->input_line) {
+        free(shell->input_line);  // Seulement en mode interactif
+    }
+    shell->input_line = NULL;
 }
 
 void	cleanup_all(t_exec *exec)
