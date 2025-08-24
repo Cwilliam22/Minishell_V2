@@ -6,7 +6,7 @@
 /*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 17:22:47 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/24 17:44:53 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/24 18:06:07 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static int	count_single_arg(char *arg, t_shell *shell)
 	expanded = handle_quotes(arg, shell);
 	if (!expanded)
 		return (0);
-	if (should_split(expanded))
-		count = count_words_in_expanded(expanded);
-	else
+	if (is_quoted_arg(arg) || !should_split(expanded))
 		count = 1;
+	else
+		count = count_words_in_expanded(expanded);;
 	free(expanded);
 	return (count);
 }
@@ -82,7 +82,9 @@ static void	add_split_args(char **final_args, int *k, char *arg, t_shell *shell)
 	expanded = handle_quotes(arg, shell);
 	if (!expanded)
 		return ;
-	if (should_split(expanded))
+	if (is_quoted_arg(arg) || !should_split(expanded))
+		final_args[(*k)++] = expanded;
+	else
 	{
 		words = ft_split(expanded, ' ');
 		if (words)
@@ -94,8 +96,6 @@ static void	add_split_args(char **final_args, int *k, char *arg, t_shell *shell)
 		}
 		free(expanded);
 	}
-	else
-		final_args[(*k)++] = expanded;
 }
 
 void	expand_command_args(t_cmd *cmd, t_shell *shell)

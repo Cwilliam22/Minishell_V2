@@ -14,18 +14,26 @@
 
 static int	is_valid_n_flag(char *arg)
 {
-	int	i;
+	int		i;
+	char	*trimmed;
 
 	i = 0;
 	if (!arg || arg[0] != '-')
 		return (0);
+	trimmed = ft_strtrim(arg, " ");
+	if (!trimmed)
+		return (0);
 	i = 1;
-	while (arg[i])
+	while (trimmed[i])
 	{
-		if (arg[i] != 'n')
+		if (trimmed[i] != 'n')
+		{
+			free(trimmed);
 			return (0);
+		}
 		i++;
 	}
+	free(trimmed);
 	return (i > 1);
 }
 
