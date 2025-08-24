@@ -33,18 +33,10 @@ static void	tokenize_and_parse(t_shell *shell)
 
 static int	prepare_and_validate(t_shell *shell)
 {
-	t_cmd	*head;
-
 	if (has_heredocs(shell->commands))
 		if (handle_heredocs(shell->commands) == -1)
 			return (-1);
 	expand_commands(shell);
-	head = shell->commands;
-	while (head)
-	{
-		first_valid_argument(head);
-		head = head->next;
-	}
 	return (0);
 }
 

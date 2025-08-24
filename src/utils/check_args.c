@@ -39,7 +39,7 @@ int	check_args(t_exec *exec)
 		return (0);
 	args = shell->commands->args_expanded;
 	if (!args || !args[0])
-		return (set_exit_status(127), 0);
+		return (0);
 	cmd_name = args[0];
 	if (!cmd_name || cmd_name[0] == '\0')
 	{

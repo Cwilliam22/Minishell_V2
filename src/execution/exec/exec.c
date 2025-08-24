@@ -20,8 +20,6 @@ static void	pipeline_or_simple(t_exec *exec, t_cmd *cmd)
 	{
 		if (check_args(exec))
 			execute_single_command(cmd, exec);
-		else
-			set_exit_status(127);
 	}
 }
 

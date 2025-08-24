@@ -71,7 +71,8 @@ int	builtin_cd(t_exec *exec)
 		print_error("cd", NULL, "too many arguments");
 		return (GENERAL_ERROR);
 	}
-	if (!args[1] || ft_strcmp(args[1], "~") == 0)
+	if (!args[1] || ft_strcmp(args[1], "~") == 0
+		|| ft_strcmp(args[1], "--") == 0)
 		return (handle_cd_home(exec));
 	if (ft_strcmp(args[1], "-") == 0)
 		return (handle_cd_previous(exec));

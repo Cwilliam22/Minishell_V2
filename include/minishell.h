@@ -471,7 +471,6 @@ int			apply_cmd_path(t_cmd *cmd, t_exec *exec);
 /* Cmd_utils */
 int			update_state_path(t_cmd *cmd);
 int			check_command_exist(char *name);
-void		first_valid_argument(t_cmd *cmd);
 
 /* Error */
 void		print_syntax_error(char *token);

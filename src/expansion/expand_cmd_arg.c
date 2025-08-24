@@ -6,7 +6,7 @@
 /*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 17:22:47 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/24 18:06:07 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/25 00:30:44 by alexis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ static void	add_split_args(char **final_args, int *k, char *arg, t_shell *shell)
 	expanded = handle_quotes(arg, shell);
 	if (!expanded)
 		return ;
+	if (!is_quoted_arg(arg) && expanded[0] == '\0')
+	{
+		free(expanded);
+		return ;
+	}
 	if (is_quoted_arg(arg) || !should_split(expanded))
 		final_args[(*k)++] = expanded;
 	else
