@@ -5,16 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 11:53:09 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:55:39 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:11:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:15:07 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	heredoc_child_sigint(int sig)
+{
+	set_exit_status(sig);
+	g_signal_received = sig;
+	cleanup_and_exit(130, NULL);
+}
+
 void	heredoc_child_signal(void)
 {
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, heredoc_child_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 

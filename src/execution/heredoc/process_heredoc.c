@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 13:06:28 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:08:16 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:16:03 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:16:03 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ static void	read_and_write_heredoc(t_redir *redir)
 
 	while (1)
 	{
-		if (g_signal_received == 130)
-		{
-			close(redir->heredoc->fd);
-			cleanup_and_exit(130, NULL);
-		}
 		line = readline("> ");
 		if (!line)
 		{
