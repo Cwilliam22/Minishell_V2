@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:04:07 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:04:23 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:34:36 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:34:36 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ static int	handle_single_quotes(char *str, int *i)
 	return (0);
 }
 
+/**
+ * @brief Validates quote syntax in string
+ * @param str String to validate
+ * @return 0 if quotes are valid, -1 on error
+ */
 int	check_quotes(char *str)
 {
 	int	i;

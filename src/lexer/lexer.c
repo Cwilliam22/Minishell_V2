@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/31 17:15:11 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 17:50:10 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 13:33:44 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:33:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ static int	is_assignment(char *str)
 	return (T_WORD);
 }
 
-/**
- * Get the type of a token based on its value
- * @param str: Token string
- * @return: Token type
- */
 static int	get_token_type(char *str)
 {
 	if (!str)
@@ -57,12 +52,6 @@ static int	get_token_type(char *str)
 	return (is_assignment(str));
 }
 
-/**
- * Create a new token and add it to the token list
- * @param value: Token value
- * @param type: Token type
- * @return: New token or NULL on error
- */
 static t_token	*create_and_add_token(char *token_value, t_token **head)
 {
 	t_token	*new_token;
@@ -74,13 +63,6 @@ static t_token	*create_and_add_token(char *token_value, t_token **head)
 	return (new_token);
 }
 
-/**
- * Extract a word token from the input string
- * @param input: Input string
- * @param start: Start position
- * @param end: Pointer to store end position
- * @return: Extracted word or NULL on error
- */
 static char	*extract_next_token(char *input, int i, int *end)
 {
 	char	*op;

@@ -5,13 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 18:36:30 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/19 18:36:44 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:22:59 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:23:04 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Creates and initializes an execution structure
+ * @param shell Pointer to the shell structure
+ * @return Pointer to the new t_exec structure
+ */
 t_exec	*create_exec(t_shell *shell)
 {
 	t_exec	*exec;
@@ -37,6 +42,10 @@ t_exec	*create_exec(t_shell *shell)
 	return (exec);
 }
 
+/**
+ * @brief Frees memory of an execution structure
+ * @param exec Structure to free
+ */
 void	free_exec(t_exec *exec)
 {
 	if (!exec)

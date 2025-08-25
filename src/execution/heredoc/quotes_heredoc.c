@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 12:05:58 by wcapt             #+#    #+#             */
-/*   Updated: 2025/08/21 18:11:10 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 13:25:52 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:25:52 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ static int	order_of_quotes(const char *str)
 	return (SIMPLE_DOUBLE_QUOTED);
 }
 
+/**
+ * @brief Determines quote conditions for string parsing
+ * @param s_quote Single quote state
+ * @param d_quote Double quote state
+ * @param str String being parsed
+ * @return Quote condition type
+ */
 int	conditions_type_of_quotes(int s_quote, int d_quote, const char *str)
 {
 	if (last_and_first_quotes(str) == -1)

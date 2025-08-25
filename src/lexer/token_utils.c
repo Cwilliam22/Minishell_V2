@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 11:45:49 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 11:46:48 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:34:53 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:41:26 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
+/**
+ * @brief Validates quote syntax in token list
+ * @param tokens Token list to validate
+ * @return 0 if quotes are valid, -1 on error
+ */
 int	check_token_quotes(t_token *tokens)
 {
 	t_token	*current;

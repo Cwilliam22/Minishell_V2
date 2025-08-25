@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 11:28:55 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 11:30:06 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:23:11 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:23:11 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ static void	pipeline_or_simple(t_exec *exec, t_cmd *cmd)
 	}
 }
 
+/**
+ * @brief Executes all commands in the shell
+ * @param shell Structure containing commands to execute
+ */
 void	execute_commands(t_shell *shell)
 {
 	t_exec	*exec;

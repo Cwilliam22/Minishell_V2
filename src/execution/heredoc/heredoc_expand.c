@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 10:56:27 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 14:49:00 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 13:25:22 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:25:22 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ static char	*expand_vars(char *line)
 	return (result);
 }
 
+/**
+ * @brief Expands variables in heredoc content
+ * @param redir Redirection structure containing heredoc
+ * @param line Line to expand and add to heredoc
+ */
 void	expand_heredoc_content(t_redir *redir, char *line)
 {
 	char	*new_line;

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 13:16:03 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:16:03 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:25:45 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:25:45 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	read_and_write_heredoc(t_redir *redir)
 	}
 }
 
-int	error_fork(t_heredoc *hd)
+static int	error_fork(t_heredoc *hd)
 {
 	print_error(NULL, NULL, "fork failed");
 	set_exit_status(1);
@@ -45,7 +45,7 @@ int	error_fork(t_heredoc *hd)
 	return (0);
 }
 
-void	wait_child(pid_t last_pid)
+static void	wait_child(pid_t last_pid)
 {
 	int		status;
 	int		exit_status;
@@ -75,6 +75,11 @@ static void	in_child(t_redir *redir)
 	cleanup_and_exit(0, NULL);
 }
 
+/**
+ * @brief Processes a single heredoc redirection
+ * @param redir Heredoc redirection to process
+ * @return 0 on success, -1 on error
+ */
 int	process_heredoc(t_redir *redir)
 {
 	t_heredoc	*hd;

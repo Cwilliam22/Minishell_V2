@@ -5,15 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 11:26:27 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:26:42 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:22:45 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:22:45 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * Nb_arg compte le nom d'argument avant expension
+ * @brief Executes a single command
+ * @param cmd Command structure to execute
+ * @param exec Execution context structure
  */
 void	execute_single_command(t_cmd *cmd, t_exec *exec)
 {

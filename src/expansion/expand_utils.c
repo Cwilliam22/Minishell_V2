@@ -5,13 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:03:51 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:49:29 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:31:17 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:31:17 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Counts total expanded arguments for a command
+ * @param cmd Command to count expanded arguments for
+ * @param shell Shell context for expansion
+ * @return Total number of expanded arguments
+ */
 int	count_expanded_args(t_cmd *cmd, t_shell *shell)
 {
 	int	i;

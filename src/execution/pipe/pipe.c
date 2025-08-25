@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:41:28 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:41:51 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:26:15 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:26:15 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ static int	process_pipeline_commands(t_cmd *cmds, t_exec *exec)
 	return (1);
 }
 
+/**
+ * @brief Handles execution of command pipeline
+ * @param cmds Command list forming the pipeline
+ * @param exec Execution context
+ */
 void	handle_pipeline(t_cmd *cmds, t_exec *exec)
 {
 	exec->pids = NULL;

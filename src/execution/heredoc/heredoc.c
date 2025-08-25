@@ -5,13 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 10:35:59 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 10:56:33 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:25:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:25:35 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Checks if commands contain heredoc redirections
+ * @param cmds Command list to check
+ * @return 1 if heredocs found, 0 otherwise
+ */
 int	has_heredocs(t_cmd *cmds)
 {
 	t_cmd	*current_cmd;
@@ -32,6 +37,11 @@ int	has_heredocs(t_cmd *cmds)
 	return (0);
 }
 
+/**
+ * @brief Handles all heredoc redirections in commands
+ * @param cmds Command list containing heredocs
+ * @return 0 on success, -1 on error
+ */
 int	handle_heredocs(t_cmd *cmds)
 {
 	t_cmd	*current_cmd;

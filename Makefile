@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/08/25 11:43:21 by root             ###   ########.fr        #
+#    Updated: 2025/08/25 13:28:04 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,6 @@ EXEC_SRCS =		execution/exec/exec_single_cmd.c \
 				execution/pipe/pipe_process.c \
 				execution/pipe/pipe.c \
 				execution/redir/apply_redir.c \
-				execution/redir/redir_utils.c
 
 EXPAND_SRCS =	expansion/expand_cmd_arg.c \
 				expansion/expand_utils.c \

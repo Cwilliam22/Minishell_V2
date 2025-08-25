@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cmd_arg.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 17:22:47 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/25 11:52:46 by wcapt            ###   ########.fr       */
+/*   Created: 2025/08/25 13:30:57 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:31:04 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ static int	count_words_in_expanded(char *expanded)
 	return (count);
 }
 
+/**
+ * @brief Counts expanded tokens for a single argument
+ * @param arg Argument to count expansions for
+ * @param shell Shell context for expansion
+ * @return Number of expanded tokens
+ */
 int	count_single_arg(char *arg, t_shell *shell)
 {
 	char	*expanded;
@@ -86,6 +92,11 @@ static void	add_split_args(char **final_args, int *k, char *arg, t_shell *shell)
 	}
 }
 
+/**
+ * @brief Expands all arguments in a command
+ * @param cmd Command with arguments to expand
+ * @param shell Shell context for expansion
+ */
 void	expand_command_args(t_cmd *cmd, t_shell *shell)
 {
 	char	**final_args;

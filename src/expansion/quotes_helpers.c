@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 12:31:20 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 12:31:20 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:34:14 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:34:14 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,11 @@ char	*process_quoted_section(char *result, char *str,
 	return (result);
 }
 
+/**
+ * @brief Checks if string contains single quotes
+ * @param str String to check
+ * @return 1 if single quotes found, 0 otherwise
+ */
 int	single_quote(char *str)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/06 11:24:27 by alfavre           #+#    #+#             */
-/*   Updated: 2025/07/20 15:26:53 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 13:34:24 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:34:24 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ int	is_valid_var_char(char c)
 	return (ft_isalnum(c) || c == '_' || c == '?');
 }
 
+/**
+ * @brief Checks if argument is quoted
+ * @param arg Argument to check
+ * @return 1 if quoted, 0 otherwise
+ */
 int	is_quoted_arg(char *arg)
 {
 	int	len;

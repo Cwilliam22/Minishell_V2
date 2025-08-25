@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 09:50:02 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/24 15:38:16 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 13:30:39 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:30:47 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static int	apply_single_redirection(t_redir *curr)
 	return (ret);
 }
 
+/**
+ * @brief Applies all redirections for a command
+ * @param cmd Command with redirections to apply
+ * @return 0 on success, -1 on error
+ */
 int	apply_redirections(t_cmd *cmd)
 {
 	t_redir	*curr;
@@ -45,6 +50,11 @@ int	apply_redirections(t_cmd *cmd)
 	return (0);
 }
 
+/**
+ * @brief Handles command with only redirections (no executable)
+ * @param cmd Command containing only redirections
+ * @param exec Execution context
+ */
 void	handle_redirection_only(t_cmd *cmd, t_exec *exec)
 {
 	pid_t	pid;

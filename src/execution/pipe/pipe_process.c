@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:42:00 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:42:00 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:26:08 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:26:08 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ static int	create_pipe_if_needed(int cmd_index, t_exec *exec, int pipe_fds[2])
 	return (0);
 }
 
+/**
+ * @brief Creates a process for pipeline execution
+ * @param cmd Command to execute in pipeline
+ * @param exec Execution context
+ * @param prev_read Previous pipe read file descriptor
+ * @param cmd_index Index of command in pipeline
+ * @return Process ID of created child process
+ */
 pid_t	create_pipeline_process(t_cmd *cmd, t_exec *exec,
 					int *prev_read, int cmd_index)
 {

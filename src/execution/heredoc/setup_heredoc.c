@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 10:51:35 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/24 15:32:04 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 13:26:01 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:26:01 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ static char	*update_delimiter(t_heredoc *heredoc)
 	return (free(heredoc->delimiter), result);
 }
 
+/**
+ * @brief Creates temporary file for heredoc content
+ * @param redir Heredoc redirection structure
+ * @return 0 on success, -1 on error
+ */
 int	create_heredoc_file(t_redir *redir)
 {
 	char	*filename;

@@ -5,18 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 13:55:15 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 13:55:25 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:31:55 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:32:04 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * Expand variables in assignments
- * @param assignments: List of assignments to expand
- * @param shell: Shell context
- */
 static void	expand_assignments(t_ass *assignments, t_shell *shell)
 {
 	t_ass	*current;
@@ -32,11 +27,6 @@ static void	expand_assignments(t_ass *assignments, t_shell *shell)
 	}
 }
 
-/**
- * Expand variables in redirections
- * @param redirections: List of redirections to expand
- * @param shell: Shell context
- */
 static void	expand_redirections(t_redir *redirections, t_shell *shell)
 {
 	t_redir	*current;
@@ -54,32 +44,6 @@ static void	expand_redirections(t_redir *redirections, t_shell *shell)
 		current = current->next;
 	}
 }
-
-/**
- * Version complète de expand_command_args avec handle_quotes
- * @param cmd: Command to expand
- * @param shell: Shell context
- */
-/*static void	expand_command_args(t_cmd *cmd, t_shell *shell)
-{
-	int		i;
-	int		j;
-	char	*expanded;
-	int		size;
-
-	i = 0;
-	j = 0;
-	size = get_nb_command_args(cmd);
-	cmd->args_expanded = (char **)safe_malloc(sizeof(char *) * (size + 1));
-	while (cmd->args[i])
-	{
-		expanded = handle_quotes(cmd->args[i], shell);
-		if (expanded)
-			cmd->args_expanded[j++] = expanded;
-		i++;
-	}
-	cmd->args_expanded[j] = NULL;
-}*/
 
 /**
  * Expand variables in all commands

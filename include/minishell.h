@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:42:29 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:43:04 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:28:57 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:28:57 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,10 +346,6 @@ void		handle_pipeline(t_cmd *cmd, t_exec *exec);
 /* apply redir */
 int			apply_redirections(t_cmd *cmd);
 void		handle_redirection_only(t_cmd *cmd, t_exec *exec);
-
-/* Redir utils */
-int			has_file_redirections(t_cmd *cmds);
-int			validate_file_redirections(t_cmd *cmds);
 
 /* ============================= EXPAND ==================================== */
 /* Expand command args */
