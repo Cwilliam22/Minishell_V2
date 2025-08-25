@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 11:52:38 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 11:52:38 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 14:13:33 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:13:33 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 	g_signal_received = sig;
+	set_exit_status(sig);
 }
 
 static void	sigquit_handler(int sig)

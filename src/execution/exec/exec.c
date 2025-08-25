@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 13:23:11 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:23:11 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 14:17:48 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:20:12 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	execute_commands(t_shell *shell)
 	t_cmd	*cmds;
 
 	if (!shell || !shell->commands)
+	{
+		set_exit_status(0);
 		return ;
+	}
 	exec = create_exec(shell);
 	if (!exec)
 		return ;
