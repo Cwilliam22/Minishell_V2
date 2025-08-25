@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2025/08/06 18:25:27 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 11:26:03 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:26:03 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ t_shell	*init_shell(char **envp)
 	shell->input_line = NULL;
 	shell->interactive = isatty(STDIN_FILENO);
 	shell->running = 1;
-	shell->all_lines = NULL;
-	shell->current_line_index = 0;
-	shell->total_lines = 0;
 	return (shell);
 }
 

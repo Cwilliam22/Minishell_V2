@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:36:37 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:36:37 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 10:14:08 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 10:14:15 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_args(char **args)
  * @param type: Redirection type
  * @return: String representation
  */
-static void	print_assignments(t_ass *assignments)
+static void	print_ass(t_ass *assignments)
 {
 	t_ass	*assign;
 
@@ -106,7 +106,7 @@ void	print_commands(t_cmd *commands)
 	{
 		printf("Command %d:\n", cmd_num);
 		print_args(current->args);
-		print_assignments(current->assignments);
+		print_ass(current->assignments);
 		print_redirections(current->redirections);
 		if (current->next)
 			printf("  -> PIPE TO NEXT COMMAND\n");

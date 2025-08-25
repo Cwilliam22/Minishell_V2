@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 13:46:10 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 15:12:59 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 11:26:09 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:26:19 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,11 @@ void	cleanup_iteration(t_shell *shell)
 {
 	if (!shell)
 		return ;
-	/*if (shell->input_line)
+	if (shell->input_line)
 	{
 		free(shell->input_line);
 		shell->input_line = NULL;
-	}*/
-	if (isatty(fileno(stdin)) && shell->input_line) {
-        free(shell->input_line);  // Seulement en mode interactif
-    }
-    shell->input_line = NULL;
+	}
 }
 
 void	cleanup_all(t_exec *exec)

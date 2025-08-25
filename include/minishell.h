@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 12:27:08 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 12:27:08 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:24:44 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:24:53 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,9 +185,6 @@ typedef struct s_shell
 	char	*input_line;
 	int		running;
 	int		interactive;
-	char	**all_lines;			// Stockez pour les heredocs
-	int		*current_line_index;	// Pointeur pour que heredocs puissent avancer
-	int		total_lines;		//Partie heredoc 
 }	t_shell;
 
 typedef struct s_exec
@@ -238,6 +235,10 @@ void		run_shell_loop(t_shell *shell);
 /* ============================= BUILTINS ================================== */
 /* CD */
 int			builtin_cd(t_exec *exec);
+
+/* Echo utils */
+int			skip_all_n_flags(char **args);
+void		print_assignments(t_ass *assignments);
 
 /* Echo */
 int			builtin_echo(t_exec *exec);

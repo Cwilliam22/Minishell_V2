@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   process_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 12:27:17 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/24 15:15:43 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 11:25:42 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:25:47 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Pour le tester */
-static void read_and_write_heredoc_batch(t_redir *redir, char **all_lines, int *current_line_index, int total_lines)
-{
-	(*current_line_index)++;
-    while (*current_line_index < total_lines) {
-        char *line = all_lines[*current_line_index];
-        (*current_line_index)++;
-        if (ft_strcmp(line, redir->heredoc->delimiter) == 0) {
-            break ;
-        }
-        expand_heredoc_content(redir, line);
-    }
-}
 
 static void	read_and_write_heredoc(t_redir *redir)
 {
@@ -84,18 +70,8 @@ static void	in_child(t_redir *redir)
 
 	shell = get_shell(NULL);
 	heredoc_child_signal();
-	if (isatty(fileno(stdin)))
+	if (shell->interactive)
 		read_and_write_heredoc(redir);
-	else // Pour le tester
-		read_and_write_heredoc_batch(redir, shell->all_lines, shell->current_line_index, shell->total_lines);
-    // Sauvegarder l'index dans un fichier temporaire
-    if (!isatty(fileno(stdin))) {
-        FILE *f = fopen("/tmp/minishell_heredoc_index", "w");
-        if (f) {
-            fprintf(f, "%d", *shell->current_line_index);
-            fclose(f);
-        }
-    }
 	exit(0);
 }
 
@@ -117,19 +93,6 @@ int	process_heredoc(t_redir *redir)
 	if (pid == 0)
 		in_child(redir);
 	wait_child(pid);
-	/* Pour le tester */
-	if (!isatty(fileno(stdin))) {
-		t_shell *shell = get_shell(NULL);
-   		FILE *f = fopen("/tmp/minishell_heredoc_index", "r");
-    	if (f) {
-        	int new_index;
-        	if (fscanf(f, "%d", &new_index) == 1) {
-            	*shell->current_line_index = new_index;  // Mettre à jour la variable globale
-        	}
-        	fclose(f);
-        	unlink("/tmp/minishell_heredoc_index");  // Nettoyer
-    	}
-	}
 	if (hd->fd >= 0)
 	{
 		close(hd->fd);

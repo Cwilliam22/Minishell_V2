@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/08/17 11:20:47 by root             ###   ########.fr        #
+#    Updated: 2025/08/25 10:12:08 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ MAIN_SRCS	=	cleanup.c \
 				shell_loop.c \
 
 BUILTIN_SRCS = 	builtins/cd/cd.c \
+				builtins/echo/echo_utils.c \
 				builtins/echo/echo.c \
 				builtins/env/env.c \
 				builtins/exit/exit_utils.c \

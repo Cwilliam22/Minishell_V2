@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 09:44:29 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 09:44:29 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:27:49 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:28:01 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,32 @@ static int	command_permission(char *name_cmd)
 	return (1);
 }
 
+static int	search_in_current_dir(t_cmd *cmd)
+{
+	char	*full_path;
+
+	full_path = ft_strjoin("./", cmd->args_expanded[0]);
+	if (!full_path)
+		return (0);
+	if (access(full_path, F_OK) == 0)
+	{
+		free(cmd->cmd_path);
+		cmd->cmd_path = full_path;
+		return (1);
+	}
+	free(full_path);
+	return (0);
+}
+
 static int	search_in_path(t_cmd *cmd, t_exec *exec)
 {
 	char	**paths;
 	int		result;
 
 	result = 0;
+	
+	if (search_in_current_dir(cmd))
+		return (command_permission(cmd->cmd_path));
 	if (!exec->path || !exec->path[0])
 		return (0);
 	paths = ft_split(exec->path, ':');
