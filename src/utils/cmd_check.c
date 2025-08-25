@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:35:31 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:35:31 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 12:19:58 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:00:19 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	command_permission(char *name_cmd)
  */
 int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 {
+	int	search;
+
+	search = 0;
 	if (!cmd)
 		return (0);
 	if (cmd->state_path != PATH_SIMPLE)
@@ -63,10 +66,14 @@ int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 	}
 	else
 	{
-		if (search_in_path(cmd, exec))
-			return (1);
-		print_error(cmd->args_expanded[0], NULL, "command not found");
-		set_exit_status(127);
-		return (0);
+		search = search_in_path(cmd, exec);
+		if (search == 0)
+		{
+			print_error(cmd->args_expanded[0], NULL, "command not found");
+			set_exit_status(127);
+			return (0);
+		}
+		else
+			return (command_permission(cmd->cmd_path));
 	}
 }

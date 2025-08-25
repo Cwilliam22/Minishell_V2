@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:26:09 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:26:19 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:05:16 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:05:30 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	cleanup_shell(t_shell *shell)
 
 void	cleanup_and_exit(int exit_code, t_exec *exec)
 {
-	cleanup_all(exec);
+	if (exec)
+		cleanup_all(exec);
+	else
+		cleanup_shell(get_shell(NULL));
 	exit(exit_code);
 }
