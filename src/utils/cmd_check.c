@@ -5,96 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 13:48:31 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:49:03 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:57:54 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:57:54 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Checks if command has proper permissions and is executable
- * @param name_cmd Path to the command to check
- * @return 1 if executable, 0 otherwise
- */
-static int	command_permission(char *name_cmd, int from_path_search)
+static int	handle_non_simple_path(t_cmd *cmd)
 {
-	struct stat	file_stat;
-
-	if (stat(name_cmd, &file_stat) != 0)
+	if (!find_other_in_path(cmd))
 	{
-		print_error(name_cmd, NULL, "No such file or directory");
+		print_error(cmd->args_expanded[0], NULL,
+			"No such file or directory");
 		set_exit_status(127);
 		return (0);
 	}
-	if (S_ISDIR(file_stat.st_mode))
-	{
-		if (from_path_search)
-		{
-			print_error(name_cmd, NULL, "command not found");
-			set_exit_status(127);
-		}
-		else
-		{
-			print_error(name_cmd, NULL, "Is a directory");
-			set_exit_status(126);
-		}
+	if (!command_permission(cmd->cmd_path, 0))
 		return (0);
-	}
-	if (access(name_cmd, X_OK) != 0)
-	{
-		if (from_path_search)
-		{
-			print_error(name_cmd, NULL, "command not found");
-			set_exit_status(127);
-		}
-		else
-		{
-			print_error(name_cmd, NULL, "Permission denied");
-			set_exit_status(126);
-		}
-		return (0);
-	}
 	return (1);
 }
 
-/**
- * Fonction qui contrôle si une commande est executable ou si elle existe
- * en fonction de l'appelant
- * @param shell: structure du shell
- * @param access_mode: F_OK (existence) ou X_OK (exécutable)
- * @return: 1 si trouvé, 0 sinon
- */
-int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
+static int	handle_simple_path(t_cmd *cmd, t_exec *exec)
 {
 	int	search;
 
-	search = 0;
+	search = search_in_path(cmd, exec);
+	if (search == 0)
+	{
+		print_error(cmd->args_expanded[0], NULL, "command not found");
+		set_exit_status(127);
+		return (0);
+	}
+	return (command_permission(cmd->cmd_path, 1));
+}
+
+/**
+* @brief Applies command path resolution and validation
+* @param cmd Command structure to resolve path for
+* @param exec Execution context structure
+* @return 1 on success, 0 on error
+*/
+int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
+{
 	if (!cmd)
 		return (0);
 	if (cmd->state_path != PATH_SIMPLE)
-	{
-		if (!find_other_in_path(cmd))
-		{
-			print_error(cmd->args_expanded[0], NULL,
-				"No such file or directory");
-			set_exit_status(127);
-			return (0);
-		}
-		if (!command_permission(cmd->cmd_path, 0))
-			return (0);
-		return (1);
-	}
-	else
-	{
-		search = search_in_path(cmd, exec);
-		if (search == 0)
-		{
-			print_error(cmd->args_expanded[0], NULL, "command not found");
-			set_exit_status(127);
-			return (0);
-		}
-		else
-			return (command_permission(cmd->cmd_path, 1));
-	}
+		return (handle_non_simple_path(cmd));
+	return (handle_simple_path(cmd, exec));
 }

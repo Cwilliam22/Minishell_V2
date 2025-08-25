@@ -5,13 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 12:19:21 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 12:19:43 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:59:51 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:00:34 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+* @brief Finds command executable in filesystem paths
+* @param cmd Command structure to find path for
+* @return 1 if found, 0 otherwise
+*/
 int	find_other_in_path(t_cmd *cmd)
 {
 	char	*name_cmd;
@@ -27,7 +32,7 @@ int	find_other_in_path(t_cmd *cmd)
 	return (0);
 }
 
-int	find_simple_in_path(t_cmd *cmd, char **paths)
+static int	find_simple_in_path(t_cmd *cmd, char **paths)
 {
 	int		i;
 	char	*name_cmd;
@@ -71,6 +76,12 @@ static int	search_in_current_dir(t_cmd *cmd)
 	return (0);
 }
 
+/**
+* @brief Searches for command executable in PATH environment variable
+* @param cmd Command structure to search for
+* @param exec Execution context containing environment
+* @return 1 if found, 0 otherwise
+*/
 int	search_in_path(t_cmd *cmd, t_exec *exec)
 {
 	char	**paths;

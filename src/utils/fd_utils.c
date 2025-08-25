@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 14:42:56 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 14:43:57 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 14:03:29 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:04:23 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int	dup_and_close(int fd, int stdfd, const char *err)
 	return (0);
 }
 
+/**
+* @brief Restores standard input and output file descriptors
+* @param saved_stdout Previously saved stdout file descriptor
+* @param saved_stdin Previously saved stdin file descriptor
+*/
 void	restore_std(int saved_stdout, int saved_stdin)
 {
 	dup2(saved_stdout, STDOUT_FILENO);

@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 19:32:28 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/30 15:41:17 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 14:04:44 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:04:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+* @brief Allocates memory safely with error handling
+* @param size Number of bytes to allocate
+* @return Pointer to allocated memory, exits on failure
+*/
 void	*safe_malloc(size_t size)
 {
 	void	*ptr;
@@ -20,20 +25,7 @@ void	*safe_malloc(size_t size)
 	if (!ptr)
 	{
 		print_error(NULL, NULL, "fatal: memory allocation failed");
-		exit(2);
-	}
-	return (ptr);
-}
-
-void	*safe_malloc_exec(size_t size, t_exec *exec)
-{
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (!ptr)
-	{
-		print_error(NULL, NULL, "fatal: memory allocation failed");
-		cleanup_and_exit(2, exec);
+		cleanup_and_exit(2, NULL);
 	}
 	return (ptr);
 }

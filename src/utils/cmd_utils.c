@@ -5,13 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:36:22 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:36:22 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 14:01:23 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:01:27 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+* @brief Updates the path state of a command
+* @param cmd Command structure to update path state for
+* @return 1 on success, 0 on error
+*/
 int	update_state_path(t_cmd *cmd)
 {
 	char	*first_arg;
@@ -33,6 +38,11 @@ int	update_state_path(t_cmd *cmd)
 	return (1);
 }
 
+/**
+* @brief Checks if a command exists in the system
+* @param name Command name to check
+* @return 1 if command exists, 0 otherwise
+*/
 int	check_command_exist(char *name)
 {
 	if (access(name, F_OK) != 0)

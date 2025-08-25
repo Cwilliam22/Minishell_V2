@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/08/25 13:28:04 by root             ###   ########.fr        #
+#    Updated: 2025/08/25 14:07:35 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -151,6 +151,7 @@ UTILS_SRCS	= 	utils/check_args.c \
 				utils/cmd_args_utils.c \
 				utils/cmd_check.c \
 				utils/cmd_path.c \
+				utils/cmd_permission.c \
 				utils/cmd_utils.c \
 				utils/error.c \
 				utils/fd_utils.c \

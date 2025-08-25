@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 13:47:39 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:47:39 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 14:07:58 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:07:58 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -470,8 +470,10 @@ int			apply_cmd_path(t_cmd *cmd, t_exec *exec);
 
 /* Cmd path */
 int			find_other_in_path(t_cmd *cmd);
-int			find_simple_in_path(t_cmd *cmd, char **paths);
 int			search_in_path(t_cmd *cmd, t_exec *exec);
+
+/* Cmd permission */
+int			command_permission(char *name_cmd, int from_path_search);
 
 /* Cmd_utils */
 int			update_state_path(t_cmd *cmd);

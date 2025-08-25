@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 16:11:11 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 03:11:17 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 14:06:23 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 14:06:23 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+* @brief Frees a null-terminated array of strings
+* @param array Array of strings to free
+*/
 void	free_array(char **array)
 {
 	int	i;

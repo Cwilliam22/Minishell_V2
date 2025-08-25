@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 16:30:25 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 00:17:41 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 13:58:30 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:58:30 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static int	is_all_spaces(const char *s)
 	return (1);
 }
 
+/**
+* @brief Validates command arguments in execution context
+* @param exec Execution context containing arguments to validate
+* @return 1 if arguments are valid, 0 otherwise
+*/
 int	check_args(t_exec *exec)
 {
 	t_shell	*shell;
