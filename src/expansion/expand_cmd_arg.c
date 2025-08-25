@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cmd_arg.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 17:22:47 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/25 00:30:44 by alexis           ###   ########.fr       */
+/*   Updated: 2025/08/25 11:49:03 by wcapt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,9 @@ static int	count_single_arg(char *arg, t_shell *shell)
 	if (is_quoted_arg(arg) || !should_split(expanded))
 		count = 1;
 	else
-		count = count_words_in_expanded(expanded);;
+		count = count_words_in_expanded(expanded);
 	free(expanded);
 	return (count);
-}
-
-static int	count_expanded_args(t_cmd *cmd, t_shell *shell)
-{
-	int	i;
-	int	total;
-
-	total = 0;
-	i = 0;
-	while (cmd->args[i])
-	{
-		total += count_single_arg(cmd->args[i], shell);
-		i++;
-	}
-	return (total);
 }
 
 static void	add_split_args(char **final_args, int *k, char *arg, t_shell *shell)
@@ -80,9 +65,7 @@ static void	add_split_args(char **final_args, int *k, char *arg, t_shell *shell)
 	int		j;
 
 	expanded = handle_quotes(arg, shell);
-	if (!expanded)
-		return ;
-	if (!is_quoted_arg(arg) && expanded[0] == '\0')
+	if (!expanded || (!is_quoted_arg(arg) && expanded[0] == '\0'))
 	{
 		free(expanded);
 		return ;

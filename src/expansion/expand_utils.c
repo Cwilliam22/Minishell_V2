@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+int	count_expanded_args(t_cmd *cmd, t_shell *shell)
+{
+	int	i;
+	int	total;
+
+	total = 0;
+	i = 0;
+	while (cmd->args[i])
+	{
+		total += count_single_arg(cmd->args[i], shell);
+		i++;
+	}
+	return (total);
+}
+
 static char	*extract_var_name(char *str, int *index)
 {
 	char	*var_name;
