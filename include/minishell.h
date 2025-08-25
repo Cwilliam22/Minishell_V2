@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:24:44 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:24:53 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:42:29 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:43:04 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,8 +336,9 @@ int			conditions_type_of_quotes(int s_quote, int d_quote,
 /* Setup heredoc */
 int			create_heredoc_file(t_redir *redir);
 
-/* Pipe_utils */
-void		wait_all_pipeline_children(pid_t *pids, int nb_process);
+/* Pipe_process */
+pid_t		create_pipeline_process(t_cmd *cmd, t_exec *exec, int *prev_read,
+				int cmd_index);
 
 /* Pipe */
 void		handle_pipeline(t_cmd *cmd, t_exec *exec);
@@ -467,7 +468,13 @@ int			check_args(t_exec *exec);
 int			get_nb_command_args(t_cmd *commands);
 
 /* cmd_check */
+int			command_permission(char *name_cmd);
 int			apply_cmd_path(t_cmd *cmd, t_exec *exec);
+
+/* Cmd path */
+int			find_other_in_path(t_cmd *cmd);
+int			find_simple_in_path(t_cmd *cmd, char **paths);
+int			search_in_path(t_cmd *cmd, t_exec *exec);
 
 /* Cmd_utils */
 int			update_state_path(t_cmd *cmd);

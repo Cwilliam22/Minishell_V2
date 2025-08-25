@@ -5,38 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:27:30 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:27:30 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:37:27 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:37:27 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*get_print_string(char *arg, t_shell *g_shell)
+{
+	char	*home;
+
+	if (ft_strcmp(arg, "~") == 0)
+	{
+		home = get_env_var("HOME", g_shell->env);
+		return (home);
+	}
+	return (arg);
+}
+
+static void	print_argument(char *to_print, int is_home)
+{
+	write(STDOUT_FILENO, to_print, ft_strlen(to_print));
+	if (is_home)
+		free(to_print);
+}
 
 static int	ft_printf_arg(char **tab_arg, int index, int option)
 {
 	int		i;
 	t_shell	*g_shell;
 	char	*to_print;
-	char	*home;
+	int		is_home;
 
 	g_shell = get_shell(NULL);
 	i = index;
-	home = NULL;
 	while (tab_arg[i])
 	{
-		if (ft_strcmp(tab_arg[i], "~") == 0)
-		{
-			home = get_env_var("HOME", g_shell->env);
-			to_print = home;
-		}
-		else
-			to_print = tab_arg[i];
-		write(STDOUT_FILENO, to_print, ft_strlen(to_print));
-		if (home)
-		{
-			free(home);
-			home = NULL;
-		}
+		is_home = (ft_strcmp(tab_arg[i], "~") == 0);
+		to_print = get_print_string(tab_arg[i], g_shell);
+		print_argument(to_print, is_home);
 		if (tab_arg[i + 1])
 			write(STDOUT_FILENO, " ", 1);
 		i++;
@@ -45,7 +53,6 @@ static int	ft_printf_arg(char **tab_arg, int index, int option)
 		write(STDOUT_FILENO, "\n", 1);
 	return (1);
 }
-
 
 int	builtin_echo(t_exec *exec)
 {

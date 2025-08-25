@@ -5,59 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:27:49 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:28:01 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:35:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:35:31 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	find_other_in_path(t_cmd *cmd)
-{
-	char	*name_cmd;
-
-	name_cmd = cmd->args_expanded[0];
-	if (check_command_exist(name_cmd))
-	{
-		if (cmd->cmd_path)
-			free(cmd->cmd_path);
-		cmd->cmd_path = ft_strdup(name_cmd);
-		return (1);
-	}
-	return (0);
-}
-
-static int	find_simple_in_path(t_cmd *cmd, char **paths)
-{
-	int		i;
-	char	*name_cmd;
-	char	*path_cmd;
-	char	*tmp;
-
-	i = 0;
-	name_cmd = cmd->args_expanded[0];
-	while (paths[i])
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		path_cmd = ft_strjoin(tmp, name_cmd);
-		free(tmp);
-		if (check_command_exist(path_cmd))
-		{
-			if (cmd->cmd_path)
-				free(cmd->cmd_path);
-			cmd->cmd_path = path_cmd;
-			return (1);
-		}
-		free(path_cmd);
-		i++;
-	}
-	return (0);
-}
-
-/**
- * Vérifie si une commande existe dans le PATH
- */
-static int	command_permission(char *name_cmd)
+int	command_permission(char *name_cmd)
 {
 	struct stat	file_stat;
 
@@ -80,46 +35,6 @@ static int	command_permission(char *name_cmd)
 		return (0);
 	}
 	return (1);
-}
-
-static int	search_in_current_dir(t_cmd *cmd)
-{
-	char	*full_path;
-
-	full_path = ft_strjoin("./", cmd->args_expanded[0]);
-	if (!full_path)
-		return (0);
-	if (access(full_path, F_OK) == 0)
-	{
-		free(cmd->cmd_path);
-		cmd->cmd_path = full_path;
-		return (1);
-	}
-	free(full_path);
-	return (0);
-}
-
-static int	search_in_path(t_cmd *cmd, t_exec *exec)
-{
-	char	**paths;
-	int		result;
-
-	result = 0;
-	
-	if (search_in_current_dir(cmd))
-		return (command_permission(cmd->cmd_path));
-	if (!exec->path || !exec->path[0])
-		return (0);
-	paths = ft_split(exec->path, ':');
-	if (!paths || !paths[0])
-	{
-		free_array(paths);
-		return (0);
-	}
-	if (find_simple_in_path(cmd, paths))
-		result = command_permission(cmd->cmd_path);
-	free_array(paths);
-	return (result);
 }
 
 /**

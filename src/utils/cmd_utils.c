@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 14:55:32 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 14:19:44 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 11:36:22 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:36:22 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ int	check_command_exist(char *name)
 	}
 	return (1);
 }
-

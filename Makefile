@@ -6,7 +6,7 @@
 #    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/31 17:40:12 by root              #+#    #+#              #
-#    Updated: 2025/08/25 10:12:08 by root             ###   ########.fr        #
+#    Updated: 2025/08/25 11:43:21 by root             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,7 +115,7 @@ EXEC_SRCS =		execution/exec/exec_single_cmd.c \
 				execution/heredoc/process_heredoc.c \
 				execution/heredoc/quotes_heredoc.c \
 				execution/heredoc/setup_heredoc.c \
-				execution/pipe/pipe_utils.c \
+				execution/pipe/pipe_process.c \
 				execution/pipe/pipe.c \
 				execution/redir/apply_redir.c \
 				execution/redir/redir_utils.c
@@ -151,6 +151,7 @@ STRUCT_SRCS =	structures/append_assignment.c \
 UTILS_SRCS	= 	utils/check_args.c \
 				utils/cmd_args_utils.c \
 				utils/cmd_check.c \
+				utils/cmd_path.c \
 				utils/cmd_utils.c \
 				utils/error.c \
 				utils/fd_utils.c \
