@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 13:28:57 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:28:57 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:47:39 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:47:39 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -466,7 +466,6 @@ int			check_args(t_exec *exec);
 int			get_nb_command_args(t_cmd *commands);
 
 /* cmd_check */
-int			command_permission(char *name_cmd);
 int			apply_cmd_path(t_cmd *cmd, t_exec *exec);
 
 /* Cmd path */

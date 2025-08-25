@@ -5,14 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 12:19:58 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 13:00:19 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 13:48:31 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 13:49:03 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	command_permission(char *name_cmd)
+/**
+ * @brief Checks if command has proper permissions and is executable
+ * @param name_cmd Path to the command to check
+ * @return 1 if executable, 0 otherwise
+ */
+static int	command_permission(char *name_cmd, int from_path_search)
 {
 	struct stat	file_stat;
 
@@ -24,14 +29,30 @@ int	command_permission(char *name_cmd)
 	}
 	if (S_ISDIR(file_stat.st_mode))
 	{
-		print_error(name_cmd, NULL, "Is a directory");
-		set_exit_status(126);
+		if (from_path_search)
+		{
+			print_error(name_cmd, NULL, "command not found");
+			set_exit_status(127);
+		}
+		else
+		{
+			print_error(name_cmd, NULL, "Is a directory");
+			set_exit_status(126);
+		}
 		return (0);
 	}
 	if (access(name_cmd, X_OK) != 0)
 	{
-		print_error(name_cmd, NULL, "Permission denied");
-		set_exit_status(126);
+		if (from_path_search)
+		{
+			print_error(name_cmd, NULL, "command not found");
+			set_exit_status(127);
+		}
+		else
+		{
+			print_error(name_cmd, NULL, "Permission denied");
+			set_exit_status(126);
+		}
 		return (0);
 	}
 	return (1);
@@ -60,7 +81,7 @@ int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 			set_exit_status(127);
 			return (0);
 		}
-		if (!command_permission(cmd->cmd_path))
+		if (!command_permission(cmd->cmd_path, 0))
 			return (0);
 		return (1);
 	}
@@ -74,6 +95,6 @@ int	apply_cmd_path(t_cmd *cmd, t_exec *exec)
 			return (0);
 		}
 		else
-			return (command_permission(cmd->cmd_path));
+			return (command_permission(cmd->cmd_path, 1));
 	}
 }
