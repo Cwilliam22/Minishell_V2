@@ -6,7 +6,7 @@
 /*   By: wcapt < wcapt@student.42lausanne.ch >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 17:22:47 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/25 11:49:03 by wcapt            ###   ########.fr       */
+/*   Updated: 2025/08/25 11:52:46 by wcapt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	count_words_in_expanded(char *expanded)
 	return (count);
 }
 
-static int	count_single_arg(char *arg, t_shell *shell)
+int	count_single_arg(char *arg, t_shell *shell)
 {
 	char	*expanded;
 	int		count;

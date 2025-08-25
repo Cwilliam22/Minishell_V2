@@ -354,6 +354,7 @@ int			validate_file_redirections(t_cmd *cmds);
 /* ============================= EXPAND ==================================== */
 /* Expand command args */
 void		expand_command_args(t_cmd *cmd, t_shell *shell);
+int			count_single_arg(char *arg, t_shell *shell);
 
 /* Expand_utils */
 char		*expand_variables(char *str, t_shell *shell);
