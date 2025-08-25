@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_no_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 02:27:19 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 17:35:53 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 11:53:27 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:53:27 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ static t_env_var	*copy_env_sorted(t_exec *exec)
 	return (cpy);
 }
 
+/**
+ * @brief Prints environment variables in sorted order.
+ * 
+ * @param exec Execution context containing environment variables
+ */
 void	print_env_sorted(t_exec *exec)
 {
 	t_env_var	*sorted_env;

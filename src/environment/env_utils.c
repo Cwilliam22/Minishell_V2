@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 11:39:44 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/17 11:39:44 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:56:22 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:56:22 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ void	free_environment(t_env *env)
 	free(env);
 }
 
+/**
+* @brief Converts environment variables list to string array.
+* 
+* @param env Environment variables linked list
+* @return char** Array of "KEY=VALUE" strings, NULL on failure
+*/
 char	**env_to_string(t_env *env)
 {
 	t_env_var	*current;

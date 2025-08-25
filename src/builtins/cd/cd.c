@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/21 15:28:27 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/21 15:29:24 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:47:02 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:47:02 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ static int	handle_cd_path(t_exec *exec, char *target)
 	return (do_chir(exec, target));
 }
 
+/**
+ * @brief Changes the current working directory (cd command).
+ * 
+ * @param exec Execution context containing command arguments
+ * @return int 0 on success, 1 on failure
+ */
 int	builtin_cd(t_exec *exec)
 {
 	char	**args;

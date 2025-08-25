@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:37:27 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:37:27 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:48:44 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:48:44 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ static int	ft_printf_arg(char **tab_arg, int index, int option)
 	return (1);
 }
 
+/**
+ * @brief Implements the built-in 'echo' command.
+ * 
+ * @param exec Execution context containing command arguments
+ * @return int 0 on success, 1 on failure
+ */
 int	builtin_echo(t_exec *exec)
 {
 	int		i;

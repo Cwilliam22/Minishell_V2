@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 20:34:52 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 20:36:29 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 11:49:05 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:49:05 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ static char	*skip_leading_zeros(char *str)
 	return (str);
 }
 
+/**
+ * @brief Checks if string represents a valid numeric limit.
+ * 
+ * @param str String to validate
+ * @return int 1 if valid limit, 0 otherwise
+ */
 int	check_limit(char *str)
 {
 	char	*tmp;

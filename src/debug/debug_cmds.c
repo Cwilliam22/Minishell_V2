@@ -5,18 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 10:14:08 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 10:14:15 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:55:24 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:55:29 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * Get string representation of redirection type
- * @param type: Redirection type
- * @return: String representation
- */
 static void	print_args(char **args)
 {
 	int	i;
@@ -36,11 +31,6 @@ static void	print_args(char **args)
 		printf("  No args\n");
 }
 
-/**
- * Get string representation of redirection type
- * @param type: Redirection type
- * @return: String representation
- */
 static void	print_ass(t_ass *assignments)
 {
 	t_ass	*assign;
@@ -57,11 +47,6 @@ static void	print_ass(t_ass *assignments)
 	}
 }
 
-/**
- * Get string representation of redirection type
- * @param type: Redirection type
- * @return: String representation
- */
 static void	print_redirections(t_redir *redirections)
 {
 	t_redir	*redir;

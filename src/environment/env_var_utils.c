@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 07:40:54 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 18:41:31 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 11:56:40 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:56:40 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ void	add_env_var(t_env_var **head, t_env_var *new_var)
 	current->next = new_var;
 }
 
+/**
+* @brief Removes an environment variable from the list.
+* 
+* @param key Variable name to remove
+* @param env Environment variables list
+* @return int 0 on success, 1 on failure or not found
+*/
 int	remove_env_var(char *key, t_env *env)
 {
 	t_env_var	**current;

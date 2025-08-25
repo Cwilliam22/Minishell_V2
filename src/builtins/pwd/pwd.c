@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 16:11:50 by wcapt             #+#    #+#             */
-/*   Updated: 2025/08/03 04:11:07 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 11:54:14 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:54:24 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Y avait-il une raison de faire ft_strdup(getcwd) ?
+/**
+ * @brief Updates PWD environment variable to current directory.
+ * 
+ * @param exec Execution context containing environment variables
+ * @return int 0 on success, 1 on failure
+ */
 int	update_pwd(t_exec *exec)
 {
 	char	*new_pwd;
@@ -26,6 +31,12 @@ int	update_pwd(t_exec *exec)
 	return (result);
 }
 
+/**
+ * @brief Updates OLDPWD environment variable to previous directory.
+ * 
+ * @param exec Execution context containing environment variables
+ * @return int 0 on success, 1 on failure
+ */
 int	update_oldpwd(t_exec *exec)
 {
 	char		*curr_pwd;
@@ -43,6 +54,12 @@ int	update_oldpwd(t_exec *exec)
 	return (result);
 }
 
+/**
+ * @brief Implements the built-in 'pwd' command.
+ * 
+ * @param exec Execution context (unused but for consistency)
+ * @return int 0 on success, 1 on failure
+ */
 int	builtin_pwd(t_exec *exec)
 {
 	char	*path;

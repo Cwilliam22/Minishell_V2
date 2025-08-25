@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 15:50:04 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/20 15:50:04 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:49:18 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:49:18 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ static int	handle_single_arg(char *arg)
 	return ((exit_code % 256 + 256) % 256);
 }
 
+/**
+ * @brief Implements the built-in 'exit' command.
+ * 
+ * @param exec Execution context containing exit arguments
+ * @return int Exit status code (if function returns)
+ */
 int	builtin_exit(t_exec *exec)
 {
 	char	**args;

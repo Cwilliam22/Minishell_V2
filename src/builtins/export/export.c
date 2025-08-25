@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alfavre <alfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 01:51:43 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/06 13:32:56 by alfavre          ###   ########.fr       */
+/*   Created: 2025/08/25 11:54:01 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:54:06 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ static void	update_var_path(t_exec *exec)
 	exec->path = get_env_var("PATH", exec->shell->env);
 }
 
+/**
+ * @brief Validates if string is a valid variable identifier.
+ * 
+ * @param str String to validate
+ * @return int 1 if valid identifier, 0 otherwise
+ */
 int	is_a_valid_identifier(char *str)
 {
 	int	i;
@@ -64,6 +70,12 @@ static int	export_args_only(t_exec *exec)
 	return (0);
 }
 
+/**
+ * @brief Implements the built-in 'export' command.
+ * 
+ * @param exec Execution context containing export arguments
+ * @return int 0 on success, 1 on failure
+ */
 int	builtin_export(t_exec *exec)
 {
 	int	error;

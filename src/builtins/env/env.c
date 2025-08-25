@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/14 15:46:00 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/14 15:46:31 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:48:59 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:48:59 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ static void	print_env(t_env *env)
 	}
 }
 
+/**
+ * @brief Implements the built-in 'env' command.
+ * 
+ * @param exec Execution context containing environment variables
+ * @return int 0 on success, 1 on failure
+ */
 int	builtin_env(t_exec *exec)
 {
 	char	**arg;

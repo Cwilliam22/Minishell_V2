@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 05:52:21 by alexis            #+#    #+#             */
-/*   Updated: 2025/08/03 06:26:51 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 11:54:41 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:54:41 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Implements the built-in 'unset' command.
+ * 
+ * @param exec Execution context containing unset arguments
+ * @return int 0 on success, 1 on failure
+ */
 int	builtin_unset(t_exec *exec)
 {
 	int		i;

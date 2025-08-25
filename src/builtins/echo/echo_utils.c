@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 11:27:24 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/25 11:27:24 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:48:30 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:48:36 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static int	is_valid_n_flag(char *arg)
 	return (arg[i] == '\0' || arg[i] == ' ' || arg[i] == '\t');
 }
 
+/**
+ * @brief Skips all consecutive -n flags in arguments array.
+ * 
+ * @param args Array of command arguments
+ * @return int Index of first non -n flag argument
+ */
 int	skip_all_n_flags(char **args)
 {
 	int	i;
@@ -36,6 +42,11 @@ int	skip_all_n_flags(char **args)
 	return (i);
 }
 
+/**
+ * @brief Prints variable assignments to stdout.
+ * 
+ * @param assignments Linked list of variable assignments
+ */
 void	print_assignments(t_ass *assignments)
 {
 	t_ass	*head;

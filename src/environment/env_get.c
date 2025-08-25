@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexis <alexis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 17:50:12 by alexis            #+#    #+#             */
-/*   Updated: 2025/07/29 18:11:15 by alexis           ###   ########.fr       */
+/*   Created: 2025/08/25 11:55:39 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:55:56 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * Find environment variable index by key
- * @param variable: Variable name to find
- * @param env: Environment structure
- * @return: Index position in env tab or -1 if not found
- */
 static int	find_var_in_env(char *variable, t_env *env)
 {
 	int			i;
@@ -37,12 +31,6 @@ static int	find_var_in_env(char *variable, t_env *env)
 	return (-1);
 }
 
-/**
- * Get environment variable value
- * @param variable: Variable name
- * @param shell: Shell structure
- * @return: Variable value or NULL if not found
- */
 static char	*find_value_in_env(char *variable, t_env *env)
 {
 	t_env_var	*env_var;
@@ -59,6 +47,13 @@ static char	*find_value_in_env(char *variable, t_env *env)
 	return (NULL);
 }
 
+/**
+* @brief Retrieves the value of an environment variable.
+* 
+* @param key Variable name to search for
+* @param env Environment variables list
+* @return char* Variable value if found, NULL otherwise
+*/
 char	*get_env_var(char *key, t_env *env)
 {
 	int		index;

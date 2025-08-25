@@ -5,13 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alfavre <alfavre@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 09:43:31 by alfavre           #+#    #+#             */
-/*   Updated: 2025/08/22 09:43:31 by alfavre          ###   ########.ch       */
+/*   Created: 2025/08/25 11:54:47 by alfavre           #+#    #+#             */
+/*   Updated: 2025/08/25 11:55:00 by alfavre          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Checks if command is a built-in function.
+ * 
+ * @param cmd Command structure to check
+ * @return int 1 if builtin, 0 otherwise
+ */
 int	is_builtin(t_cmd *cmd)
 {
 	char		**args;
@@ -33,6 +39,12 @@ int	is_builtin(t_cmd *cmd)
 	return (0);
 }
 
+/**
+ * @brief Executes the appropriate built-in command.
+ * 
+ * @param cmd Command structure containing builtin name
+ * @param exec Execution context for builtin execution
+ */
 void	execute_builtin(t_cmd *cmd, t_exec *exec)
 {
 	int				i;
